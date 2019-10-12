@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <title>WebSocket</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+</head>
+<style>
+    #console {
+        max-height: 100px;
+        overflow-y: scroll;
+        display: block;
+        margin: 0 0 20px 0;
+    }
+</style>
+<body style="overflow-x: hidden;">
+<h1>WebSocket запросы!</h1>
+
+<div class="container-row">
+    <div class="row">
+        <div class="col-auto col-md-4">
+            <div class="input-group mb-3">
+                <input type="number" id="clientId" value="0" min="0" class="form-control" placeholder="ID клиента" aria-label="ID клиента" aria-describedby="btnInit">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="button" id="btnInit">Запрос данных клиента</button>
+                </div>
+            </div>
+            <div>Запрос: <br> <code id="clientIdStat"></code></div>
+        </div>
+        <div class="col-auto col-md-4">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">ID клиента:</span>
+                </div>
+                <input type="number" id="info" value="0" min="0" class="form-control" placeholder="Тело запроса" aria-label="Тело запроса" aria-describedby="btnInfo">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="button" id="btnInfo">Добавить данные</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-auto col-md-4">
+            <code id="console"></code>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="input-group mb-3">
+                <input type="number" id="clientIdInf" value="0" class="form-control" placeholder="ID клиента" aria-label="ID клиента" aria-describedby="btnInit">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="button" id="btnInitInf">Запрос информации с клиента</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-row" style="max-width: 100vw; overflow-x: scroll;">
+    <table class="table table-striped table-sm">
+        <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">init_client</th>
+            <th scope="col">company_id</th>
+            <th scope="col">address_id</th>
+            <th scope="col">url</th>
+            <th scope="col">status</th>
+            <th scope="col">cartridge</th>
+            <th scope="col">KIT</th>
+            <th scope="col">productName</th>
+            <th scope="col">serialNumber</th>
+            <th scope="col">maintenanceKitCount</th>
+            <th scope="col">printCycles</th>
+            <th scope="col">scanCycles</th>
+            <th scope="col">adfCycles</th>
+            <th scope="col">log</th>
+            <th scope="col">article</th>
+            <th scope="col">client_article</th>
+        </tr>
+        </thead>
+        <tbody id="json">
+        </tbody>
+    </table>
+</div>
+
+<script>
+    //var socket = new WebSocket("ws://116.203.243.136:8080/ws");
+    var socket = new WebSocket("ws://localhost:8080/ws");
+    socket.onopen = function() {
+        document.getElementById('console').innerHTML = "";
+        document.getElementById('console').innerHTML = "Соединение установлено.";
+        console.log("Соединение установлено.");
+    };
+
+    socket.onclose = function(event) {
+        document.getElementById('console').innerHTML = "";
+        if (event.wasClean) {
+            console.log('Соединение закрыто чисто');
+            document.getElementById('console').innerHTML = "Соединение закрыто чисто";
+        } else {
+            console.log('Обрыв соединения'); // например, "убит" процесс сервера
+            document.getElementById('console').innerHTML = "Обрыв соединения";
+        }
+        console.log('Код: ' + event.code + ' причина: ' + event.reason);
+        document.getElementById('console').innerHTML += ' Код: ' + event.code + ' причина: ' + event.reason;
+    };
+
+    socket.onmessage = function(event) {
+        document.getElementById('console').innerHTML = "";
+        document.getElementById('console').innerHTML = "Получены данные: <br>" + event.data;
+        if(JSON.parse(event.data)['status'] !== undefined) {
+            document.getElementById('clientIdStat').innerHTML = "";
+            document.getElementById("clientIdStat").innerHTML = JSON.stringify(event.data, undefined, 2);//JSON.parse(event.data)['status'];
+        }
+        if(JSON.parse(event.data)['content'] !== undefined) {
+            var obj =  JSON.parse(event.data)['content'];
+            var table = '';
+            for (var i in obj) {
+                table += '<tr>' +
+                    '<td>'+obj[i]['id']+'</td>' +
+                    '<td>'+obj[i]['client_id']+'</td>' +
+                    '<td>'+obj[i]['company_id']+'</td>' +
+                    '<td>'+obj[i]['address_id']+'</td>' +
+                    '<td>'+obj[i]['url']+'</td>' +
+                    '<td>'+obj[i]['status']+'</td>' +
+                    '<td>'+JSON.stringify(obj[i]['cartridge'], undefined, 2)+'</td>' +
+                    '<td>'+obj[i]['kit']+'</td>' +
+                    '<td>'+obj[i]['productname']+'</td>' +
+                    '<td>'+obj[i]['serialnumber']+'</td>' +
+                    '<td>'+obj[i]['maintenancekitcount']+'</td>' +
+                    '<td>'+obj[i]['printcycles']+'</td>' +
+                    '<td>'+obj[i]['scancycles']+'</td>' +
+                    '<td>'+obj[i]['adfcycles']+'</td>'+
+                    '<td>'+JSON.stringify(obj[i]['log'], undefined, 2)+'</td>'+
+                    '<td>'+obj[i]['article']+'</td>'+
+                    '<td>'+obj[i]['client_article']+'</td>'+
+                    ' </tr>';
+            }
+            document.getElementById('json').innerHTML = "";
+            document.getElementById("json").innerHTML = table;
+        }
+    };
+
+    socket.onerror = function(error) {
+        console.log("Ошибка " + error.message);
+    };
+
+    document.getElementById('btnInit').onclick = function () {
+        console.log('btnInit');
+        socket.send('{"server_init": "getDevices", "client": '+ document.getElementById('clientId').value +'}');
+        //socket.send('{"print":54546, "url":"", "scan":0, "KIT":[{"Fuser":456544},{"Transfer belt":456}],"cartridge":[{"black":60},{"cyan":10},{"magente":30},{"yellow":100}], "company_id":1, "address_id":1, "init_client":1, "device":"HP LaserJet M603", "serial_number":"56DS456S", "article":"45654654", "client_article":"DS45654", "status":"Ready", "log": [{"date": "24.09.2019","info":"low cartridge"},{"date": "20.09.2019","error":"open door"}]}');
+    };
+    document.getElementById('btnInitInf').onclick = function () {
+        socket.send('{"server_init": "getInfo", "client": '+ document.getElementById('clientIdInf').value +'}');
+        //socket.send('{"print":54546, "url":"", "scan":0, "KIT":[{"Fuser":456544},{"Transfer belt":456}],"cartridge":[{"black":60},{"cyan":10},{"magente":30},{"yellow":100}], "company_id":1, "address_id":1, "init_client":1, "device":"HP LaserJet M603", "serial_number":"56DS456S", "article":"45654654", "client_article":"DS45654", "status":"Ready", "log": [{"date": "24.09.2019","info":"low cartridge"},{"date": "20.09.2019","error":"open door"}]}');
+    };
+    document.getElementById('btnInfo').onclick = function () {
+        socket.send('{"init_client":'+document.getElementById('info').value+',"company_id":1,"address_id":1,"url":"",' +
+            '"status":"Ready","cartridge":[{"black":60},{"cyan":10},{"magente":30},{"yellow":100}],' +
+            '"KIT":[{"Fuser":456544},{"Transfer belt":456}],"productName":"HP LaserJet M603","serialNumber":"56DS456S",' +
+            '"maintenanceKitCount": 10,"printCycles":54546,"scanCycles":0,"adfCycles":0,' +
+            '"log": [{"date": "24.09.2019","info":"low cartridge"},{"date": "20.09.2019","error":"open door"}],' +
+            '"article":"45654654","client_article":"DS45654"}');
+    };
+</script>
+
+</body>
+</html>
