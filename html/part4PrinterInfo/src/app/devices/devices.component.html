@@ -11,9 +11,12 @@
       </mat-autocomplete>
     </mat-form-field>
   </div>
+  <div class="socket-init">
+    <button mat-raised-button id="btnInit" [disabled]="cid === 0">Получить данные с устройств</button>
+  </div>
 </header>
 <mat-sidenav-container *ngIf="customers">
-  <mat-sidenav opened mode="side" style="width: 200px;" class="py-2">
+  <mat-sidenav opened mode="side" style="width: 200px;" class="px-2">
     <h3>Офис:</h3>
     <mat-form-field class="full-width" *ngIf="clients.length > 0">
       <mat-select>
@@ -22,32 +25,66 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <div class="urls-nav" *ngIf="infos.length > 0">
-      <mat-list>
-        <mat-list-item *ngFor="let info of infos">
-          <div (click)="setInfo(info['id'])">
-            <h4 class="cursor-pointer">{{info['productname']}}
-              <small>
-                {{info['url']}} <br> s/n {{info['serialnumber']}}
-              </small>
-            </h4>
-
-          </div>
-        </mat-list-item>
-      </mat-list>
+    <div class="urls-nav" *ngIf="devices.length > 0">
+      <div *ngFor="let info of devices" (click)="setInfo(info['url'])">
+        <h4 class="cursor-pointer">{{info['title']}}
+          <small>
+            {{info['url']}} <br> s/n {{info['sn']}}
+          </small>
+        </h4>
+      </div>
     </div>
+    <input type="hidden" id="clientId" [value]="cid">
+    <div class="console" id="console"></div>
   </mat-sidenav>
   <div class="container">
-    <ng-container *ngIf="infoId !== 0">
-      <ng-container *ngFor="let info of infos">
-        <ng-container *ngIf="info['id'] === infoId">
-          <h2>{{info['productname']}}</h2>
-
-
-
-          <pre>{{info | json}}</pre>
+    <ng-container *ngIf="infoUrl !== ''">
+      <mat-list role="list" class="dateList">
+        <h4>Даты:</h4>
+        <mat-list-item *ngFor="let date of dates" role="listitem" (click)="setDate(date)"
+                       class="cursor-pointer border">{{date | date:'yyyy-MM-dd HH:mm:ss'}}</mat-list-item>
+      </mat-list>
+      <div class="device-info">&nbsp;
+        <ng-container *ngFor="let info of infos">
+          <ng-container *ngIf="infoDate && info['datetime'] === infoDate">
+            <h2>{{info['productname']}} <small>{{info['datetime'] | date:'yyyy-MM-dd HH:mm:ss'}}</small></h2>
+            <p>Статус: {{info['status']}}</p>
+            <p>Серийный номер: {{info['serialnumber']}}</p>
+            <p>Сетевой адрес: {{info['url']}}</p>
+            <ng-container *ngFor="let color of info['cartridge']">
+              <p *ngIf="color['black']">Черный {{color['black'].slice(0, -1)}}<br>
+                <mat-progress-bar mode="determinate" [value]="color['black'].slice(0, -1)"
+                                  color="warn"></mat-progress-bar>
+              </p>
+              <p *ngIf="color['yellow']">Желтый {{color['yellow'].slice(0, -1)}}<br>
+                <mat-progress-bar mode="determinate" [value]="color['yellow'].slice(0, -1)"
+                                  color="warn"></mat-progress-bar>
+              </p>
+              <p *ngIf="color['magenta']">Пурпурный {{color['magenta'].slice(0, -1)}}<br>
+                <mat-progress-bar mode="determinate" [value]="color['magenta'].slice(0, -1)"
+                                  color="warn"></mat-progress-bar>
+              </p>
+              <p *ngIf="color['blue']">Голубой {{color['blue'].slice(0, -1)}}<br>
+                <mat-progress-bar mode="determinate" [value]="color['blue'].slice(0, -1)"
+                                  color="warn"></mat-progress-bar>
+              </p>
+            </ng-container>
+            <p>Цикл механизма: {{info['printcycles']}}</p>
+            <p>Счетчик технического
+              обслуживания: {{info['kit'][0]['adfCycles']}} {{info['kit'][0]['maintenanceKitCount']}}</p>
+            <p>Цикл сканирования: {{info['scancycles']}}</p>
+            <h4>Лог:</h4>
+            <table>
+              <tbody>
+              <tr>
+                <td></td>
+                <td></td>
+              </tr>
+              </tbody>
+            </table>
+          </ng-container>
         </ng-container>
-      </ng-container>
+      </div>
     </ng-container>
   </div>
 </mat-sidenav-container>

@@ -11,5 +11,42 @@
 </head>
 <body>
   <app-root></app-root>
+
+  <script>
+      var socket = new WebSocket("ws://116.203.243.136:8080/ws");
+      document.addEventListener('DOMContentLoaded', function() {
+          socket.onopen = function () {
+              console.log("Соединение установлено.");
+              document.getElementById('console').innerHTML = "";
+              document.getElementById('console').innerHTML = "Соединение установлено.";
+          };
+
+          socket.onclose = function (event) {
+              document.getElementById('console').innerHTML = "";
+              if (event.wasClean) {
+                  console.log('Соединение закрыто чисто');
+                  document.getElementById('console').innerHTML = "Соединение закрыто чисто";
+              } else {
+                  console.log('Обрыв соединения'); // например, "убит" процесс сервера
+                  document.getElementById('console').innerHTML = "Обрыв соединения";
+              }
+              console.log('Код: ' + event.code + ' причина: ' + event.reason);
+              document.getElementById('console').innerHTML += ' Код: ' + event.code + ' причина: ' + event.reason;
+          };
+
+          socket.onmessage = function (event) {
+              console.log(JSON.parse(event.data));
+          };
+
+          socket.onerror = function (error) {
+              console.log("Ошибка " + error.message);
+          };
+
+          document.getElementById('btnInit').onclick = function () {
+              console.log('btnInit');
+              socket.send('{"server_init": "getDevices", "client": ' + document.getElementById('clientId').value + '}');
+          };
+      });
+  </script>
 </body>
 </html>

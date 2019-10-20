@@ -7,6 +7,9 @@ module.exports = function (app) {
 
     /* Get all company */
     app.get('/api/company', function (req, res) {
+        var d = new Date();
+        var n = d.toJSON();
+        console.log(n);
         db.getCustomersO().subscribe(result => {
             return res.send(result);
         });

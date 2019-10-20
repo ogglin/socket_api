@@ -19,7 +19,10 @@ export class DevicesComponent implements OnInit {
   clients: any[] = [];
   cid: number = 0;
   infos: any[] = [];
-  infoId: number = 0;
+  infoUrl: string = '';
+  infoDate: any;
+  devices: any[] = [];
+  dates: any[] = [];
 
   constructor(private api: APIService) { }
 
@@ -51,7 +54,18 @@ export class DevicesComponent implements OnInit {
   getInfo() {
     this.api.getInfo(this.cid).subscribe(result=>{
       this.infos = result['content'];
-      console.log(this.infos);
+      let url = [];
+      this.infos.forEach(info => {
+        if(url.indexOf(info['url']) < 0) {
+          url.push(info['url']);
+          this.devices.push({
+            title: info['productname'],
+            url: info['url'],
+            sn: info['serialnumber']
+          })
+        }
+      });
+      console.log(this.devices);
     });
   }
 
@@ -65,7 +79,18 @@ export class DevicesComponent implements OnInit {
     this.getInfo();
   }
 
-  setInfo(id){
-    this.infoId = id;
+  setInfo(url){
+    this.infoUrl = url;
+    this.dates = [];
+    this.infos.forEach(info => {
+      if(info['url'] === url){
+        this.dates.push(info['datetime'])
+      }
+    });
+    this.infoDate = null;
   }
+  setDate(date) {
+    this.infoDate = date;
+  }
+
 }
