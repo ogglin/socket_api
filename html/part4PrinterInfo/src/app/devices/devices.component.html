@@ -1,0 +1,53 @@
+<header class="container">
+  <div class="pt-2">
+    <mat-form-field class="full-width">
+      <input type="text" placeholder="Поиск помпании" aria-label="Number" matInput [formControl]="customerControl"
+             [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredCustomers | async" [value]="option['title']"
+                    (click)="setCustomer(option['id'])">
+          {{option['title']}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+</header>
+<mat-sidenav-container *ngIf="customers">
+  <mat-sidenav opened mode="side" style="width: 200px;" class="py-2">
+    <h3>Офис:</h3>
+    <mat-form-field class="full-width" *ngIf="clients.length > 0">
+      <mat-select>
+        <mat-option *ngFor="let option of clients" [value]="option['name']" (click)="setClient(option['id'])">
+          {{option['name']}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="urls-nav" *ngIf="infos.length > 0">
+      <mat-list>
+        <mat-list-item *ngFor="let info of infos">
+          <div (click)="setInfo(info['id'])">
+            <h4 class="cursor-pointer">{{info['productname']}}
+              <small>
+                {{info['url']}} <br> s/n {{info['serialnumber']}}
+              </small>
+            </h4>
+
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </mat-sidenav>
+  <div class="container">
+    <ng-container *ngIf="infoId !== 0">
+      <ng-container *ngFor="let info of infos">
+        <ng-container *ngIf="info['id'] === infoId">
+          <h2>{{info['productname']}}</h2>
+
+
+
+          <pre>{{info | json}}</pre>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
+</mat-sidenav-container>

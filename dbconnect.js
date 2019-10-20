@@ -48,6 +48,23 @@ function getClient(cuid, callback) {
     });
 }
 
+function getAddress(callback) {
+    qga = "SELECT * FROM rdata.address";
+    (async () => {
+        const client = await pool.connect();
+        try {
+            const result = await client.query(qga);
+            callback (result.rows);
+            return result.rows;
+        } finally {
+            client.release()
+        }
+    })().catch(e => {
+        console.log(e.stack);
+        return {error: e.detail};
+    });
+}
+
 function getInfo(clid, callback) {
     qgi = "SELECT * FROM rdata.info ";
     if (clid !== 0) {
@@ -102,10 +119,30 @@ function addClient(token, name, url, customers_id, callback) {
     });
 }
 
+function addAddress(address, callback) {
+    qaa = "INSERT INTO rdata.address (address) VALUES ('"+ address +"') RETURNING id;";
+    console.log(qaa);
+    (async () => {
+        const client = await pool.connect();
+        try {
+            const result = await client.query(qaa);
+            callback ({status: 'success', result: result.rows});
+            return {status: 'success', result: result.rows};
+        } finally {
+            client.release()
+        }
+    })().catch(e => {
+        console.log(e.stack);
+        return {error: e.detail};
+    });
+}
+
 function addInfo (init_client, company_id, address_id, url, status, cartridge, KIT,
                   productName, serialNumber, maintenanceKitCount, printCycles,
                   scanCycles, adfCycles, log, article, client_article, callback) {
-    qai = "INSERT INTO rdata.info (productName, client_id";
+    var d = new Date();
+    var n = d.toJSON();
+    qai = "INSERT INTO rdata.info (datetime, productName, client_id";
     if (company_id) {qai += ", company_id";}
     if (address_id) {qai += ", address_id";}
     if (url) {qai += ", url";}
@@ -121,7 +158,7 @@ function addInfo (init_client, company_id, address_id, url, status, cartridge, K
     if (article) {qai += ", article";}
     if (client_article) {qai += ", client_article";}
 
-    qai += ") VALUES ('" + productName + "', " + init_client;
+    qai += ") VALUES ('"+n+"', '" + productName + "', " + init_client;
 
     if (company_id) {qai += ", " + company_id;}
     if (address_id) {qai += ", " + address_id;}
@@ -139,7 +176,6 @@ function addInfo (init_client, company_id, address_id, url, status, cartridge, K
     if (client_article) {qai += ", '" + client_article + "'";}
 
     qai += ") RETURNING id";
-    console.log(qai);
     (async () => {
         const client = await pool.connect();
         try {
@@ -161,11 +197,15 @@ module.exports = {
 
     addClientO: Rx.Observable.bindCallback(addClient),
 
+    addAddressO: Rx.Observable.bindCallback(addAddress),
+
     addInfo: Rx.Observable.bindCallback(addInfo),
 
     getCustomersO: Rx.Observable.bindCallback(getCustomers),
 
     getClientsO: Rx.Observable.bindCallback(getClient),
+
+    getAddressO: Rx.Observable.bindCallback(getAddress),
 
     getInfoO: Rx.Observable.bindCallback(getInfo)
 };
