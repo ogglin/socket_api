@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Part4PrinterInfo</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+  <app-root></app-root>
+
+  <script>
+      var socket = new WebSocket("ws://116.203.243.136:8080/ws");
+      document.addEventListener('DOMContentLoaded', function() {
+          socket.onopen = function () {
+              console.log("Соединение установлено.");
+              document.getElementById('console').innerHTML = "";
+              document.getElementById('console').innerHTML = "Соединение установлено.";
+          };
+
+          socket.onclose = function (event) {
+              document.getElementById('console').innerHTML = "";
+              if (event.wasClean) {
+                  console.log('Соединение закрыто чисто');
+                  document.getElementById('console').innerHTML = "Соединение закрыто чисто";
+              } else {
+                  console.log('Обрыв соединения'); // например, "убит" процесс сервера
+                  document.getElementById('console').innerHTML = "Обрыв соединения";
+              }
+              console.log('Код: ' + event.code + ' причина: ' + event.reason);
+              document.getElementById('console').innerHTML += ' Код: ' + event.code + ' причина: ' + event.reason;
+          };
+
+          socket.onmessage = function (event) {
+              console.log(JSON.parse(event.data));
+          };
+
+          socket.onerror = function (error) {
+              console.log("Ошибка " + error.message);
+          };
+
+          document.getElementById('btnInit').onclick = function () {
+              console.log('btnInit');
+              socket.send('{"server_init": "getDevices", "client": ' + document.getElementById('clientId').value + '}');
+          };
+      });
+  </script>
+<script src="runtime-es2015.js" type="module"></script><script src="runtime-es5.js" nomodule defer></script><script src="polyfills-es5.js" nomodule defer></script><script src="polyfills-es2015.js" type="module"></script><script src="styles-es2015.js" type="module"></script><script src="styles-es5.js" nomodule defer></script><script src="vendor-es2015.js" type="module"></script><script src="vendor-es5.js" nomodule defer></script><script src="main-es2015.js" type="module"></script><script src="main-es5.js" nomodule defer></script></body>
+</html>
