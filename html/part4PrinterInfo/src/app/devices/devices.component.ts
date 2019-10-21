@@ -24,6 +24,7 @@ export class DevicesComponent implements OnInit {
   devices: any[] = [];
   device: any;
   dates: any[] = [];
+  dataLI: number = 0;
 
   constructor(private api: APIService) { }
 
@@ -78,14 +79,21 @@ export class DevicesComponent implements OnInit {
   setClient(id) {
     this.cid = id;
     this.getInfo();
+    this.devices = [];
   }
 
   setInfo(url){
     this.infoUrl = url;
     this.dates = [];
+    this.device = null;
     this.infos.forEach(info => {
       if(info['url'] === url){
-        this.dates.push(info['datetime'])
+        this.dates.push(info['datetime']);
+        if(this.device) {
+
+        } else {
+          this.device = info;
+        }
       }
     });
     this.infoDate = null;
@@ -98,5 +106,7 @@ export class DevicesComponent implements OnInit {
       }
     });
   }
-
+  toggleActive(i) {
+    this.dataLI = i;
+  }
 }

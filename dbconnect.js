@@ -66,10 +66,15 @@ function getAddress(callback) {
 }
 
 function getInfo(clid, callback) {
-    qgi = "SELECT * FROM rdata.info ";
+    qgi = "SELECT rdata.info.\"id\" as info_id, rdata.devices.\"id\" as device_id, rdata.devices.productname, rdata.devices.url, " +
+        "rdata.devices.article, rdata.devices.client_article, rdata.info.scancycles, rdata.info.printcycles, " +
+        "rdata.info.status, rdata.info.kit, rdata.info.cartridge, rdata.info.log, rdata.info.serialnumber, " +
+        "rdata.info.maintenancekitcount, rdata.info.adfcycles, rdata.info.datetime FROM rdata.info " +
+        "INNER JOIN rdata.devices ON rdata.info.device_id = rdata.devices.\"id\"";
     if (clid !== 0) {
         qgi += "WHERE rdata.info.client_id = " + clid;
     }
+    qgi += " ORDER BY datetime DESC";
     (async () => {
         const client = await pool.connect();
         try {

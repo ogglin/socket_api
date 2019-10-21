@@ -1,14 +1,27 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/theming';
+@include mat-core();
+
+// Define an alternate dark theme.
+$dark-primary: mat-palette($mat-orange);
+$dark-accent:  mat-palette($mat-amber, A200, A100, A400);
+$dark-warn:    mat-palette($mat-brown);
+$dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+@include angular-material-theme($dark-theme);
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 header {
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.7);
   height: 90px;
+  color: aliceblue;
 }
 mat-sidenav-container {
   height: calc(100vh - 90px);
+}
+.full-width {
+  width: 100%;
 }
 .container {
   padding: 0 15px;
@@ -54,10 +67,23 @@ mat-sidenav-container {
   margin-bottom: 3px;
 }
 .device-info {
-  padding-left: 185px;
+  padding-left: 180px;
+  max-width: 400px;
 }
 .socket-init {
   position: absolute;
   top: 30px;
   right: 20px;
+}
+.sidenav {
+  width: 300px;
+}
+.text-orange {
+  color: #ffcc00;
+}
+mat-list-item.active {
+  background-color: #ff980020;
+}
+mat-list-item:hover {
+  background-color: #ff980020;
 }
