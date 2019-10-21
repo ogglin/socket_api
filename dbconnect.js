@@ -149,11 +149,11 @@ function addInfo (init_client, company_id, address_id, url, status, cartridge, K
     if (status) {qai += ", status";}
     if (cartridge) {qai += ", cartridge";}
     if (KIT) {qai += ", KIT";}
-    if (serialNumber) {qai += ", serialNumber";}
-    if (maintenanceKitCount) {qai += ", maintenanceKitCount";}
-    if (printCycles) {qai += ", printCycles";}
-    if (scanCycles) {qai += ", scanCycles";}
-    if (adfCycles) {qai += ", adfCycles";}
+    if (serialNumber) {qai += ", serialnumber";}
+    if (maintenanceKitCount) {qai += ", maintenancekitcount";}
+    if (printCycles) {qai += ", printcycles";}
+    if (scanCycles) {qai += ", scancycles";}
+    if (adfCycles) {qai += ", adfcycles";}
     if (log) {qai += ", log";}
     if (article) {qai += ", article";}
     if (client_article) {qai += ", client_article";}
