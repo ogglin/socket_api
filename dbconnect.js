@@ -5,7 +5,7 @@ const dbConfig = {
     host: 'localhost',
     database: 'remote_info',
     password: 'q1w2e3r4t5',
-    port: 5433,
+    port: 5432,
 };
 
 const {Pool} = require('pg');
