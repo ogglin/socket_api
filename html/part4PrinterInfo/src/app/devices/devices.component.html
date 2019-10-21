@@ -45,34 +45,37 @@
                        class="cursor-pointer border">{{date | date:'yyyy-MM-dd HH:mm:ss'}}</mat-list-item>
       </mat-list>
       <div class="device-info">&nbsp;
-        <ng-container *ngFor="let info of infos">
-          <ng-container *ngIf="infoDate && info['datetime'] === infoDate">
-            <h2>{{info['productname']}} <small>{{info['datetime'] | date:'yyyy-MM-dd HH:mm:ss'}}</small></h2>
-            <p>Статус: {{info['status']}}</p>
-            <p>Серийный номер: {{info['serialnumber']}}</p>
-            <p>Сетевой адрес: {{info['url']}}</p>
-            <ng-container *ngFor="let color of info['cartridge']">
-              <p *ngIf="color['black']">Черный {{color['black'].slice(0, -1)}}<br>
-                <mat-progress-bar mode="determinate" [value]="color['black'].slice(0, -1)"
+          <ng-container *ngIf="device">
+            <h2>{{device['productname']}} <small>{{device['datetime'] | date:'yyyy-MM-dd HH:mm:ss'}}</small></h2>
+            <p>Статус: {{device['status']}}</p>
+            <p>Серийный номер: {{device['serialnumber']}}</p>
+            <p>Сетевой адрес: {{device['url']}}</p>
+            <ng-container *ngFor="let color of device['cartridge']">
+              <p *ngIf="color['black']">Черный {{color['black'].replace('%', '')}}<br>
+                <mat-progress-bar mode="determinate" [value]="color['black'].replace('%', '')"
                                   color="warn"></mat-progress-bar>
               </p>
-              <p *ngIf="color['yellow']">Желтый {{color['yellow'].slice(0, -1)}}<br>
-                <mat-progress-bar mode="determinate" [value]="color['yellow'].slice(0, -1)"
+              <p *ngIf="color['yellow']">Желтый {{color['yellow'].replace('%', '')}}<br>
+                <mat-progress-bar mode="determinate" [value]="color['yellow'].replace('%', '')"
                                   color="warn"></mat-progress-bar>
               </p>
-              <p *ngIf="color['magenta']">Пурпурный {{color['magenta'].slice(0, -1)}}<br>
-                <mat-progress-bar mode="determinate" [value]="color['magenta'].slice(0, -1)"
+              <p *ngIf="color['magenta']">Пурпурный {{color['magenta'].replace('%', '')}}<br>
+                <mat-progress-bar mode="determinate" [value]="color['magenta'].replace('%', '')"
                                   color="warn"></mat-progress-bar>
               </p>
-              <p *ngIf="color['blue']">Голубой {{color['blue'].slice(0, -1)}}<br>
-                <mat-progress-bar mode="determinate" [value]="color['blue'].slice(0, -1)"
+              <p *ngIf="color['blue']">Голубой {{color['blue'].replace('%', '')}}<br>
+                <mat-progress-bar mode="determinate" [value]="color['blue'].replace('%', '')"
                                   color="warn"></mat-progress-bar>
               </p>
             </ng-container>
-            <p>Цикл механизма: {{info['printcycles']}}</p>
-            <p>Счетчик технического
-              обслуживания: {{info['kit'][0]['adfCycles']}} {{info['kit'][0]['maintenanceKitCount']}}</p>
-            <p>Цикл сканирования: {{info['scancycles']}}</p>
+            <p>Цикл механизма: {{device['printcycles']}}</p>
+            <p>Счетчик технического обслуживания:
+              <ng-container *ngIf="device['kit']">
+                <ng-container *ngIf="device['kit'][0]['adfcycles']">{{device['kit'][0]['adfcycles']}}</ng-container>
+                <ng-container *ngIf="device['kit'][0]['maintenanceKitCount']">{{device['kit'][0]['maintenanceKitCount']}}</ng-container>
+              </ng-container>
+            </p>
+            <p>Цикл сканирования: {{device['scancycles']}}</p>
             <h4>Лог:</h4>
             <table>
               <tbody>
@@ -83,7 +86,6 @@
               </tbody>
             </table>
           </ng-container>
-        </ng-container>
       </div>
     </ng-container>
   </div>

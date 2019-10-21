@@ -22,6 +22,7 @@ export class DevicesComponent implements OnInit {
   infoUrl: string = '';
   infoDate: any;
   devices: any[] = [];
+  device: any;
   dates: any[] = [];
 
   constructor(private api: APIService) { }
@@ -91,6 +92,11 @@ export class DevicesComponent implements OnInit {
   }
   setDate(date) {
     this.infoDate = date;
+    this.infos.forEach(info => {
+      if(info['datetime'] === date){
+        this.device = info;
+      }
+    });
   }
 
 }
