@@ -43,4 +43,18 @@ module.exports = function (app) {
             res.send('Error: need client id - client');
         }
     });
+
+    /* Get Errors */
+    app.get('/api/errors', function (req, res) {
+        db.getErrorsO().subscribe(result=>{
+            res.send(result);
+        });
+    });
+
+    /* Get Devices */
+    app.get('/api/devices', function (req, res) {
+        db.getDevicesO(req.query['cuid'], req.query['cid']).subscribe(result=>{
+            res.send(result);
+        });
+    });
 };

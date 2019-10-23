@@ -43,8 +43,8 @@ wss.on('connection', function connection(ws) {
             console.log(data, isJson);
             if (isJson) {
                 var obj = JSON.parse(data);
-                if (obj['init_client']) {
-                    db.addInfo(
+                if (obj['init_client'] && obj['new'] === 0) {
+                    db.addInfoO(
                         obj['init_client'],
                         obj['company_id'],
                         obj['address_id'],
@@ -65,8 +65,39 @@ wss.on('connection', function connection(ws) {
                         ws.send(JSON.stringify(res));
                     });
                 }
-                if (obj['test']) {
-                    ws.send('{"status": "server is ok"}');
+                if (obj['init_client'] && obj['new'] === 1) {
+                    db.addDeviceO(
+                        obj['init_client'],
+                        obj['company_id'],
+                        obj['address_id'],
+                        obj['url'],
+                        obj['status'],
+                        obj['cartridge'],
+                        obj['KIT'],
+                        obj['productName'],
+                        obj['serialNumber'],
+                        obj['maintenanceKitCount'],
+                        obj['printCycles'],
+                        obj['scanCycles'],
+                        obj['adfCycles'],
+                        obj['log'],
+                        obj['article'],
+                        obj['client_article'],
+                        obj['company_id']
+                    ).subscribe(res => {
+                        ws.send(JSON.stringify(res));
+                    });
+                }
+                //{"init_client_error": 1, "device_id": 1, "error": "Нет связи с устройством, по адресу: https://192.168.1.233"}
+                if (obj['init_client_error']) {
+                    ws.send('{"status": '+ obj['error'] +'}');
+                    db.addErrorO(
+                        obj['init_client_error'],
+                        obj['url'],
+                        obj['error']
+                    ).subscribe(res => {
+                        ws.send(JSON.stringify(res));
+                    });
                 }
                 if (obj['server_init'] === 'getDevices' && !obj['status']) {
                     for (var key in clients) {

@@ -30,8 +30,17 @@ export class APIService {
     return this.http.get<any>(this.url + 'client' + param, this.httpOptions);
   }
 
+  getDevices(cuid, cid): Observable<any[]> {
+    const param = "?cuid="+cuid+"&cid="+cid;
+    return this.http.get<any>(this.url + 'devices' + param, this.httpOptions);
+  }
+
   getInfo(id): Observable<any[]> {
     const param = '?client='+id;
     return this.http.get<any>(this.url+'info'+param, this.httpOptions);
+  }
+
+  getErrors(): Observable<any[]> {
+    return this.http.get<any>(this.url + 'errors', this.httpOptions);
   }
 }

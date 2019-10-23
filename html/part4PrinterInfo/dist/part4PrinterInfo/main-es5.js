@@ -39,7 +39,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<header class=\"container\">\r\n  <div class=\"pt-2\">\r\n    <mat-form-field class=\"full-width\">\r\n      <input type=\"text\" placeholder=\"Поиск помпании\" aria-label=\"Number\" matInput [formControl]=\"customerControl\"\r\n             [matAutocomplete]=\"auto\">\r\n      <mat-autocomplete #auto=\"matAutocomplete\">\r\n        <mat-option *ngFor=\"let option of filteredCustomers | async\" [value]=\"option['title']\"\r\n                    (click)=\"setCustomer(option['id'])\">\r\n          {{option['title']}}\r\n        </mat-option>\r\n      </mat-autocomplete>\r\n    </mat-form-field>\r\n  </div>\r\n  <div class=\"socket-init\">\r\n    <button mat-raised-button id=\"btnInit\" [disabled]=\"cid === 0\">Получить данные с устройств</button>\r\n  </div>\r\n</header>\r\n<mat-sidenav-container *ngIf=\"customers\">\r\n  <mat-sidenav opened mode=\"side\" style=\"width: 200px;\" class=\"px-2\">\r\n    <h3>Офис:</h3>\r\n    <mat-form-field class=\"full-width\" *ngIf=\"clients.length > 0\">\r\n      <mat-select>\r\n        <mat-option *ngFor=\"let option of clients\" [value]=\"option['name']\" (click)=\"setClient(option['id'])\">\r\n          {{option['name']}}\r\n        </mat-option>\r\n      </mat-select>\r\n    </mat-form-field>\r\n    <div class=\"urls-nav\" *ngIf=\"devices.length > 0\">\r\n      <div *ngFor=\"let info of devices\" (click)=\"setInfo(info['url'])\">\r\n        <h4 class=\"cursor-pointer\">{{info['title']}}\r\n          <small>\r\n            {{info['url']}} <br> s/n {{info['sn']}}\r\n          </small>\r\n        </h4>\r\n      </div>\r\n    </div>\r\n    <input type=\"hidden\" id=\"clientId\" [value]=\"cid\">\r\n    <div class=\"console\" id=\"console\"></div>\r\n  </mat-sidenav>\r\n  <div class=\"container\">\r\n    <ng-container *ngIf=\"infoUrl !== ''\">\r\n      <mat-list role=\"list\" class=\"dateList\">\r\n        <h4>Даты:</h4>\r\n        <mat-list-item *ngFor=\"let date of dates\" role=\"listitem\" (click)=\"setDate(date)\"\r\n                       class=\"cursor-pointer border\">{{date | date:'yyyy-MM-dd HH:mm:ss'}}</mat-list-item>\r\n      </mat-list>\r\n      <div class=\"device-info\">&nbsp;\r\n          <ng-container *ngIf=\"device\">\r\n            <h2>{{device['productname']}} <small>{{device['datetime'] | date:'yyyy-MM-dd HH:mm:ss'}}</small></h2>\r\n            <p>Статус: {{device['status']}}</p>\r\n            <p>Серийный номер: {{device['serialnumber']}}</p>\r\n            <p>Сетевой адрес: {{device['url']}}</p>\r\n            <ng-container *ngFor=\"let color of device['cartridge']\">\r\n              <p *ngIf=\"color['black']\">Черный {{color['black'].replace('%', '')}}<br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['black'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['yellow']\">Желтый {{color['yellow'].replace('%', '')}}<br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['yellow'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['magenta']\">Пурпурный {{color['magenta'].replace('%', '')}}<br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['magenta'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['blue']\">Голубой {{color['blue'].replace('%', '')}}<br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['blue'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n            </ng-container>\r\n            <p>Цикл механизма: {{device['printcycles']}}</p>\r\n            <p>Счетчик технического обслуживания:\r\n              <ng-container *ngIf=\"device['kit']\">\r\n                <ng-container *ngIf=\"device['kit'][0]['adfcycles']\">{{device['kit'][0]['adfcycles']}}</ng-container>\r\n                <ng-container *ngIf=\"device['kit'][0]['maintenanceKitCount']\">{{device['kit'][0]['maintenanceKitCount']}}</ng-container>\r\n              </ng-container>\r\n            </p>\r\n            <p>Цикл сканирования: {{device['scancycles']}}</p>\r\n            <h4>Лог:</h4>\r\n            <table>\r\n              <tbody>\r\n              <tr>\r\n                <td></td>\r\n                <td></td>\r\n              </tr>\r\n              </tbody>\r\n            </table>\r\n          </ng-container>\r\n      </div>\r\n    </ng-container>\r\n  </div>\r\n</mat-sidenav-container>\r\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"\">\r\n  <header class=\"container\">\r\n    <div class=\"pt-2\">\r\n      <mat-form-field class=\"\" style=\"width: 250px;\">\r\n        <input type=\"text\" placeholder=\"Поиск помпании\" aria-label=\"Number\" matInput [formControl]=\"customerControl\"\r\n               [matAutocomplete]=\"auto\">\r\n        <mat-autocomplete #auto=\"matAutocomplete\">\r\n          <mat-option *ngFor=\"let option of filteredCustomers | async\" [value]=\"option['title']\"\r\n                      (click)=\"setCustomer(option['id'])\">\r\n            {{option['title']}}\r\n          </mat-option>\r\n        </mat-autocomplete>\r\n      </mat-form-field>\r\n    </div>\r\n    <div class=\"socket-init\">\r\n      <button mat-raised-button id=\"btnInit\" [disabled]=\"cid === 0\">Получить данные с устройств</button>\r\n      <!--button mat-raised-button id=\"addDevice\">Добавить</button-->\r\n    </div>\r\n  </header>\r\n  <mat-sidenav-container *ngIf=\"customers\">\r\n    <mat-sidenav opened mode=\"side\" class=\"px-2 sidenav\">\r\n      <h3>Офис:</h3>\r\n      <mat-form-field class=\"full-width\" *ngIf=\"clients.length > 0\">\r\n        <mat-select>\r\n          <mat-option *ngFor=\"let option of clients\" [value]=\"option['name']\" (click)=\"setClient(option['id'])\">\r\n            {{option['name']}}\r\n          </mat-option>\r\n        </mat-select>\r\n      </mat-form-field>\r\n      <div class=\"urls-nav\" *ngIf=\"devices.length > 0\">\r\n        <div *ngFor=\"let item of devices, let i = index\" (click)=\"setInfo(item['id']); toggleActive(i, 'dev')\" [ngClass]=\"i===devLI ? 'active': ''\">\r\n          <h4 class=\"cursor-pointer\">{{item['productname']}} <br>\r\n            <small class=\"text-orange\">\r\n              {{item['url']}} <br> {{item['sn']}}\r\n            </small>\r\n          </h4>\r\n        </div>\r\n      </div>\r\n      <input type=\"hidden\" id=\"clientId\" [value]=\"cid\">\r\n      <div class=\"console\" id=\"console\"></div>\r\n    </mat-sidenav>\r\n    <div class=\"container\">\r\n      <ng-container *ngIf=\"dates.length\">\r\n        <mat-list role=\"list\" class=\"dateList\">\r\n          <h4>Даты:</h4>\r\n          <mat-list-item *ngFor=\"let date of dates, let i = index\" role=\"listitem\" (click)=\"setDate(date); toggleActive(i, 'data')\"\r\n                         [ngClass]=\"i===dataLI ? 'cursor-pointer border active': 'cursor-pointer border'\">\r\n            {{date | date:'yyyy-MM-dd HH:mm:ss'}}\r\n          </mat-list-item>\r\n        </mat-list>\r\n        <div class=\"device-info\">&nbsp;\r\n          <ng-container *ngIf=\"device\">\r\n            <h2>{{device['productname']}}</h2>\r\n            <p>Статус: {{device['status']}}</p>\r\n            <p>Серийный номер: {{device['serialnumber']}}</p>\r\n            <p>Сетевой адрес: {{device['url']}}</p>\r\n            <ng-container *ngFor=\"let color of device['cartridge']\">\r\n              <p *ngIf=\"color['black']\">Черный {{color['black'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['black'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['yellow']\">Желтый {{color['yellow'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['yellow'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['magenta']\">Пурпурный {{color['magenta'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['magenta'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['blue']\">Голубой {{color['blue'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['blue'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n            </ng-container>\r\n            <p>Цикл механизма: {{device['printcycles']}}</p>\r\n            <p>Счетчик технического обслуживания:\r\n              <ng-container *ngIf=\"device['kit']\">\r\n                <ng-container *ngIf=\"device['kit'][0]['adfcycles']\">{{device['kit'][0]['adfcycles']}}</ng-container>\r\n                <ng-container\r\n                  *ngIf=\"device['kit'][0]['maintenanceKitCount']\">{{device['kit'][0]['maintenanceKitCount']}}</ng-container>\r\n              </ng-container>\r\n            </p>\r\n            <p>Цикл сканирования: {{device['scancycles']}}</p>\r\n            <h4>Лог:</h4>\r\n            <table>\r\n              <tbody>\r\n              <tr>\r\n                <td></td>\r\n                <td></td>\r\n              </tr>\r\n              </tbody>\r\n            </table>\r\n          </ng-container>\r\n        </div>\r\n      </ng-container>\r\n    </div>\r\n  </mat-sidenav-container>\r\n</div>\r\n");
             /***/ 
         }),
         /***/ "./node_modules/tslib/tslib.es6.js": 
@@ -485,6 +485,8 @@
                     this.infoUrl = '';
                     this.devices = [];
                     this.dates = [];
+                    this.dataLI = 0;
+                    this.devLI = 0;
                 }
                 DevicesComponent.prototype.ngOnInit = function () {
                     var _this = this;
@@ -505,25 +507,25 @@
                     var _this = this;
                     this.api.getClient(this.cuid).subscribe(function (result) {
                         _this.clients = result;
-                        console.log(_this.clients);
+                    });
+                };
+                DevicesComponent.prototype.getDevices = function () {
+                    var _this = this;
+                    this.devices = [];
+                    this.api.getDevices(this.cuid, this.cid).subscribe(function (result) {
+                        _this.devices = result;
+                        console.log(_this.devices);
                     });
                 };
                 DevicesComponent.prototype.getInfo = function () {
                     var _this = this;
-                    this.api.getInfo(this.cid).subscribe(function (result) {
+                    this.dates = [];
+                    this.api.getInfo(this.devId).subscribe(function (result) {
                         _this.infos = result['content'];
-                        var url = [];
-                        _this.infos.forEach(function (info) {
-                            if (url.indexOf(info['url']) < 0) {
-                                url.push(info['url']);
-                                _this.devices.push({
-                                    title: info['productname'],
-                                    url: info['url'],
-                                    sn: info['serialnumber']
-                                });
-                            }
+                        console.log(_this.infos);
+                        _this.infos.forEach(function (item) {
+                            _this.dates.push(item['datetime']);
                         });
-                        console.log(_this.devices);
                     });
                 };
                 DevicesComponent.prototype.setCustomer = function (id) {
@@ -532,18 +534,11 @@
                 };
                 DevicesComponent.prototype.setClient = function (id) {
                     this.cid = id;
-                    this.getInfo();
+                    this.getDevices();
                 };
-                DevicesComponent.prototype.setInfo = function (url) {
-                    var _this = this;
-                    this.infoUrl = url;
-                    this.dates = [];
-                    this.infos.forEach(function (info) {
-                        if (info['url'] === url) {
-                            _this.dates.push(info['datetime']);
-                        }
-                    });
-                    this.infoDate = null;
+                DevicesComponent.prototype.setInfo = function (id) {
+                    this.devId = id;
+                    this.getInfo();
                 };
                 DevicesComponent.prototype.setDate = function (date) {
                     var _this = this;
@@ -553,6 +548,16 @@
                             _this.device = info;
                         }
                     });
+                };
+                DevicesComponent.prototype.toggleActive = function (i, t) {
+                    switch (t) {
+                        case 'data':
+                            this.dataLI = i;
+                            break;
+                        case 'dev':
+                            this.devLI = i;
+                            break;
+                    }
                 };
                 return DevicesComponent;
             }());
@@ -631,9 +636,16 @@
                     var param = '?cuid=' + cuid;
                     return this.http.get(this.url + 'client' + param, this.httpOptions);
                 };
+                APIService.prototype.getDevices = function (cuid, cid) {
+                    var param = "?cuid=" + cuid + "&cid=" + cid;
+                    return this.http.get(this.url + 'devices' + param, this.httpOptions);
+                };
                 APIService.prototype.getInfo = function (id) {
                     var param = '?client=' + id;
                     return this.http.get(this.url + 'info' + param, this.httpOptions);
+                };
+                APIService.prototype.getErrors = function () {
+                    return this.http.get(this.url + 'errors', this.httpOptions);
                 };
                 return APIService;
             }());
@@ -811,7 +823,8 @@
             // The list of file replacements can be found in `angular.json`.
             var environment = {
                 production: false,
-                apiURL: 'http://116.203.243.136:5000/api/'
+                /*apiURL: 'http://116.203.243.136:5000/api/',*/
+                apiURL: 'http://localhost:5000/api/'
             };
             /*
              * For easier debugging in development mode, you can import the following file

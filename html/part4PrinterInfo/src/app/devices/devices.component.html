@@ -14,6 +14,7 @@
     </div>
     <div class="socket-init">
       <button mat-raised-button id="btnInit" [disabled]="cid === 0">Получить данные с устройств</button>
+      <!--button mat-raised-button id="addDevice">Добавить</button-->
     </div>
   </header>
   <mat-sidenav-container *ngIf="customers">
@@ -27,10 +28,10 @@
         </mat-select>
       </mat-form-field>
       <div class="urls-nav" *ngIf="devices.length > 0">
-        <div *ngFor="let info of devices" (click)="setInfo(info['url'])">
-          <h4 class="cursor-pointer">{{info['title']}}
+        <div *ngFor="let item of devices, let i = index" (click)="setInfo(item['id']); toggleActive(i, 'dev')" [ngClass]="i===devLI ? 'active': ''">
+          <h4 class="cursor-pointer">{{item['productname']}} <br>
             <small class="text-orange">
-              {{info['url']}} <br> s/n {{info['sn']}}
+              {{item['url']}} <br> {{item['sn']}}
             </small>
           </h4>
         </div>
@@ -39,17 +40,17 @@
       <div class="console" id="console"></div>
     </mat-sidenav>
     <div class="container">
-      <ng-container *ngIf="infoUrl !== ''">
+      <ng-container *ngIf="dates.length">
         <mat-list role="list" class="dateList">
           <h4>Даты:</h4>
-          <mat-list-item *ngFor="let date of dates, let i = index" role="listitem" (click)="setDate(date); toggleActive(i)"
+          <mat-list-item *ngFor="let date of dates, let i = index" role="listitem" (click)="setDate(date); toggleActive(i, 'data')"
                          [ngClass]="i===dataLI ? 'cursor-pointer border active': 'cursor-pointer border'">
             {{date | date:'yyyy-MM-dd HH:mm:ss'}}
           </mat-list-item>
         </mat-list>
         <div class="device-info">&nbsp;
           <ng-container *ngIf="device">
-            <h2>{{device['productname']}} <small>{{device['datetime'] | date:'yyyy-MM-dd HH:mm:ss'}}</small></h2>
+            <h2>{{device['productname']}}</h2>
             <p>Статус: {{device['status']}}</p>
             <p>Серийный номер: {{device['serialnumber']}}</p>
             <p>Сетевой адрес: {{device['url']}}</p>

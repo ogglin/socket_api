@@ -13,7 +13,7 @@
   <app-root></app-root>
 
   <script>
-      var socket = new WebSocket("ws://116.203.243.136:8080/ws");
+      var socket = new WebSocket("ws://localhost:8080/ws");
       document.addEventListener('DOMContentLoaded', function() {
           socket.onopen = function () {
               console.log("Соединение установлено.");
@@ -31,11 +31,13 @@
                   document.getElementById('console').innerHTML = "Обрыв соединения";
               }
               console.log('Код: ' + event.code + ' причина: ' + event.reason);
-              document.getElementById('console').innerHTML += ' Код: ' + event.code + ' причина: ' + event.reason;
+              document.getElementById('console').innerHTML += ' Код: ' + event.code + ' причина: ' + event.reason + ' Решение: Перезагрузите страницу!';
           };
 
           socket.onmessage = function (event) {
               console.log(JSON.parse(event.data));
+              document.getElementById('console').innerHTML = "";
+              document.getElementById('console').innerHTML = event.data;
           };
 
           socket.onerror = function (error) {
@@ -46,6 +48,10 @@
               console.log('btnInit');
               socket.send('{"server_init": "getDevices", "client": ' + document.getElementById('clientId').value + '}');
           };
+          /*document.getElementById('addDevice').onclick = function () {
+              console.log('addDevice');
+              socket.send('{"new":0,"init_client":2,"cartridge":[{"black":"99"}],"serialNumber":"VCG7428977","scanCycles":29969,"url":"http://192.168.1.205","article":"0","client_article":"0","printCycles":87255,"productName":"Kyocera ECOSYS M2540dn","status":"Режим ожидания....", "company_id": 1}');
+          };*/
       });
   </script>
 </body>

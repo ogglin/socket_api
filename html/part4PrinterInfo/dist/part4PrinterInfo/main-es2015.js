@@ -45,7 +45,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<header class=\"container\">\r\n  <div class=\"pt-2\">\r\n    <mat-form-field class=\"full-width\">\r\n      <input type=\"text\" placeholder=\"Поиск помпании\" aria-label=\"Number\" matInput [formControl]=\"customerControl\"\r\n             [matAutocomplete]=\"auto\">\r\n      <mat-autocomplete #auto=\"matAutocomplete\">\r\n        <mat-option *ngFor=\"let option of filteredCustomers | async\" [value]=\"option['title']\"\r\n                    (click)=\"setCustomer(option['id'])\">\r\n          {{option['title']}}\r\n        </mat-option>\r\n      </mat-autocomplete>\r\n    </mat-form-field>\r\n  </div>\r\n  <div class=\"socket-init\">\r\n    <button mat-raised-button id=\"btnInit\" [disabled]=\"cid === 0\">Получить данные с устройств</button>\r\n  </div>\r\n</header>\r\n<mat-sidenav-container *ngIf=\"customers\">\r\n  <mat-sidenav opened mode=\"side\" style=\"width: 200px;\" class=\"px-2\">\r\n    <h3>Офис:</h3>\r\n    <mat-form-field class=\"full-width\" *ngIf=\"clients.length > 0\">\r\n      <mat-select>\r\n        <mat-option *ngFor=\"let option of clients\" [value]=\"option['name']\" (click)=\"setClient(option['id'])\">\r\n          {{option['name']}}\r\n        </mat-option>\r\n      </mat-select>\r\n    </mat-form-field>\r\n    <div class=\"urls-nav\" *ngIf=\"devices.length > 0\">\r\n      <div *ngFor=\"let info of devices\" (click)=\"setInfo(info['url'])\">\r\n        <h4 class=\"cursor-pointer\">{{info['title']}}\r\n          <small>\r\n            {{info['url']}} <br> s/n {{info['sn']}}\r\n          </small>\r\n        </h4>\r\n      </div>\r\n    </div>\r\n    <input type=\"hidden\" id=\"clientId\" [value]=\"cid\">\r\n    <div class=\"console\" id=\"console\"></div>\r\n  </mat-sidenav>\r\n  <div class=\"container\">\r\n    <ng-container *ngIf=\"infoUrl !== ''\">\r\n      <mat-list role=\"list\" class=\"dateList\">\r\n        <h4>Даты:</h4>\r\n        <mat-list-item *ngFor=\"let date of dates\" role=\"listitem\" (click)=\"setDate(date)\"\r\n                       class=\"cursor-pointer border\">{{date | date:'yyyy-MM-dd HH:mm:ss'}}</mat-list-item>\r\n      </mat-list>\r\n      <div class=\"device-info\">&nbsp;\r\n          <ng-container *ngIf=\"device\">\r\n            <h2>{{device['productname']}} <small>{{device['datetime'] | date:'yyyy-MM-dd HH:mm:ss'}}</small></h2>\r\n            <p>Статус: {{device['status']}}</p>\r\n            <p>Серийный номер: {{device['serialnumber']}}</p>\r\n            <p>Сетевой адрес: {{device['url']}}</p>\r\n            <ng-container *ngFor=\"let color of device['cartridge']\">\r\n              <p *ngIf=\"color['black']\">Черный {{color['black'].replace('%', '')}}<br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['black'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['yellow']\">Желтый {{color['yellow'].replace('%', '')}}<br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['yellow'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['magenta']\">Пурпурный {{color['magenta'].replace('%', '')}}<br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['magenta'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['blue']\">Голубой {{color['blue'].replace('%', '')}}<br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['blue'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n            </ng-container>\r\n            <p>Цикл механизма: {{device['printcycles']}}</p>\r\n            <p>Счетчик технического обслуживания:\r\n              <ng-container *ngIf=\"device['kit']\">\r\n                <ng-container *ngIf=\"device['kit'][0]['adfcycles']\">{{device['kit'][0]['adfcycles']}}</ng-container>\r\n                <ng-container *ngIf=\"device['kit'][0]['maintenanceKitCount']\">{{device['kit'][0]['maintenanceKitCount']}}</ng-container>\r\n              </ng-container>\r\n            </p>\r\n            <p>Цикл сканирования: {{device['scancycles']}}</p>\r\n            <h4>Лог:</h4>\r\n            <table>\r\n              <tbody>\r\n              <tr>\r\n                <td></td>\r\n                <td></td>\r\n              </tr>\r\n              </tbody>\r\n            </table>\r\n          </ng-container>\r\n      </div>\r\n    </ng-container>\r\n  </div>\r\n</mat-sidenav-container>\r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"\">\r\n  <header class=\"container\">\r\n    <div class=\"pt-2\">\r\n      <mat-form-field class=\"\" style=\"width: 250px;\">\r\n        <input type=\"text\" placeholder=\"Поиск помпании\" aria-label=\"Number\" matInput [formControl]=\"customerControl\"\r\n               [matAutocomplete]=\"auto\">\r\n        <mat-autocomplete #auto=\"matAutocomplete\">\r\n          <mat-option *ngFor=\"let option of filteredCustomers | async\" [value]=\"option['title']\"\r\n                      (click)=\"setCustomer(option['id'])\">\r\n            {{option['title']}}\r\n          </mat-option>\r\n        </mat-autocomplete>\r\n      </mat-form-field>\r\n    </div>\r\n    <div class=\"socket-init\">\r\n      <button mat-raised-button id=\"btnInit\" [disabled]=\"cid === 0\">Получить данные с устройств</button>\r\n      <!--button mat-raised-button id=\"addDevice\">Добавить</button-->\r\n    </div>\r\n  </header>\r\n  <mat-sidenav-container *ngIf=\"customers\">\r\n    <mat-sidenav opened mode=\"side\" class=\"px-2 sidenav\">\r\n      <h3>Офис:</h3>\r\n      <mat-form-field class=\"full-width\" *ngIf=\"clients.length > 0\">\r\n        <mat-select>\r\n          <mat-option *ngFor=\"let option of clients\" [value]=\"option['name']\" (click)=\"setClient(option['id'])\">\r\n            {{option['name']}}\r\n          </mat-option>\r\n        </mat-select>\r\n      </mat-form-field>\r\n      <div class=\"urls-nav\" *ngIf=\"devices.length > 0\">\r\n        <div *ngFor=\"let item of devices, let i = index\" (click)=\"setInfo(item['id']); toggleActive(i, 'dev')\" [ngClass]=\"i===devLI ? 'active': ''\">\r\n          <h4 class=\"cursor-pointer\">{{item['productname']}} <br>\r\n            <small class=\"text-orange\">\r\n              {{item['url']}} <br> {{item['sn']}}\r\n            </small>\r\n          </h4>\r\n        </div>\r\n      </div>\r\n      <input type=\"hidden\" id=\"clientId\" [value]=\"cid\">\r\n      <div class=\"console\" id=\"console\"></div>\r\n    </mat-sidenav>\r\n    <div class=\"container\">\r\n      <ng-container *ngIf=\"dates.length\">\r\n        <mat-list role=\"list\" class=\"dateList\">\r\n          <h4>Даты:</h4>\r\n          <mat-list-item *ngFor=\"let date of dates, let i = index\" role=\"listitem\" (click)=\"setDate(date); toggleActive(i, 'data')\"\r\n                         [ngClass]=\"i===dataLI ? 'cursor-pointer border active': 'cursor-pointer border'\">\r\n            {{date | date:'yyyy-MM-dd HH:mm:ss'}}\r\n          </mat-list-item>\r\n        </mat-list>\r\n        <div class=\"device-info\">&nbsp;\r\n          <ng-container *ngIf=\"device\">\r\n            <h2>{{device['productname']}}</h2>\r\n            <p>Статус: {{device['status']}}</p>\r\n            <p>Серийный номер: {{device['serialnumber']}}</p>\r\n            <p>Сетевой адрес: {{device['url']}}</p>\r\n            <ng-container *ngFor=\"let color of device['cartridge']\">\r\n              <p *ngIf=\"color['black']\">Черный {{color['black'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['black'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['yellow']\">Желтый {{color['yellow'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['yellow'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['magenta']\">Пурпурный {{color['magenta'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['magenta'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['blue']\">Голубой {{color['blue'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['blue'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n            </ng-container>\r\n            <p>Цикл механизма: {{device['printcycles']}}</p>\r\n            <p>Счетчик технического обслуживания:\r\n              <ng-container *ngIf=\"device['kit']\">\r\n                <ng-container *ngIf=\"device['kit'][0]['adfcycles']\">{{device['kit'][0]['adfcycles']}}</ng-container>\r\n                <ng-container\r\n                  *ngIf=\"device['kit'][0]['maintenanceKitCount']\">{{device['kit'][0]['maintenanceKitCount']}}</ng-container>\r\n              </ng-container>\r\n            </p>\r\n            <p>Цикл сканирования: {{device['scancycles']}}</p>\r\n            <h4>Лог:</h4>\r\n            <table>\r\n              <tbody>\r\n              <tr>\r\n                <td></td>\r\n                <td></td>\r\n              </tr>\r\n              </tbody>\r\n            </table>\r\n          </ng-container>\r\n        </div>\r\n      </ng-container>\r\n    </div>\r\n  </mat-sidenav-container>\r\n</div>\r\n");
 
 /***/ }),
 
@@ -450,6 +450,8 @@ let DevicesComponent = class DevicesComponent {
         this.infoUrl = '';
         this.devices = [];
         this.dates = [];
+        this.dataLI = 0;
+        this.devLI = 0;
     }
     ngOnInit() {
         this.getCustomer();
@@ -467,24 +469,23 @@ let DevicesComponent = class DevicesComponent {
     getClient() {
         this.api.getClient(this.cuid).subscribe(result => {
             this.clients = result;
-            console.log(this.clients);
+        });
+    }
+    getDevices() {
+        this.devices = [];
+        this.api.getDevices(this.cuid, this.cid).subscribe(result => {
+            this.devices = result;
+            console.log(this.devices);
         });
     }
     getInfo() {
-        this.api.getInfo(this.cid).subscribe(result => {
+        this.dates = [];
+        this.api.getInfo(this.devId).subscribe(result => {
             this.infos = result['content'];
-            let url = [];
-            this.infos.forEach(info => {
-                if (url.indexOf(info['url']) < 0) {
-                    url.push(info['url']);
-                    this.devices.push({
-                        title: info['productname'],
-                        url: info['url'],
-                        sn: info['serialnumber']
-                    });
-                }
+            console.log(this.infos);
+            this.infos.forEach(item => {
+                this.dates.push(item['datetime']);
             });
-            console.log(this.devices);
         });
     }
     setCustomer(id) {
@@ -493,17 +494,11 @@ let DevicesComponent = class DevicesComponent {
     }
     setClient(id) {
         this.cid = id;
-        this.getInfo();
+        this.getDevices();
     }
-    setInfo(url) {
-        this.infoUrl = url;
-        this.dates = [];
-        this.infos.forEach(info => {
-            if (info['url'] === url) {
-                this.dates.push(info['datetime']);
-            }
-        });
-        this.infoDate = null;
+    setInfo(id) {
+        this.devId = id;
+        this.getInfo();
     }
     setDate(date) {
         this.infoDate = date;
@@ -512,6 +507,16 @@ let DevicesComponent = class DevicesComponent {
                 this.device = info;
             }
         });
+    }
+    toggleActive(i, t) {
+        switch (t) {
+            case 'data':
+                this.dataLI = i;
+                break;
+            case 'dev':
+                this.devLI = i;
+                break;
+        }
     }
 };
 DevicesComponent.ctorParameters = () => [
@@ -604,9 +609,16 @@ let APIService = class APIService {
         const param = '?cuid=' + cuid;
         return this.http.get(this.url + 'client' + param, this.httpOptions);
     }
+    getDevices(cuid, cid) {
+        const param = "?cuid=" + cuid + "&cid=" + cid;
+        return this.http.get(this.url + 'devices' + param, this.httpOptions);
+    }
     getInfo(id) {
         const param = '?client=' + id;
         return this.http.get(this.url + 'info' + param, this.httpOptions);
+    }
+    getErrors() {
+        return this.http.get(this.url + 'errors', this.httpOptions);
     }
 };
 APIService.ctorParameters = () => [
@@ -839,7 +851,8 @@ __webpack_require__.r(__webpack_exports__);
 
 const environment = {
     production: false,
-    apiURL: 'http://116.203.243.136:5000/api/'
+    /*apiURL: 'http://116.203.243.136:5000/api/',*/
+    apiURL: 'http://localhost:5000/api/'
 };
 /*
  * For easier debugging in development mode, you can import the following file

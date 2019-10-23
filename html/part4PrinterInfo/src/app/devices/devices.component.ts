@@ -23,8 +23,10 @@ export class DevicesComponent implements OnInit {
   infoDate: any;
   devices: any[] = [];
   device: any;
+  devId: number;
   dates: any[] = [];
   dataLI: number = 0;
+  devLI: number = 0;
 
   constructor(private api: APIService) { }
 
@@ -49,25 +51,24 @@ export class DevicesComponent implements OnInit {
   getClient() {
     this.api.getClient(this.cuid).subscribe(result=>{
       this.clients = result;
-      console.log(this.clients);
     });
   }
-
-  getInfo() {
-    this.api.getInfo(this.cid).subscribe(result=>{
-      this.infos = result['content'];
-      let url = [];
-      this.infos.forEach(info => {
-        if(url.indexOf(info['url']) < 0) {
-          url.push(info['url']);
-          this.devices.push({
-            title: info['productname'],
-            url: info['url'],
-            sn: info['serialnumber']
-          })
-        }
-      });
+  getDevices() {
+    this.devices = [];
+    this.api.getDevices(this.cuid, this.cid).subscribe(result=>{
+      this.devices = result;
       console.log(this.devices);
+    });
+  }
+  getInfo() {
+    this.dates = [];
+    this.api.getInfo(this.devId).subscribe(result=>{
+      this.infos = result['content'];
+      console.log(this.infos);
+      this.infos.forEach(item=>{
+        this.dates.push(item['datetime']);
+      });
+
     });
   }
 
@@ -78,25 +79,12 @@ export class DevicesComponent implements OnInit {
 
   setClient(id) {
     this.cid = id;
-    this.getInfo();
-    this.devices = [];
+    this.getDevices();
   }
 
-  setInfo(url){
-    this.infoUrl = url;
-    this.dates = [];
-    this.device = null;
-    this.infos.forEach(info => {
-      if(info['url'] === url){
-        this.dates.push(info['datetime']);
-        if(this.device) {
-
-        } else {
-          this.device = info;
-        }
-      }
-    });
-    this.infoDate = null;
+  setInfo(id){
+    this.devId = id;
+    this.getInfo();
   }
   setDate(date) {
     this.infoDate = date;
@@ -106,7 +94,11 @@ export class DevicesComponent implements OnInit {
       }
     });
   }
-  toggleActive(i) {
-    this.dataLI = i;
+  toggleActive(i, t) {
+    switch (t) {
+      case 'data':this.dataLI = i; break;
+      case 'dev':this.devLI = i; break
+    }
+
   }
 }

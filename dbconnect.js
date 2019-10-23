@@ -2,7 +2,7 @@ var Rx = require('rxjs/Rx');
 
 const dbConfig = {
     user: 'part4',
-    host: 'localhost',
+    host: '116.203.243.136',
     database: 'remote_info',
     password: 'q1w2e3r4t5',
     port: 5432,
@@ -12,7 +12,7 @@ const {Pool} = require('pg');
 const pool = new Pool(dbConfig);
 
 function getCustomers(callback) {
-    qgc = "SELECT * FROM rdata.customers";
+    qgc = "SELECT * FROM rdata.company";
     (async () => {
         const client = await pool.connect();
         try {
@@ -65,14 +65,32 @@ function getAddress(callback) {
     });
 }
 
-function getInfo(clid, callback) {
-    qgi = "SELECT rdata.info.\"id\" as info_id, rdata.devices.\"id\" as device_id, rdata.devices.productname, rdata.devices.url, " +
-        "rdata.devices.article, rdata.devices.client_article, rdata.info.scancycles, rdata.info.printcycles, " +
-        "rdata.info.status, rdata.info.kit, rdata.info.cartridge, rdata.info.log, rdata.info.serialnumber, " +
-        "rdata.info.maintenancekitcount, rdata.info.adfcycles, rdata.info.datetime FROM rdata.info " +
-        "INNER JOIN rdata.devices ON rdata.info.device_id = rdata.devices.\"id\"";
-    if (clid !== 0) {
-        qgi += "WHERE rdata.info.client_id = " + clid;
+function getDevices(cuid, cid, callback) {
+    qda = "SELECT * FROM rdata.devices WHERE company_id = "+cuid+" AND client_id= "+ cid+";";
+    (async () => {
+        const client = await pool.connect();
+        try {
+            const result = await client.query(qda);
+            callback (result.rows);
+            return result.rows;
+        } finally {
+            client.release()
+        }
+    })().catch(e => {
+        console.log(e.stack);
+        return {error: e.detail};
+    });
+}
+
+function getInfo(devid, callback) {
+    qgi = "SELECT rdata.devices.productname, rdata.devices.article, rdata.devices.client_article, rdata.devices.sn, " +
+        "rdata.devices.url, rdata.info.printcycles, rdata.info.scancycles, rdata.info.status, rdata.info.kit, " +
+        "rdata.info.cartridge, rdata.info.maintenancekitcount, rdata.info.log, rdata.info.adfcycles, " +
+        "rdata.info.datetime " +
+        "FROM rdata.devices " +
+        "INNER JOIN rdata.info ON rdata.info.device_id = rdata.devices.\"id\"";
+    if (devid !== 0) {
+        qgi += " WHERE rdata.info.device_id = " + devid;
     }
     qgi += " ORDER BY datetime DESC";
     (async () => {
@@ -90,8 +108,28 @@ function getInfo(clid, callback) {
     });
 }
 
+function getErrors(callback) {
+    var oldD = new Date();
+    var newD = new Date();
+    newD.setTime(oldD.getTime() - (30 * 60 * 1000));
+    qea = "SELECT * FROM rdata.errors where datetime >=" + newD;
+    (async () => {
+        const client = await pool.connect();
+        try {
+            const result = await client.query(qea);
+            callback (result.rows);
+            return result.rows;
+        } finally {
+            client.release()
+        }
+    })().catch(e => {
+        console.log(e.stack);
+        return {error: e.detail};
+    });
+}
+
 function addCustomer(title, description, callback) {
-    qac = "INSERT INTO rdata.customers (title, description) VALUES ('"+ title +"', '"+ description +"');";
+    qac = "INSERT INTO rdata.company (title, description) VALUES ('"+ title +"', '"+ description +"');";
     (async () => {
         const client = await pool.connect();
         try {
@@ -142,49 +180,92 @@ function addAddress(address, callback) {
     });
 }
 
+function addDevice(init_client, company_id, address_id, url, status, cartridge, KIT,
+                   productName, serialNumber, maintenanceKitCount, printCycles,
+                   scanCycles, adfCycles, log, article, client_article, company_id, callback) {
+    var d = new Date();
+    var n = d.toJSON();
+    qda = "DO $$ " +
+        "DECLARE lastId INTEGER = 0; " +
+        "BEGIN " +
+        "INSERT INTO rdata.devices (productname, url, client_id, company_id, article, client_article, sn)  " +
+        "VALUES ('"+productName+"', '"+url+"', "+init_client+", "+company_id;
+    if (article) {qda += ", '" + article + "'";} else {qda += ", NULL";}
+    if (client_article) {qda += ", '" + client_article + "'";} else {qda += ", NULL";}
+    qda += ", 'VCG7428977'"+") RETURNING id INTO lastId; " +
+        "INSERT INTO rdata.info (printcycles, scancycles, status, kit, cartridge, log, maintenancekitcount, adfcycles, datetime, device_id) VALUES (";
+    if (printCycles) {qda += printCycles;} else {qda += "NULL";}
+    if (scanCycles) {qda += ", " + scanCycles + "";} else {qda += ", NULL";}
+    if (status) {qda += ", '" + status + "'";} else {qda += ", NULL";}
+    if (KIT) {qda += ", '" + JSON.stringify(KIT) + "'";} else {qda += ", NULL";}
+    if (cartridge) {qda += ", '" + JSON.stringify(cartridge) + "'";} else {qda += ", NULL";}
+    if (log) {qda += ", '" + JSON.stringify(log) + "'";} else {qda += ", NULL";}
+    if (maintenanceKitCount) {qda += ", " + maintenanceKitCount + "";} else {qda += ", NULL";}
+    if (adfCycles) {qda += ", " + adfCycles + "";} else {qda += ", NULL";}
+    qda += ",'" +n+ "', lastId); END $$";
+
+    console.log(qda);
+    (async () => {
+        const client = await pool.connect();
+        try {
+            const result = await client.query(qda);
+            callback ({status: 'success', result: result.rows});
+            return {status: 'success', result: result.rows};
+        } finally {
+            client.release()
+        }
+    })().catch(e => {
+        console.log(e.stack);
+        return {error: e.detail};
+    });
+}
+
 function addInfo (init_client, company_id, address_id, url, status, cartridge, KIT,
                   productName, serialNumber, maintenanceKitCount, printCycles,
                   scanCycles, adfCycles, log, article, client_article, callback) {
     var d = new Date();
     var n = d.toJSON();
-    qai = "INSERT INTO rdata.info (datetime, productName, client_id";
-    if (company_id) {qai += ", company_id";}
-    if (address_id) {qai += ", address_id";}
-    if (url) {qai += ", url";}
-    if (status) {qai += ", status";}
-    if (cartridge) {qai += ", cartridge";}
-    if (KIT) {qai += ", KIT";}
-    if (serialNumber) {qai += ", serialnumber";}
-    if (maintenanceKitCount) {qai += ", maintenancekitcount";}
-    if (printCycles) {qai += ", printcycles";}
-    if (scanCycles) {qai += ", scancycles";}
-    if (adfCycles) {qai += ", adfcycles";}
-    if (log) {qai += ", log";}
-    if (article) {qai += ", article";}
-    if (client_article) {qai += ", client_article";}
-
-    qai += ") VALUES ('"+n+"', '" + productName + "', " + init_client;
-
-    if (company_id) {qai += ", " + company_id;}
-    if (address_id) {qai += ", " + address_id;}
-    if (url) {qai += ", '" + url + "'";}
-    if (status) {qai += ", '" + status + "'";}
-    if (cartridge) {qai += ", '" + JSON.stringify(cartridge) + "'";}
-    if (KIT) {qai += ", '" + JSON.stringify(KIT) + "'";}
-    if (serialNumber) {qai += ", '" + serialNumber + "'";}
-    if (maintenanceKitCount) {qai += ", " + maintenanceKitCount;}
-    if (printCycles) {qai += ", " + printCycles;}
-    if (scanCycles) {qai += ", " + scanCycles;}
-    if (adfCycles) {qai += ", " + adfCycles;}
-    if (log) {qai += ", '" + JSON.stringify(log) + "'";}
-    if (article) {qai += ", '" + article + "'";}
-    if (client_article) {qai += ", '" + client_article + "'";}
-
-    qai += ") RETURNING id";
+    qai = "DO $$ " +
+        "DECLARE lastId INTEGER = 0; " +
+        "BEGIN " +
+        "SELECT devices.id INTO lastID FROM rdata.devices WHERE client_id = 2 AND sn = 'VCG7428977'; " +
+        "INSERT INTO rdata.info (printcycles, scancycles, status, kit, cartridge, log, maintenancekitcount, adfcycles, datetime, device_id) " +
+        "VALUES (";
+    if (printCycles) {qai += printCycles;} else {qai += "NULL"}
+    if (scanCycles) {qai += ", "+scanCycles;} else {qai += ", NULL"}
+    if (status) {qai += ", '" + status + "'";} else {qai += ", NULL"}
+    if (KIT) {qai += ", '" + JSON.stringify(KIT) + "'";} else {qai += ", NULL"}
+    if (cartridge) {qai += ", '" + JSON.stringify(cartridge) + "'";} else {qai += ", NULL"}
+    if (log) {qai += ", '" + JSON.stringify(log) + "'";} else {qai += ", NULL"}
+    if (maintenanceKitCount) {qai += ", " + maintenanceKitCount;} else {qai += ", NULL"}
+    if (adfCycles) {qai += ", " + adfCycles;} else {qai += ", NULL"}
+    qai += ", '"+n+"', lastId);" +
+        "END $$";
+    console.log(qai);
     (async () => {
         const client = await pool.connect();
         try {
             const result = await client.query(qai);
+            callback ({status: 'success', result: result.rows});
+            return {status: 'success', result: result.rows};
+        } finally {
+            client.release()
+        }
+    })().catch(e => {
+        console.log(e.stack);
+        return {error: e.detail};
+    });
+}
+
+function addError(init_client_error, url, error, callback) {
+    var d = new Date();
+    var n = d.toJSON();
+    qaa = "INSERT INTO rdata.errors VALUES ("+init_client_error+", '"+ url +"', '"+ error +"',"+n+") RETURNING id;";
+    console.log(qaa);
+    (async () => {
+        const client = await pool.connect();
+        try {
+            const result = await client.query(qaa);
             callback ({status: 'success', result: result.rows});
             return {status: 'success', result: result.rows};
         } finally {
@@ -204,7 +285,11 @@ module.exports = {
 
     addAddressO: Rx.Observable.bindCallback(addAddress),
 
-    addInfo: Rx.Observable.bindCallback(addInfo),
+    addDeviceO: Rx.Observable.bindCallback(addDevice),
+
+    addInfoO: Rx.Observable.bindCallback(addInfo),
+
+    addErrorO: Rx.Observable.bindCallback(addError),
 
     getCustomersO: Rx.Observable.bindCallback(getCustomers),
 
@@ -212,5 +297,9 @@ module.exports = {
 
     getAddressO: Rx.Observable.bindCallback(getAddress),
 
-    getInfoO: Rx.Observable.bindCallback(getInfo)
+    getDevicesO: Rx.Observable.bindCallback(getDevices),
+
+    getInfoO: Rx.Observable.bindCallback(getInfo),
+
+    getErrorsO: Rx.Observable.bindCallback(getErrors)
 };
