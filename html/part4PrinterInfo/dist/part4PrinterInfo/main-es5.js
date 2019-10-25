@@ -31,6 +31,61 @@
             /* harmony default export */ __webpack_exports__["default"] = ("<router-outlet></router-outlet>\n");
             /***/ 
         }),
+        /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/devices/admin/admin.component.html": 
+        /*!******************************************************************************************!*\
+          !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/devices/admin/admin.component.html ***!
+          \******************************************************************************************/
+        /*! exports provided: default */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"admin-panel\">\n  <ng-container *ngIf=\"!isLogIn\">\n    <div class=\"login-form bg-black\">\n      <form [formGroup]=\"loginForm\" (ngSubmit)=\"logIn()\">\n        <mat-form-field>\n          <input matInput placeholder=\"Login\" name=\"login\" formControlName=\"loginControl\">\n        </mat-form-field>\n        <mat-form-field>\n          <input matInput placeholder=\"Password\" name=\"password\" formControlName=\"passControl\">\n        </mat-form-field>\n        <button mat-raised-button type=\"submit\" color=\"primary\">Вход</button>\n      </form>\n    </div>\n  </ng-container>\n\n  <ng-container *ngIf=\"isLogIn\">\n    <header class=\"container\">\n      <div class=\"pt-2\">\n        <mat-form-field class=\"\" style=\"width: 250px;\">\n          <input type=\"text\" placeholder=\"Поиск помпании\" aria-label=\"Number\" matInput [formControl]=\"customerControl\"\n                 [matAutocomplete]=\"auto\">\n          <mat-autocomplete #auto=\"matAutocomplete\">\n            <mat-option *ngFor=\"let option of filteredCustomers | async\" [value]=\"option['title']\"\n                        (click)=\"setCustomer(option['id'])\">\n              {{option['title']}}\n            </mat-option>\n          </mat-autocomplete>\n        </mat-form-field>\n      </div>\n      <div class=\"socket-init\">\n        <button mat-raised-button color=\"accent\" (click)=\"go('device')\">Выход</button>\n        <!--button mat-raised-button id=\"addDevice\">Добавить</button-->\n      </div>\n    </header>\n    <mat-sidenav-container *ngIf=\"customers\">\n      <mat-sidenav opened mode=\"side\" class=\"px-2 sidenav\">\n        <h3>Офис:</h3>\n        <mat-form-field class=\"full-width\" *ngIf=\"clients.length > 0\">\n          <mat-select>\n            <mat-option *ngFor=\"let option of clients\" [value]=\"option['name']\" (click)=\"setClient(option['id'])\">\n              {{option['name']}}\n            </mat-option>\n          </mat-select>\n        </mat-form-field>\n      </mat-sidenav>\n      <div class=\"container\">\n        {{devices | json}}\n      </div>\n    </mat-sidenav-container>\n  </ng-container>\n</div>\n");
+            /***/ 
+        }),
+        /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/devices/admin/client/client.component.html": 
+        /*!**************************************************************************************************!*\
+          !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/devices/admin/client/client.component.html ***!
+          \**************************************************************************************************/
+        /*! exports provided: default */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony default export */ __webpack_exports__["default"] = ("<p>client works!</p>\n");
+            /***/ 
+        }),
+        /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/devices/admin/company/company.component.html": 
+        /*!****************************************************************************************************!*\
+          !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/devices/admin/company/company.component.html ***!
+          \****************************************************************************************************/
+        /*! exports provided: default */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony default export */ __webpack_exports__["default"] = ("<p>company works!</p>\n");
+            /***/ 
+        }),
+        /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/devices/admin/device/device.component.html": 
+        /*!**************************************************************************************************!*\
+          !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/devices/admin/device/device.component.html ***!
+          \**************************************************************************************************/
+        /*! exports provided: default */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony default export */ __webpack_exports__["default"] = ("<p>device works!</p>\n");
+            /***/ 
+        }),
+        /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/devices/admin/manage/manage.component.html": 
+        /*!**************************************************************************************************!*\
+          !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/devices/admin/manage/manage.component.html ***!
+          \**************************************************************************************************/
+        /*! exports provided: default */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony default export */ __webpack_exports__["default"] = ("<p>manage works!</p>\n");
+            /***/ 
+        }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/devices/devices.component.html": 
         /*!**************************************************************************************!*\
           !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/devices/devices.component.html ***!
@@ -39,7 +94,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"\">\r\n  <header class=\"container\">\r\n    <div class=\"pt-2\">\r\n      <mat-form-field class=\"\" style=\"width: 250px;\">\r\n        <input type=\"text\" placeholder=\"Поиск помпании\" aria-label=\"Number\" matInput [formControl]=\"customerControl\"\r\n               [matAutocomplete]=\"auto\">\r\n        <mat-autocomplete #auto=\"matAutocomplete\">\r\n          <mat-option *ngFor=\"let option of filteredCustomers | async\" [value]=\"option['title']\"\r\n                      (click)=\"setCustomer(option['id'])\">\r\n            {{option['title']}}\r\n          </mat-option>\r\n        </mat-autocomplete>\r\n      </mat-form-field>\r\n    </div>\r\n    <div class=\"socket-init\">\r\n      <button mat-raised-button id=\"btnInit\" [disabled]=\"cid === 0\">Получить данные с устройств</button>\r\n      <!--button mat-raised-button id=\"addDevice\">Добавить</button-->\r\n    </div>\r\n  </header>\r\n  <mat-sidenav-container *ngIf=\"customers\">\r\n    <mat-sidenav opened mode=\"side\" class=\"px-2 sidenav\">\r\n      <h3>Офис:</h3>\r\n      <mat-form-field class=\"full-width\" *ngIf=\"clients.length > 0\">\r\n        <mat-select>\r\n          <mat-option *ngFor=\"let option of clients\" [value]=\"option['name']\" (click)=\"setClient(option['id'])\">\r\n            {{option['name']}}\r\n          </mat-option>\r\n        </mat-select>\r\n      </mat-form-field>\r\n      <div class=\"urls-nav\" *ngIf=\"devices.length > 0\">\r\n        <div *ngFor=\"let item of devices, let i = index\" (click)=\"setInfo(item['id']); toggleActive(i, 'dev')\" [ngClass]=\"i===devLI ? 'active': ''\">\r\n          <h4 class=\"cursor-pointer\">{{item['productname']}} <br>\r\n            <small class=\"text-orange\">\r\n              {{item['url']}} <br> {{item['sn']}}\r\n            </small>\r\n          </h4>\r\n        </div>\r\n      </div>\r\n      <input type=\"hidden\" id=\"clientId\" [value]=\"cid\">\r\n      <div class=\"console\" id=\"console\"></div>\r\n    </mat-sidenav>\r\n    <div class=\"container\">\r\n      <ng-container *ngIf=\"dates.length\">\r\n        <mat-list role=\"list\" class=\"dateList\">\r\n          <h4>Даты:</h4>\r\n          <mat-list-item *ngFor=\"let date of dates, let i = index\" role=\"listitem\" (click)=\"setDate(date); toggleActive(i, 'data')\"\r\n                         [ngClass]=\"i===dataLI ? 'cursor-pointer border active': 'cursor-pointer border'\">\r\n            {{date | date:'yyyy-MM-dd HH:mm:ss'}}\r\n          </mat-list-item>\r\n        </mat-list>\r\n        <div class=\"device-info\">&nbsp;\r\n          <ng-container *ngIf=\"device\">\r\n            <h2>{{device['productname']}}</h2>\r\n            <p>Статус: {{device['status']}}</p>\r\n            <p>Серийный номер: {{device['serialnumber']}}</p>\r\n            <p>Сетевой адрес: {{device['url']}}</p>\r\n            <ng-container *ngFor=\"let color of device['cartridge']\">\r\n              <p *ngIf=\"color['black']\">Черный {{color['black'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['black'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['yellow']\">Желтый {{color['yellow'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['yellow'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['magenta']\">Пурпурный {{color['magenta'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['magenta'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['blue']\">Голубой {{color['blue'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['blue'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n            </ng-container>\r\n            <p>Цикл механизма: {{device['printcycles']}}</p>\r\n            <p>Счетчик технического обслуживания:\r\n              <ng-container *ngIf=\"device['kit']\">\r\n                <ng-container *ngIf=\"device['kit'][0]['adfcycles']\">{{device['kit'][0]['adfcycles']}}</ng-container>\r\n                <ng-container\r\n                  *ngIf=\"device['kit'][0]['maintenanceKitCount']\">{{device['kit'][0]['maintenanceKitCount']}}</ng-container>\r\n              </ng-container>\r\n            </p>\r\n            <p>Цикл сканирования: {{device['scancycles']}}</p>\r\n            <h4>Лог:</h4>\r\n            <table>\r\n              <tbody>\r\n              <tr>\r\n                <td></td>\r\n                <td></td>\r\n              </tr>\r\n              </tbody>\r\n            </table>\r\n          </ng-container>\r\n        </div>\r\n      </ng-container>\r\n    </div>\r\n  </mat-sidenav-container>\r\n</div>\r\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"\">\r\n  <header class=\"container\">\r\n    <div class=\"pt-2\">\r\n      <mat-form-field class=\"\" style=\"width: 250px;\">\r\n        <input type=\"text\" placeholder=\"Поиск помпании\" aria-label=\"Number\" matInput [formControl]=\"customerControl\"\r\n               [matAutocomplete]=\"auto\">\r\n        <mat-autocomplete #auto=\"matAutocomplete\">\r\n          <mat-option *ngFor=\"let option of filteredCustomers | async\" [value]=\"option['title']\"\r\n                      (click)=\"setCustomer(option['id'])\">\r\n            {{option['title']}}\r\n          </mat-option>\r\n        </mat-autocomplete>\r\n      </mat-form-field>\r\n    </div>\r\n    <div class=\"socket-init\">\r\n      <button mat-raised-button id=\"btnInit\" [disabled]=\"cid === 0\">Получить данные с устройств</button>\r\n      <input type=\"hidden\" id=\"info_query\" [value]=\"getQuery\">\r\n      <button mat-raised-button (click)=\"go('admin')\">Админ</button>\r\n      <!--button mat-raised-button id=\"addDevice\">Добавить</button-->\r\n    </div>\r\n  </header>\r\n  <mat-sidenav-container *ngIf=\"customers\">\r\n    <mat-sidenav opened mode=\"side\" class=\"px-2 sidenav\">\r\n      <h3>Офис:</h3>\r\n      <mat-form-field class=\"full-width\" *ngIf=\"clients.length > 0\">\r\n        <mat-select>\r\n          <mat-option *ngFor=\"let option of clients\" [value]=\"option['name']\" (click)=\"setClient(option['id'])\">\r\n            {{option['name']}}\r\n          </mat-option>\r\n        </mat-select>\r\n      </mat-form-field>\r\n      <div class=\"urls-nav\" *ngIf=\"devices.length > 0\">\r\n        <div *ngFor=\"let item of devices, let i = index\" (click)=\"setInfo(item['id']); toggleActive(i, 'dev')\" [ngClass]=\"i===devLI ? 'active': ''\">\r\n          <h4 class=\"cursor-pointer\">{{item['productname']}} <br>\r\n            <small class=\"text-orange\">\r\n              {{item['url']}} <br> {{item['sn']}}\r\n            </small>\r\n          </h4>\r\n        </div>\r\n      </div>\r\n      <input type=\"hidden\" id=\"clientId\" [value]=\"cid\">\r\n      <div class=\"console\" id=\"console\"></div>\r\n    </mat-sidenav>\r\n    <div class=\"container\">\r\n      <ng-container *ngIf=\"dates.length\">\r\n        <mat-list role=\"list\" class=\"dateList\">\r\n          <h4>Даты:</h4>\r\n          <mat-list-item *ngFor=\"let date of dates, let i = index\" role=\"listitem\" (click)=\"setDate(date); toggleActive(i, 'data')\"\r\n                         [ngClass]=\"i===dataLI ? 'cursor-pointer border active': 'cursor-pointer border'\">\r\n            {{date | date:'yyyy-MM-dd HH:mm:ss'}}\r\n          </mat-list-item>\r\n        </mat-list>\r\n        <div class=\"device-info\">&nbsp;\r\n          <ng-container *ngIf=\"device\">\r\n            <h2>{{device['productname']}}</h2>\r\n            <p>Статус: {{device['status']}}</p>\r\n            <p>Серийный номер: {{device['serialnumber']}}</p>\r\n            <p>Сетевой адрес: {{device['url']}}</p>\r\n            <ng-container *ngFor=\"let color of device['cartridge']\">\r\n              <p *ngIf=\"color['black']\">Черный {{color['black'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['black'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['yellow']\">Желтый {{color['yellow'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['yellow'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['magenta']\">Пурпурный {{color['magenta'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['magenta'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['blue']\">Голубой {{color['blue'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['blue'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n            </ng-container>\r\n            <p>Цикл механизма: {{device['printcycles']}}</p>\r\n            <p>Счетчик технического обслуживания:\r\n              <ng-container *ngIf=\"device['kit']\">\r\n                <ng-container *ngIf=\"device['kit'][0]['adfcycles']\">{{device['kit'][0]['adfcycles']}}</ng-container>\r\n                <ng-container\r\n                  *ngIf=\"device['kit'][0]['maintenanceKitCount']\">{{device['kit'][0]['maintenanceKitCount']}}</ng-container>\r\n              </ng-container>\r\n            </p>\r\n            <p>Цикл сканирования: {{device['scancycles']}}</p>\r\n            <h4>Лог:</h4>\r\n            <table>\r\n              <tbody>\r\n              <tr>\r\n                <td></td>\r\n                <td></td>\r\n              </tr>\r\n              </tbody>\r\n            </table>\r\n          </ng-container>\r\n        </div>\r\n      </ng-container>\r\n    </div>\r\n  </mat-sidenav-container>\r\n</div>\r\n");
             /***/ 
         }),
         /***/ "./node_modules/tslib/tslib.es6.js": 
@@ -355,7 +410,9 @@
             /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
             /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
             /* harmony import */ var _devices_devices_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./devices/devices.component */ "./src/app/devices/devices.component.ts");
+            /* harmony import */ var _devices_admin_admin_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./devices/admin/admin.component */ "./src/app/devices/admin/admin.component.ts");
             var routes = [
+                { path: 'admin', component: _devices_admin_admin_component__WEBPACK_IMPORTED_MODULE_4__["AdminComponent"] },
                 { path: '**', component: _devices_devices_component__WEBPACK_IMPORTED_MODULE_3__["DevicesComponent"] }
             ];
             var AppRoutingModule = /** @class */ (function () {
@@ -448,6 +505,269 @@
             ], AppModule);
             /***/ 
         }),
+        /***/ "./src/app/devices/admin/admin.component.scss": 
+        /*!****************************************************!*\
+          !*** ./src/app/devices/admin/admin.component.scss ***!
+          \****************************************************/
+        /*! exports provided: default */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2RldmljZXMvYWRtaW4vYWRtaW4uY29tcG9uZW50LnNjc3MifQ== */");
+            /***/ 
+        }),
+        /***/ "./src/app/devices/admin/admin.component.ts": 
+        /*!**************************************************!*\
+          !*** ./src/app/devices/admin/admin.component.ts ***!
+          \**************************************************/
+        /*! exports provided: AdminComponent */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminComponent", function () { return AdminComponent; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+            /* harmony import */ var _shared_services_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shared/services/api.service */ "./src/app/devices/shared/services/api.service.ts");
+            /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+            /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+            var AdminComponent = /** @class */ (function () {
+                function AdminComponent(api, router) {
+                    this.api = api;
+                    this.router = router;
+                    this.isLogIn = false;
+                    this.customerControl = new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]();
+                    this.customers = [];
+                    this.cuid = 0;
+                    this.clients = [];
+                    this.cid = 0;
+                    this.devices = [];
+                    this.isDevOn = 1;
+                    this.loginForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]({
+                        loginControl: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
+                        passControl: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('')
+                    });
+                }
+                AdminComponent.prototype.ngOnInit = function () {
+                    var _this = this;
+                    if (localStorage.getItem('logIn') === 'true') {
+                        this.isLogIn = true;
+                    }
+                    this.getCustomer();
+                    this.filteredCustomers = this.customerControl.valueChanges.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["startWith"])(''), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (value) { return _this._filterCustomer(value); }));
+                };
+                AdminComponent.prototype._filterCustomer = function (value) {
+                    var filterValue = value.toLowerCase();
+                    return this.customers.filter(function (option) { return option['title'].toLowerCase().includes(filterValue); });
+                };
+                AdminComponent.prototype.getCustomer = function () {
+                    var _this = this;
+                    this.api.getCustomers().subscribe(function (result) {
+                        _this.customers = result;
+                    });
+                };
+                AdminComponent.prototype.getClient = function () {
+                    var _this = this;
+                    this.api.getClient(this.cuid).subscribe(function (result) {
+                        _this.clients = result;
+                    });
+                };
+                AdminComponent.prototype.getDevices = function () {
+                    var _this = this;
+                    this.devices = [];
+                    this.api.getDevices(this.cuid, this.cid, this.isDevOn).subscribe(function (result) {
+                        _this.devices = result;
+                        console.log(_this.devices);
+                    });
+                };
+                AdminComponent.prototype.setCustomer = function (id) {
+                    this.cuid = id;
+                    this.getClient();
+                };
+                AdminComponent.prototype.setClient = function (id) {
+                    this.cid = id;
+                    this.getDevices();
+                };
+                AdminComponent.prototype.logIn = function () {
+                    if (this.loginForm.controls['loginControl'].value === 'admin' && this.loginForm.controls['passControl'].value === 'q1w2e3r4t5y6') {
+                        this.isLogIn = true;
+                        localStorage.setItem('logIn', 'true');
+                    }
+                };
+                AdminComponent.prototype.go = function (url) {
+                    switch (url) {
+                        case 'device':
+                            this.router.navigate(['/']);
+                            break;
+                    }
+                };
+                return AdminComponent;
+            }());
+            AdminComponent.ctorParameters = function () { return [
+                { type: _shared_services_api_service__WEBPACK_IMPORTED_MODULE_3__["APIService"] },
+                { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"] }
+            ]; };
+            AdminComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+                    selector: 'app-admin',
+                    template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./admin.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/devices/admin/admin.component.html")).default,
+                    styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./admin.component.scss */ "./src/app/devices/admin/admin.component.scss")).default]
+                })
+            ], AdminComponent);
+            /***/ 
+        }),
+        /***/ "./src/app/devices/admin/client/client.component.scss": 
+        /*!************************************************************!*\
+          !*** ./src/app/devices/admin/client/client.component.scss ***!
+          \************************************************************/
+        /*! exports provided: default */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2RldmljZXMvYWRtaW4vY2xpZW50L2NsaWVudC5jb21wb25lbnQuc2NzcyJ9 */");
+            /***/ 
+        }),
+        /***/ "./src/app/devices/admin/client/client.component.ts": 
+        /*!**********************************************************!*\
+          !*** ./src/app/devices/admin/client/client.component.ts ***!
+          \**********************************************************/
+        /*! exports provided: ClientComponent */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ClientComponent", function () { return ClientComponent; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            var ClientComponent = /** @class */ (function () {
+                function ClientComponent() {
+                }
+                ClientComponent.prototype.ngOnInit = function () {
+                };
+                return ClientComponent;
+            }());
+            ClientComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+                    selector: 'app-client',
+                    template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./client.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/devices/admin/client/client.component.html")).default,
+                    styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./client.component.scss */ "./src/app/devices/admin/client/client.component.scss")).default]
+                })
+            ], ClientComponent);
+            /***/ 
+        }),
+        /***/ "./src/app/devices/admin/company/company.component.scss": 
+        /*!**************************************************************!*\
+          !*** ./src/app/devices/admin/company/company.component.scss ***!
+          \**************************************************************/
+        /*! exports provided: default */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2RldmljZXMvYWRtaW4vY29tcGFueS9jb21wYW55LmNvbXBvbmVudC5zY3NzIn0= */");
+            /***/ 
+        }),
+        /***/ "./src/app/devices/admin/company/company.component.ts": 
+        /*!************************************************************!*\
+          !*** ./src/app/devices/admin/company/company.component.ts ***!
+          \************************************************************/
+        /*! exports provided: CompanyComponent */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CompanyComponent", function () { return CompanyComponent; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            var CompanyComponent = /** @class */ (function () {
+                function CompanyComponent() {
+                }
+                CompanyComponent.prototype.ngOnInit = function () {
+                };
+                return CompanyComponent;
+            }());
+            CompanyComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+                    selector: 'app-company',
+                    template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./company.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/devices/admin/company/company.component.html")).default,
+                    styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./company.component.scss */ "./src/app/devices/admin/company/company.component.scss")).default]
+                })
+            ], CompanyComponent);
+            /***/ 
+        }),
+        /***/ "./src/app/devices/admin/device/device.component.scss": 
+        /*!************************************************************!*\
+          !*** ./src/app/devices/admin/device/device.component.scss ***!
+          \************************************************************/
+        /*! exports provided: default */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2RldmljZXMvYWRtaW4vZGV2aWNlL2RldmljZS5jb21wb25lbnQuc2NzcyJ9 */");
+            /***/ 
+        }),
+        /***/ "./src/app/devices/admin/device/device.component.ts": 
+        /*!**********************************************************!*\
+          !*** ./src/app/devices/admin/device/device.component.ts ***!
+          \**********************************************************/
+        /*! exports provided: DeviceComponent */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DeviceComponent", function () { return DeviceComponent; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            var DeviceComponent = /** @class */ (function () {
+                function DeviceComponent() {
+                }
+                DeviceComponent.prototype.ngOnInit = function () {
+                };
+                return DeviceComponent;
+            }());
+            DeviceComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+                    selector: 'app-device',
+                    template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./device.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/devices/admin/device/device.component.html")).default,
+                    styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./device.component.scss */ "./src/app/devices/admin/device/device.component.scss")).default]
+                })
+            ], DeviceComponent);
+            /***/ 
+        }),
+        /***/ "./src/app/devices/admin/manage/manage.component.scss": 
+        /*!************************************************************!*\
+          !*** ./src/app/devices/admin/manage/manage.component.scss ***!
+          \************************************************************/
+        /*! exports provided: default */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2RldmljZXMvYWRtaW4vbWFuYWdlL21hbmFnZS5jb21wb25lbnQuc2NzcyJ9 */");
+            /***/ 
+        }),
+        /***/ "./src/app/devices/admin/manage/manage.component.ts": 
+        /*!**********************************************************!*\
+          !*** ./src/app/devices/admin/manage/manage.component.ts ***!
+          \**********************************************************/
+        /*! exports provided: ManageComponent */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ManageComponent", function () { return ManageComponent; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            var ManageComponent = /** @class */ (function () {
+                function ManageComponent() {
+                }
+                ManageComponent.prototype.ngOnInit = function () {
+                };
+                return ManageComponent;
+            }());
+            ManageComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+                    selector: 'app-manage',
+                    template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./manage.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/devices/admin/manage/manage.component.html")).default,
+                    styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./manage.component.scss */ "./src/app/devices/admin/manage/manage.component.scss")).default]
+                })
+            ], ManageComponent);
+            /***/ 
+        }),
         /***/ "./src/app/devices/devices.component.scss": 
         /*!************************************************!*\
           !*** ./src/app/devices/devices.component.scss ***!
@@ -473,9 +793,12 @@
             /* harmony import */ var _shared_services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./shared/services/api.service */ "./src/app/devices/shared/services/api.service.ts");
             /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
             /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+            /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
             var DevicesComponent = /** @class */ (function () {
-                function DevicesComponent(api) {
+                function DevicesComponent(api, router, route) {
                     this.api = api;
+                    this.router = router;
+                    this.route = route;
                     this.customerControl = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]();
                     this.customers = [];
                     this.cuid = 0;
@@ -484,6 +807,7 @@
                     this.infos = [];
                     this.infoUrl = '';
                     this.devices = [];
+                    this.initDevices = [];
                     this.dates = [];
                     this.dataLI = 0;
                     this.devLI = 0;
@@ -512,9 +836,20 @@
                 DevicesComponent.prototype.getDevices = function () {
                     var _this = this;
                     this.devices = [];
-                    this.api.getDevices(this.cuid, this.cid).subscribe(function (result) {
+                    this.api.getDevices(this.cuid, this.cid, 1).subscribe(function (result) {
                         _this.devices = result;
                         console.log(_this.devices);
+                        _this.devices.forEach(function (item) {
+                            _this.initDevices.push({
+                                productName: item['productname'],
+                                url: item['url'],
+                                serialNumber: item['sn'],
+                                device_id: item['id']
+                            });
+                        });
+                        _this.getQuery = '{"server_init": "getInfo", "init_company":' + _this.cuid + ',"init_client": ' + _this.cid + ',"devices": ' +
+                            JSON.stringify(_this.initDevices) + '}';
+                        console.log(_this.getQuery);
                     });
                 };
                 DevicesComponent.prototype.getInfo = function () {
@@ -559,10 +894,19 @@
                             break;
                     }
                 };
+                DevicesComponent.prototype.go = function (url) {
+                    switch (url) {
+                        case 'admin':
+                            this.router.navigate(['/admin']);
+                            break;
+                    }
+                };
                 return DevicesComponent;
             }());
             DevicesComponent.ctorParameters = function () { return [
-                { type: _shared_services_api_service__WEBPACK_IMPORTED_MODULE_2__["APIService"] }
+                { type: _shared_services_api_service__WEBPACK_IMPORTED_MODULE_2__["APIService"] },
+                { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"] },
+                { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivatedRoute"] }
             ]; };
             DevicesComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -636,8 +980,8 @@
                     var param = '?cuid=' + cuid;
                     return this.http.get(this.url + 'client' + param, this.httpOptions);
                 };
-                APIService.prototype.getDevices = function (cuid, cid) {
-                    var param = "?cuid=" + cuid + "&cid=" + cid;
+                APIService.prototype.getDevices = function (cuid, cid, on) {
+                    var param = "?cuid=" + cuid + "&cid=" + cid + "&on=" + on;
                     return this.http.get(this.url + 'devices' + param, this.httpOptions);
                 };
                 APIService.prototype.getInfo = function (id) {
@@ -787,6 +1131,12 @@
             /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
             /* harmony import */ var _material_material_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./material/material.module */ "./src/app/shared/material/material.module.ts");
             /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+            /* harmony import */ var _devices_admin_company_company_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../devices/admin/company/company.component */ "./src/app/devices/admin/company/company.component.ts");
+            /* harmony import */ var _devices_admin_client_client_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../devices/admin/client/client.component */ "./src/app/devices/admin/client/client.component.ts");
+            /* harmony import */ var _devices_admin_device_device_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../devices/admin/device/device.component */ "./src/app/devices/admin/device/device.component.ts");
+            /* harmony import */ var _devices_admin_manage_manage_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../devices/admin/manage/manage.component */ "./src/app/devices/admin/manage/manage.component.ts");
+            /* harmony import */ var _devices_admin_admin_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../devices/admin/admin.component */ "./src/app/devices/admin/admin.component.ts");
+            /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
             var SharedModule = /** @class */ (function () {
                 function SharedModule() {
                 }
@@ -794,11 +1144,12 @@
             }());
             SharedModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-                    declarations: [],
+                    declarations: [_devices_admin_company_company_component__WEBPACK_IMPORTED_MODULE_5__["CompanyComponent"], _devices_admin_client_client_component__WEBPACK_IMPORTED_MODULE_6__["ClientComponent"], _devices_admin_device_device_component__WEBPACK_IMPORTED_MODULE_7__["DeviceComponent"], _devices_admin_manage_manage_component__WEBPACK_IMPORTED_MODULE_8__["ManageComponent"], _devices_admin_admin_component__WEBPACK_IMPORTED_MODULE_9__["AdminComponent"]],
                     imports: [
                         _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
                         _material_material_module__WEBPACK_IMPORTED_MODULE_3__["MaterialModule"],
-                        _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClientModule"]
+                        _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClientModule"],
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_10__["ReactiveFormsModule"]
                     ],
                     exports: [
                         _material_material_module__WEBPACK_IMPORTED_MODULE_3__["MaterialModule"],
