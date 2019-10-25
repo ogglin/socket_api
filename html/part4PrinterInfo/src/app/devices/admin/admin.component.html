@@ -1,0 +1,51 @@
+<div class="admin-panel">
+  <ng-container *ngIf="!isLogIn">
+    <div class="login-form bg-black">
+      <form [formGroup]="loginForm" (ngSubmit)="logIn()">
+        <mat-form-field>
+          <input matInput placeholder="Login" name="login" formControlName="loginControl">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Password" name="password" formControlName="passControl">
+        </mat-form-field>
+        <button mat-raised-button type="submit" color="primary">Вход</button>
+      </form>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isLogIn">
+    <header class="container">
+      <div class="pt-2">
+        <mat-form-field class="" style="width: 250px;">
+          <input type="text" placeholder="Поиск помпании" aria-label="Number" matInput [formControl]="customerControl"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredCustomers | async" [value]="option['title']"
+                        (click)="setCustomer(option['id'])">
+              {{option['title']}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="socket-init">
+        <button mat-raised-button color="accent" (click)="go('device')">Выход</button>
+        <!--button mat-raised-button id="addDevice">Добавить</button-->
+      </div>
+    </header>
+    <mat-sidenav-container *ngIf="customers">
+      <mat-sidenav opened mode="side" class="px-2 sidenav">
+        <h3>Офис:</h3>
+        <mat-form-field class="full-width" *ngIf="clients.length > 0">
+          <mat-select>
+            <mat-option *ngFor="let option of clients" [value]="option['name']" (click)="setClient(option['id'])">
+              {{option['name']}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-sidenav>
+      <div class="container">
+        {{devices | json}}
+      </div>
+    </mat-sidenav-container>
+  </ng-container>
+</div>

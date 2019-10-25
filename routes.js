@@ -53,7 +53,7 @@ module.exports = function (app) {
 
     /* Get Devices */
     app.get('/api/devices', function (req, res) {
-        db.getDevicesO(req.query['cuid'], req.query['cid']).subscribe(result=>{
+        db.getDevicesO(req.query['cuid'], req.query['cid'], req.query['on']).subscribe(result=>{
             res.send(result);
         });
     });

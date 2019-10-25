@@ -13,7 +13,7 @@
   <app-root></app-root>
 
   <script>
-      var socket = new WebSocket("ws://localhost:8080/ws");
+      var socket = new WebSocket("ws://116.203.243.136:8080/ws");
       document.addEventListener('DOMContentLoaded', function() {
           socket.onopen = function () {
               console.log("Соединение установлено.");
@@ -45,8 +45,9 @@
           };
 
           document.getElementById('btnInit').onclick = function () {
-              console.log('btnInit');
-              socket.send('{"server_init": "getDevices", "client": ' + document.getElementById('clientId').value + '}');
+              var q = document.getElementById('info_query').value;
+              console.log(q);
+              socket.send(q);
           };
           /*document.getElementById('addDevice').onclick = function () {
               console.log('addDevice');

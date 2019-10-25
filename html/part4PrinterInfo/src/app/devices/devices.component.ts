@@ -4,6 +4,7 @@ import {Customers} from './shared/model/api';
 import {FormControl} from "@angular/forms";
 import {Observable} from "rxjs";
 import {map, startWith} from "rxjs/operators";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-devices',
@@ -23,12 +24,14 @@ export class DevicesComponent implements OnInit {
   infoDate: any;
   devices: any[] = [];
   device: any;
+  initDevices: any[] = [];
   devId: number;
   dates: any[] = [];
   dataLI: number = 0;
   devLI: number = 0;
+  getQuery: string;
 
-  constructor(private api: APIService) { }
+  constructor(private api: APIService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.getCustomer();
@@ -55,9 +58,20 @@ export class DevicesComponent implements OnInit {
   }
   getDevices() {
     this.devices = [];
-    this.api.getDevices(this.cuid, this.cid).subscribe(result=>{
+    this.api.getDevices(this.cuid, this.cid, 1).subscribe(result=>{
       this.devices = result;
       console.log(this.devices);
+      this.devices.forEach(item=>{
+        this.initDevices.push({
+          productName: item['productname'],
+          url: item['url'],
+          serialNumber: item['sn'],
+          device_id: item['id']
+        });
+      });
+      this.getQuery = '{"server_init": "getInfo", "init_company":' + this.cuid+',"init_client": '+this.cid+',"devices": '+
+       JSON.stringify(this.initDevices) +'}';
+      console.log(this.getQuery);
     });
   }
   getInfo() {
@@ -68,7 +82,6 @@ export class DevicesComponent implements OnInit {
       this.infos.forEach(item=>{
         this.dates.push(item['datetime']);
       });
-
     });
   }
 
@@ -100,5 +113,10 @@ export class DevicesComponent implements OnInit {
       case 'dev':this.devLI = i; break
     }
 
+  }
+  go(url) {
+    switch (url) {
+      case 'admin': this.router.navigate(['/admin']); break;
+    }
   }
 }

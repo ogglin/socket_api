@@ -43,7 +43,7 @@ wss.on('connection', function connection(ws) {
             console.log(data, isJson);
             if (isJson) {
                 var obj = JSON.parse(data);
-                if (obj['init_client'] && obj['new'] === 0) {
+                if (obj['init_client']) {
                     db.addInfoO(
                         obj['init_client'],
                         obj['company_id'],
@@ -99,19 +99,19 @@ wss.on('connection', function connection(ws) {
                         ws.send(JSON.stringify(res));
                     });
                 }
-                if (obj['server_init'] === 'getDevices' && !obj['status']) {
+                if (obj['server_init'] === 'getInfo' && !obj['status']) {
                     for (var key in clients) {
                         clients[key].send('{"status":' + data + '}');
                     }
                 }
-                //{"server_init": "getInfo", "client": 1}
-                if (obj['server_init'] === 'getInfo' && !obj['status']) {
+                //{"server_init": "getInfo", "client": 1} - old variant
+                /*if (obj['server_init'] === 'getInfo' && !obj['status']) {
                     if (obj['client'] !== undefined) {
                         db.getInfoO(obj['client']).subscribe(res => {
                             ws.send(JSON.stringify(res));
                         });
                     }
-                }
+                }*/
                 //{"server_init": "getCustomers"}
                 if (obj['server_init'] === 'getCustomers' && !obj['status']) {
                     db.getCustomersO().subscribe(res => {
