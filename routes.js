@@ -19,8 +19,8 @@ module.exports = function (app) {
 
     /* Get Client */
     app.get('/api/client', function (req, res) {
-        if(req.query['cuid']) {
-            db.getClientsO(req.query['cuid']).subscribe(result=>{
+        if (req.query['cuid']) {
+            db.getClientsO(req.query['cuid']).subscribe(result => {
                 return res.send(result);
             });
         } else {
@@ -30,15 +30,15 @@ module.exports = function (app) {
 
     /* Get Address */
     app.get('/api/address', function (req, res) {
-        db.getAddressO().subscribe(result=>{
+        db.getAddressO().subscribe(result => {
             res.send(result);
         });
     });
 
     /* Get Info */
     app.get('/api/info', function (req, res) {
-        if(req.query['client']) {
-            db.getInfoO(req.query['client']).subscribe(result=>{
+        if (req.query['client']) {
+            db.getInfoO(req.query['client']).subscribe(result => {
                 res.send(result);
             });
         } else {
@@ -48,38 +48,60 @@ module.exports = function (app) {
 
     /* Get Errors */
     app.get('/api/errors', function (req, res) {
-        db.getErrorsO().subscribe(result=>{
+        db.getErrorsO().subscribe(result => {
             res.send(result);
         });
     });
 
     /* Get Devices */
     app.get('/api/devices', function (req, res) {
-        db.getDevicesO(req.query['cuid'], req.query['cid'], req.query['on']).subscribe(result=>{
+        db.getDevicesO(req.query['cuid'], req.query['cid'], req.query['on']).subscribe(result => {
             res.send(result);
         });
     });
 
     /* Put company */
     app.put('/api/company', jsonParser, function (req, res) {
-        db.addCustomerO(req.body['title'], req.body['desc']).subscribe(result=>{
+        db.addCustomerO(req.body['title'], req.body['desc']).subscribe(result => {
             res.send(result);
         });
     });
 
     /* Put client */
     app.put('/api/client', multipart.array(), function (req, res) {
-       db.addClientO(req.body['name'], req.body['customers_id']).subscribe(result=>{
-           res.send(result);
-       });
+        db.addClientO(req.body['name'], req.body['customers_id']).subscribe(result => {
+            res.send(result);
+        });
     });
 
     /* Put device */
     app.put('/api/device', multipart.array(), function (req, res) {
-       db.addDeviceO(req.body['productName'], req.body['url'], req.body['init_client'], req.body['company_id'],
-                req.body['article'], req.body['client_article'], req.body['serialNumber'], req.body['enable']
-       ).subscribe(result=>{
-           res.send(result);
-       });
+        db.addDeviceO(req.body['productName'], req.body['url'], req.body['init_client'], req.body['company_id'],
+            req.body['article'], req.body['client_article'], req.body['serialNumber'], req.body['enable']
+        ).subscribe(result => {
+            res.send(result);
+        });
+    });
+
+    /* Edit device */
+    app.post('/api/device', multipart.array(), function (req, res) {
+        db.editDeviceO(req.body['id'], req.body['productName'], req.body['url'], req.body['init_client'], req.body['company_id'],
+            req.body['article'], req.body['client_article'], req.body['serialNumber'], req.body['enable']).subscribe(result => {
+            res.send(result);
+        });
+    });
+
+    /* Edit company */
+    app.post('/api/company', multipart.array(), function (req, res) {
+        db.editCompanyO(req.body['id'], req.body['title']).subscribe(result => {
+            res.send(result);
+        });
+    });
+
+    /* Edit client */
+    app.post('/api/client', multipart.array(), function (req, res) {
+        db.editClientO(req.body['id'], req.body['name']).subscribe(result => {
+            res.send(result);
+        });
     });
 };

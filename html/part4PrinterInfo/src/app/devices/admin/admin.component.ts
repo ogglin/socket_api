@@ -27,6 +27,9 @@ export class AdminComponent implements OnInit {
   reqCompany: any;
   reqClient: any;
   reqDevice: any;
+  did: number;
+  saveCompany: boolean = false;
+  saveClient: boolean = false;
 
   loginForm = new FormGroup({
     loginControl: new FormControl(''),
@@ -87,30 +90,57 @@ export class AdminComponent implements OnInit {
   }
 
   addCompany(){
-    const body = {
-      title: this.companyForm.controls['title'].value,
-      desc: this.companyForm.controls['desc'].value
-    };
-    this.api.addCompany(body).subscribe(result=>{
-      this.reqCompany = result;
-      if(result['status'] === 'success') {
-        this.getCustomer();
-      }
-    });
+    if(this.saveCompany) {
+      const body = {
+        title: this.companyForm.controls['title'].value,
+        id: this.cuid
+      };
+      this.api.editCompany(body).subscribe(result=>{
+        this.reqCompany = result;
+        if(result['status'] === 'success') {
+          this.getCustomer();
+        }
+      });
+    } else {
+      const body = {
+        title: this.companyForm.controls['title'].value,
+        desc: this.companyForm.controls['desc'].value
+      };
+      this.api.addCompany(body).subscribe(result=>{
+        this.reqCompany = result;
+        if(result['status'] === 'success') {
+          this.getCustomer();
+        }
+      });
+    }
   }
 
   addClient(){
-    const body = {
-      name: this.clientForm.controls['name'].value,
-      customers_id: this.cuid
-    };
-    this.api.addClient(body).subscribe(result=>{
-      console.log(result);
-      this.reqClient = result;
-      if(result['status'] === 'success') {
-        this.getClient();
-      }
-    });
+    if(this.saveClient) {
+      const body = {
+        name: this.clientForm.controls['name'].value,
+        id: this.cid
+      };
+      this.api.editClient(body).subscribe(result=>{
+        console.log(result);
+        this.reqClient = result;
+        if(result['status'] === 'success') {
+          this.getClient();
+        }
+      });
+    } else {
+      const body = {
+        name: this.clientForm.controls['name'].value,
+        customers_id: this.cuid
+      };
+      this.api.addClient(body).subscribe(result=>{
+        console.log(result);
+        this.reqClient = result;
+        if(result['status'] === 'success') {
+          this.getClient();
+        }
+      });
+    }
   }
 
   addDevice(){
@@ -133,6 +163,27 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  editDevice(){
+    const body = {
+      id: this.did,
+      productName: this.deviceForm.controls['productName'].value,
+      url: this.deviceForm.controls['url'].value,
+      init_client: this.cid,
+      company_id: this.cuid,
+      article: this.deviceForm.controls['article'].value,
+      client_article: this.deviceForm.controls['client_article'].value,
+      serialNumber: this.deviceForm.controls['serialNumber'].value,
+      enable: 1
+    };
+    this.api.editDevice(body).subscribe(result=>{
+      console.log(result);
+      this.reqDevice = result;
+      if(result['status'] === 'success') {
+        this.getDevices();
+      }
+    });
+  }
+
   setCustomer(id) {
     this.cuid = id;
     this.getClient();
@@ -141,6 +192,73 @@ export class AdminComponent implements OnInit {
   setClient(id) {
     this.cid = id;
     this.getDevices();
+  }
+
+  setCompany(id) {
+    if(id !== 0) {
+      this.customers.forEach(item=>{
+        if(item['id'] === id) {
+          this.companyForm.controls['title'].setValue(item['title']);
+          this.saveCompany = true;
+        }
+      });
+    } else {
+      this.companyForm.controls['title'].setValue('');
+      this.saveCompany = false;
+    }
+  }
+
+  setClients(id) {
+    if(id !== 0) {
+      this.clients.forEach(item=>{
+        if(item['id'] === id) {
+          this.clientForm.controls['name'].setValue(item['name']);
+          this.saveClient = true;
+        }
+      });
+    } else {
+      this.clientForm.controls['name'].setValue('');
+      this.saveClient = false;
+    }
+  }
+
+  setDevice(id){
+    if(id !== 0) {
+      this.devices.forEach(item=>{
+        if(item['id'] === id) {
+          this.device = item;
+          this.deviceForm.controls['productName'].setValue(item['productname']);
+          this.deviceForm.controls['url'].setValue(item['url']);
+          this.deviceForm.controls['article'].setValue(item['article']);
+          this.deviceForm.controls['client_article'].setValue(item['client_article']);
+          this.deviceForm.controls['serialNumber'].setValue(item['sn']);
+          this.did = id;
+          console.log(this.device);
+        }
+      });
+    } else {
+      this.did = null;
+      this.deviceForm.controls['productName'].setValue('');
+      this.deviceForm.controls['url'].setValue('');
+      this.deviceForm.controls['article'].setValue('');
+      this.deviceForm.controls['client_article'].setValue('');
+      this.deviceForm.controls['serialNumber'].setValue('');
+    }
+  }
+
+  edit(i, id) {
+    switch (i) {
+      case 'device': this.setDevice(id); break;
+      case 'company': this.setCompany(id); break;
+      case 'client': this.setClients(id); break;
+    }
+  }
+  clear(i) {
+    switch (i) {
+      case "device": this.setDevice(0); break;
+      case 'company': this.setCompany(0); break;
+      case 'client': this.setClients(0); break;
+    }
   }
   logIn() {
     if (this.loginForm.controls['loginControl'].value === 'admin' && this.loginForm.controls['passControl'].value === 'q1w2e3r4t5y6') {

@@ -55,4 +55,16 @@ export class APIService {
   addDevice(body): Observable<any[]> {
     return this.http.put<any>(this.url + 'device', body, this.httpOptions);
   }
+
+  editDevice(body): Observable<any[]> {
+    return this.http.post<any>(this.url + 'device', body, this.httpOptions);
+  }
+
+  editCompany(body): Observable<any[]> {
+    return this.http.post<any>(this.url + 'company', body, this.httpOptions);
+  }
+
+  editClient(body): Observable<any[]> {
+    return this.http.post<any>(this.url + 'client', body, this.httpOptions);
+  }
 }

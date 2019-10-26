@@ -53,6 +53,9 @@ mat-sidenav-container {
 .pb-2 {
   padding-bottom: 1em;
 }
+.mx-2 {
+  margin: 0 1em;
+}
 .bg-black {
   background-color: black;
 }
@@ -154,4 +157,7 @@ mat-list-item:hover {
     padding: 4px;
     text-align: center;
   }
+}
+mat-icon {
+  cursor: pointer;
 }

@@ -215,7 +215,7 @@ function addInfo (init_client, company_id, address_id, url, status, cartridge, K
     qai = "DO $$ " +
         "DECLARE lastId INTEGER = 0; " +
         "BEGIN " +
-        "SELECT devices.id INTO lastID FROM rdata.devices WHERE client_id = 2 AND sn = 'VCG7428977'; " +
+        "SELECT devices.id INTO lastID FROM rdata.devices WHERE client_id = "+init_client+" AND sn = '"+serialNumber+"'; " +
         "INSERT INTO rdata.info (printcycles, scancycles, status, kit, cartridge, log, maintenancekitcount, adfcycles, datetime, device_id) " +
         "VALUES (";
     if (printCycles) {qai += printCycles;} else {qai += "NULL"}
@@ -249,7 +249,6 @@ function addError(init_client_error, url, error, callback) {
     var d = new Date();
     var n = d.toJSON();
     qaa = "INSERT INTO rdata.errors VALUES ("+init_client_error+", '"+ url +"', '"+ error +"',"+n+") RETURNING id;";
-    console.log(qaa);
     (async () => {
         const client = await pool.connect();
         try {
@@ -265,29 +264,94 @@ function addError(init_client_error, url, error, callback) {
     });
 }
 
+function editCompany(id, title, callback) {
+    var qec = "UPDATE rdata.company SET title = '"+title+"' WHERE company.id = "+id+";";
+    console.log(qec);
+    (async () => {
+        const client = await pool.connect();
+        try {
+            const result = await client.query(qec);
+            callback ({status: 'success', result: result.rows});
+            return {status: 'success', result: result.rows};
+        } finally {
+            client.release()
+        }
+    })().catch(e => {
+        console.log(e.stack);
+        callback ({status: 'error', result: e.detail});
+        return {error: e.detail};
+    });
+}
+
+function editClient(id, name, callback) {
+    var qecl = "UPDATE rdata.clients SET name = '"+name+"' WHERE clients.id = "+id+";";
+    console.log(qecl);
+    (async () => {
+        const client = await pool.connect();
+        try {
+            const result = await client.query(qecl);
+            callback ({status: 'success', result: result.rows});
+            return {status: 'success', result: result.rows};
+        } finally {
+            client.release()
+        }
+    })().catch(e => {
+        console.log(e.stack);
+        callback ({status: 'error', result: e.detail});
+        return {error: e.detail};
+    });
+}
+
+function editDevice(id, productName, url, init_client, company_id, article, client_article, serialNumber, enable, callback) {
+    var qed = "UPDATE rdata.devices SET (";
+    if(productName) {qed += "productname"}
+    if(url) {qed += ",url"}
+    if(init_client) {qed += ",client_id"}
+    if(company_id) {qed += ",company_id"}
+    if(article) {qed += ",article"}
+    if(client_article) {qed += ",client_article"}
+    if(serialNumber) {qed += ",sn"}
+    if(enable) {qed += ",enabled"}
+    qed += ") = (";
+    if(productName) {qed += "'"+productName+"'"}
+    if(url) {qed += ",'"+url+"'"}
+    if(init_client) {qed += ","+init_client}
+    if(company_id) {qed += ","+company_id}
+    if(article) {qed += ",'"+article+"'"}
+    if(client_article) {qed += ",'"+client_article+"'"}
+    if(serialNumber) {qed += ",'"+serialNumber+"'"}
+    if(enable) {qed += ","+enable}
+    qed += ") WHERE devices.id = "+id+";";
+    (async () => {
+        const client = await pool.connect();
+        try {
+            const result = await client.query(qed);
+            callback ({status: 'success', result: result.rows});
+            return {status: 'success', result: result.rows};
+        } finally {
+            client.release()
+        }
+    })().catch(e => {
+        console.log(e.stack);
+        callback ({status: 'error', result: e.detail});
+        return {error: e.detail};
+    });
+}
 
 module.exports = {
     addCustomerO: Rx.Observable.bindCallback(addCustomer),
-
     addClientO: Rx.Observable.bindCallback(addClient),
-
     addAddressO: Rx.Observable.bindCallback(addAddress),
-
     addDeviceO: Rx.Observable.bindCallback(addDevice),
-
     addInfoO: Rx.Observable.bindCallback(addInfo),
-
     addErrorO: Rx.Observable.bindCallback(addError),
-
     getCustomersO: Rx.Observable.bindCallback(getCustomers),
-
     getClientsO: Rx.Observable.bindCallback(getClient),
-
     getAddressO: Rx.Observable.bindCallback(getAddress),
-
     getDevicesO: Rx.Observable.bindCallback(getDevices),
-
     getInfoO: Rx.Observable.bindCallback(getInfo),
-
-    getErrorsO: Rx.Observable.bindCallback(getErrors)
+    getErrorsO: Rx.Observable.bindCallback(getErrors),
+    editDeviceO: Rx.Observable.bindCallback(editDevice),
+    editCompanyO: Rx.Observable.bindCallback(editCompany),
+    editClientO: Rx.Observable.bindCallback(editClient)
 };

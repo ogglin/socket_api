@@ -25,6 +25,7 @@
               {{option['title']}}
             </mat-option>
           </mat-autocomplete>
+          <mat-icon matSuffix *ngIf="cuid" (click)="setCompany(cuid)">mode_edit</mat-icon>
           <mat-hint>ID компании: {{cuid}}</mat-hint>
         </mat-form-field>
       </div>
@@ -32,12 +33,16 @@
         <form [formGroup]="companyForm" (ngSubmit)="addCompany()">
           <mat-form-field>
             <input matInput placeholder="Название" name="title" formControlName="title" required>
+            <mat-icon *ngIf="companyForm.controls['title'].value !== ''" matSuffix (click)="clear('company')">close</mat-icon>
             <mat-hint *ngIf="reqCompany === undefined">Добавить новую компанию</mat-hint>
             <mat-hint *ngIf="reqCompany !== undefined" class="text-orange">{{reqCompany['status']}}
               : {{reqCompany['result']}}</mat-hint>
           </mat-form-field>
-          <button mat-raised-button type="submit" color="primary" class="px-2"
+          <button mat-raised-button type="submit" color="primary" class="px-2" *ngIf="!saveCompany"
                   [disabled]="companyForm.controls['title'].hasError('required')">Добавить
+          </button>
+          <button mat-raised-button type="submit" color="primary" class="px-2" *ngIf="saveCompany"
+                  [disabled]="companyForm.controls['title'].hasError('required')">Сохранить
           </button>
         </form>
       </div>
@@ -55,18 +60,24 @@
               {{option['name']}}
             </mat-option>
           </mat-select>
+          <mat-icon matSuffix *ngIf="cid" (click)="setClients(cid)">mode_edit</mat-icon>
           <mat-hint>ID клиента: {{cid}}</mat-hint>
         </mat-form-field>
 
         <form [formGroup]="clientForm" (ngSubmit)="addClient()" *ngIf="cuid !== 0">
           <mat-form-field>
             <input matInput placeholder="Название" name="name" formControlName="name" required>
-            <mat-hint *ngIf="reqClient === undefined">Добавить новый клиент</mat-hint>
+            <mat-icon *ngIf="clientForm.controls['name'].value !== ''" matSuffix (click)="clear('client')">close</mat-icon>
+            <mat-hint *ngIf="reqClient === undefined && !saveClient">Добавить новый клиент</mat-hint>
+            <mat-hint *ngIf="reqClient === undefined && saveClient">Сохранить клиент</mat-hint>
             <mat-hint *ngIf="reqClient !== undefined" class="text-orange">{{reqClient['status']}}
               : {{reqClient['result']}}</mat-hint>
           </mat-form-field>
-          <button mat-raised-button type="submit" color="primary" class="px-2"
+          <button mat-raised-button type="submit" color="primary" class="mx-2" *ngIf="!saveClient"
                   [disabled]="clientForm.controls['name'].hasError('required')">Добавить
+          </button>
+          <button mat-raised-button type="submit" color="primary" class="mx-2" *ngIf="saveClient"
+                  [disabled]="clientForm.controls['name'].hasError('required')">Сохранить
           </button>
         </form>
       </mat-sidenav>
@@ -74,7 +85,8 @@
         <form [formGroup]="deviceForm" (ngSubmit)="addDevice()" class="device-form">
           <mat-form-field>
             <input matInput placeholder="Название" name="productName" formControlName="productName" required>
-            <mat-hint *ngIf="reqDevice === undefined">Добавить новое устройство</mat-hint>
+            <mat-hint *ngIf="reqDevice === undefined && !did">Добавить новое устройство</mat-hint>
+            <mat-hint *ngIf="reqDevice === undefined && did">Сохранить изменения</mat-hint>
             <mat-hint *ngIf="reqDevice !== undefined" class="text-orange">{{reqDevice['status']}}
               : {{reqDevice['result']}}</mat-hint>
           </mat-form-field>
@@ -85,18 +97,27 @@
             <input matInput placeholder="SN" name="serialNumber" formControlName="serialNumber" required>
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Артикль" name="article" formControlName="article">
+            <input matInput placeholder="Артикул" name="article" formControlName="article">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Артикль клиента" name="client_article" formControlName="client_article">
+            <input matInput placeholder="Артикул клиента" name="client_article" formControlName="client_article">
           </mat-form-field>
-          <button mat-raised-button type="submit" color="primary" class="px-2"
+          <button mat-raised-button type="submit" color="primary" class="mx-2"
                   [disabled]="deviceForm.controls['productName'].hasError('required')
                   || deviceForm.controls['url'].hasError('required')
                   || deviceForm.controls['serialNumber'].hasError('required')">
             Добавить
           </button>
         </form>
+        <div>
+          <button mat-raised-button (click)="editDevice()" color="accent" class="mx-2" *ngIf="did"
+                  [disabled]="deviceForm.controls['productName'].hasError('required')
+                  || deviceForm.controls['url'].hasError('required')
+                  || deviceForm.controls['serialNumber'].hasError('required')">
+            Сохранить
+          </button>
+          <button mat-raised-button color="warn" (click)="clear('device')" class="float-right">Сброс</button>
+        </div>
         <table class="device-table">
           <thead>
             <tr>
@@ -104,8 +125,9 @@
               <th>Название</th>
               <th>URL</th>
               <th>Серийный номер</th>
-              <th>Артикль</th>
-              <th>Артикль клиента</th>
+              <th>Артикул</th>
+              <th>Артикул клиента</th>
+              <th>-</th>
             </tr>
           </thead>
           <tbody>
@@ -116,6 +138,7 @@
             <td>{{item['sn']}}</td>
             <td>{{item['article']}}</td>
             <td>{{item['client_article']}}</td>
+            <td><button mat-stroked-button color="primary" (click)="edit('device', item['id'])"><mat-icon>edit</mat-icon></button></td>
           </tr>
           </tbody>
         </table>
