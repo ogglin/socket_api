@@ -104,6 +104,7 @@ export class DevicesComponent implements OnInit {
     this.infos.forEach(info => {
       if(info['datetime'] === date){
         this.device = info;
+        console.log(this.device);
       }
     });
   }

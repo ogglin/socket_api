@@ -54,7 +54,7 @@
           <ng-container *ngIf="device">
             <h2>{{device['productname']}}</h2>
             <p>Статус: {{device['status']}}</p>
-            <p>Серийный номер: {{device['serialnumber']}}</p>
+            <p>Серийный номер: {{device['sn']}}</p>
             <p>Сетевой адрес: {{device['url']}}</p>
             <ng-container *ngFor="let color of device['cartridge']">
               <p *ngIf="color['black']">Черный {{color['black'].replace('%', '')}}<br><br>
@@ -74,21 +74,21 @@
                                   color="warn"></mat-progress-bar>
               </p>
             </ng-container>
-            <p>Цикл механизма: {{device['printcycles']}}</p>
-            <p>Счетчик технического обслуживания:
+            <p *ngIf="device['printcycles']">Цикл механизма: {{device['printcycles']}}</p>
+            <p *ngIf="device['kit']">Счетчик технического обслуживания:
               <ng-container *ngIf="device['kit']">
-                <ng-container *ngIf="device['kit'][0]['adfcycles']">{{device['kit'][0]['adfcycles']}}</ng-container>
+                <ng-container *ngIf="device['kit'][0]['adfCycles']">{{device['kit'][0]['adfCycles']}}</ng-container>
                 <ng-container
                   *ngIf="device['kit'][0]['maintenanceKitCount']">{{device['kit'][0]['maintenanceKitCount']}}</ng-container>
               </ng-container>
             </p>
-            <p>Цикл сканирования: {{device['scancycles']}}</p>
-            <h4>Лог:</h4>
+            <p *ngIf="device['scancycles']">Цикл сканирования: {{device['scancycles']}}</p>
+            <h4 *ngIf="device['log']">Лог:</h4>
             <table>
               <tbody>
-              <tr>
-                <td></td>
-                <td></td>
+              <tr *ngFor="let log of device['log']">
+                <td>{{log['date']}}</td>
+                <td>{{log['message']}}</td>
               </tr>
               </tbody>
             </table>

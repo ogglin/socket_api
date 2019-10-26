@@ -93,7 +93,7 @@ wss.on('connection', function connection(ws) {
                     ws.send('{"status": '+ obj['error'] +'}');
                     db.addErrorO(
                         obj['init_client_error'],
-                        obj['url'],
+                        obj['device_id'],
                         obj['error']
                     ).subscribe(res => {
                         ws.send(JSON.stringify(res));

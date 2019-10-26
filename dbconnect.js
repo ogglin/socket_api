@@ -245,10 +245,11 @@ function addInfo (init_client, company_id, address_id, url, status, cartridge, K
     });
 }
 
-function addError(init_client_error, url, error, callback) {
+function addError(init_client_error, device_id, error, callback) {
     var d = new Date();
     var n = d.toJSON();
-    qaa = "INSERT INTO rdata.errors VALUES ("+init_client_error+", '"+ url +"', '"+ error +"',"+n+") RETURNING id;";
+    qaa = "INSERT INTO rdata.errors VALUES ("+init_client_error+", "+ device_id +", '"+ error +"', '"+n+"') RETURNING id;";
+    console.log(qaa)
     (async () => {
         const client = await pool.connect();
         try {
