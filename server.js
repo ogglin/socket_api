@@ -43,7 +43,7 @@ wss.on('connection', function connection(ws) {
             console.log(data, isJson);
             if (isJson) {
                 var obj = JSON.parse(data);
-                if (obj['init_client']) {
+                if (obj['init_client'] && !obj['server_init']) {
                     db.addInfoO(
                         obj['init_client'],
                         obj['company_id'],
