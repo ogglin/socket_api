@@ -25,6 +25,7 @@
               {{option['title']}}
             </mat-option>
           </mat-autocomplete>
+          <mat-hint>ID компании: {{cuid}}</mat-hint>
         </mat-form-field>
       </div>
       <div class="p-2 float-left">
@@ -54,6 +55,7 @@
               {{option['name']}}
             </mat-option>
           </mat-select>
+          <mat-hint>ID клиента: {{cid}}</mat-hint>
         </mat-form-field>
 
         <form [formGroup]="clientForm" (ngSubmit)="addClient()" *ngIf="cuid !== 0">
