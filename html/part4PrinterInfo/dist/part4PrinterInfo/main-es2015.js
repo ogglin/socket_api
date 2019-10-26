@@ -45,7 +45,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"admin-panel\">\n  <ng-container *ngIf=\"!isLogIn\">\n    <div class=\"login-form bg-black\">\n      <form [formGroup]=\"loginForm\" (ngSubmit)=\"logIn()\">\n        <mat-form-field>\n          <input matInput placeholder=\"Login\" name=\"login\" formControlName=\"loginControl\">\n        </mat-form-field>\n        <mat-form-field>\n          <input matInput placeholder=\"Password\" name=\"password\" formControlName=\"passControl\">\n        </mat-form-field>\n        <button mat-raised-button type=\"submit\" color=\"primary\">Вход</button>\n      </form>\n    </div>\n  </ng-container>\n\n  <ng-container *ngIf=\"isLogIn\">\n    <header class=\"container\">\n      <div class=\"pt-2\">\n        <mat-form-field class=\"\" style=\"width: 250px;\">\n          <input type=\"text\" placeholder=\"Поиск помпании\" aria-label=\"Number\" matInput [formControl]=\"customerControl\"\n                 [matAutocomplete]=\"auto\">\n          <mat-autocomplete #auto=\"matAutocomplete\">\n            <mat-option *ngFor=\"let option of filteredCustomers | async\" [value]=\"option['title']\"\n                        (click)=\"setCustomer(option['id'])\">\n              {{option['title']}}\n            </mat-option>\n          </mat-autocomplete>\n        </mat-form-field>\n      </div>\n      <div class=\"socket-init\">\n        <button mat-raised-button color=\"accent\" (click)=\"go('device')\">Выход</button>\n        <!--button mat-raised-button id=\"addDevice\">Добавить</button-->\n      </div>\n    </header>\n    <mat-sidenav-container *ngIf=\"customers\">\n      <mat-sidenav opened mode=\"side\" class=\"px-2 sidenav\">\n        <h3>Офис:</h3>\n        <mat-form-field class=\"full-width\" *ngIf=\"clients.length > 0\">\n          <mat-select>\n            <mat-option *ngFor=\"let option of clients\" [value]=\"option['name']\" (click)=\"setClient(option['id'])\">\n              {{option['name']}}\n            </mat-option>\n          </mat-select>\n        </mat-form-field>\n      </mat-sidenav>\n      <div class=\"container\">\n        {{devices | json}}\n      </div>\n    </mat-sidenav-container>\n  </ng-container>\n</div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"admin-panel\">\n  <ng-container *ngIf=\"!isLogIn\">\n    <div class=\"login-form bg-black\">\n      <form [formGroup]=\"loginForm\" (ngSubmit)=\"logIn()\">\n        <mat-form-field>\n          <input matInput placeholder=\"Login\" name=\"login\" formControlName=\"loginControl\">\n        </mat-form-field>\n        <mat-form-field>\n          <input matInput placeholder=\"Password\" name=\"password\" formControlName=\"passControl\">\n        </mat-form-field>\n        <button mat-raised-button type=\"submit\" color=\"primary\">Вход</button>\n      </form>\n    </div>\n  </ng-container>\n\n  <ng-container *ngIf=\"isLogIn\">\n    <header class=\"container\">\n      <div class=\"p-2 float-left\">\n        <mat-form-field class=\"\" style=\"width: 250px;\">\n          <input type=\"text\" placeholder=\"Поиск помпании\" aria-label=\"Number\" matInput [formControl]=\"customerControl\"\n                 [matAutocomplete]=\"auto\">\n          <mat-autocomplete #auto=\"matAutocomplete\">\n            <mat-option *ngFor=\"let option of filteredCustomers | async\" [value]=\"option['title']\"\n                        (click)=\"setCustomer(option['id'])\">\n              {{option['title']}}\n            </mat-option>\n          </mat-autocomplete>\n        </mat-form-field>\n      </div>\n      <div class=\"p-2 float-left\">\n        <form [formGroup]=\"companyForm\" (ngSubmit)=\"addCompany()\">\n          <mat-form-field>\n            <input matInput placeholder=\"Название\" name=\"title\" formControlName=\"title\" required>\n            <mat-hint *ngIf=\"reqCompany === undefined\">Добавить новую компанию</mat-hint>\n            <mat-hint *ngIf=\"reqCompany !== undefined\" class=\"text-orange\">{{reqCompany['status']}}\n              : {{reqCompany['result']}}</mat-hint>\n          </mat-form-field>\n          <button mat-raised-button type=\"submit\" color=\"primary\" class=\"px-2\"\n                  [disabled]=\"companyForm.controls['title'].hasError('required')\">Добавить\n          </button>\n        </form>\n      </div>\n      <div class=\"socket-init\">\n        <button mat-raised-button color=\"accent\" (click)=\"go('device')\">Выход</button>\n        <!--button mat-raised-button id=\"addDevice\">Добавить</button-->\n      </div>\n    </header>\n    <mat-sidenav-container *ngIf=\"customers\">\n      <mat-sidenav opened mode=\"side\" class=\"px-2 sidenav\">\n        <h3>Офис:</h3>\n        <mat-form-field class=\"full-width\" *ngIf=\"clients.length > 0\">\n          <mat-select>\n            <mat-option *ngFor=\"let option of clients\" [value]=\"option['name']\" (click)=\"setClient(option['id'])\">\n              {{option['name']}}\n            </mat-option>\n          </mat-select>\n        </mat-form-field>\n\n        <form [formGroup]=\"clientForm\" (ngSubmit)=\"addClient()\" *ngIf=\"cuid !== 0\">\n          <mat-form-field>\n            <input matInput placeholder=\"Название\" name=\"name\" formControlName=\"name\" required>\n            <mat-hint *ngIf=\"reqClient === undefined\">Добавить новый клиент</mat-hint>\n            <mat-hint *ngIf=\"reqClient !== undefined\" class=\"text-orange\">{{reqClient['status']}}\n              : {{reqClient['result']}}</mat-hint>\n          </mat-form-field>\n          <button mat-raised-button type=\"submit\" color=\"primary\" class=\"px-2\"\n                  [disabled]=\"clientForm.controls['name'].hasError('required')\">Добавить\n          </button>\n        </form>\n      </mat-sidenav>\n      <div class=\"container\" *ngIf=\"clients.length\">\n        <form [formGroup]=\"deviceForm\" (ngSubmit)=\"addDevice()\" class=\"device-form\">\n          <mat-form-field>\n            <input matInput placeholder=\"Название\" name=\"productName\" formControlName=\"productName\" required>\n            <mat-hint *ngIf=\"reqDevice === undefined\">Добавить новое устройство</mat-hint>\n            <mat-hint *ngIf=\"reqDevice !== undefined\" class=\"text-orange\">{{reqDevice['status']}}\n              : {{reqDevice['result']}}</mat-hint>\n          </mat-form-field>\n          <mat-form-field>\n            <input matInput placeholder=\"URL\" name=\"url\" formControlName=\"url\" required>\n          </mat-form-field>\n          <mat-form-field>\n            <input matInput placeholder=\"SN\" name=\"serialNumber\" formControlName=\"serialNumber\" required>\n          </mat-form-field>\n          <mat-form-field>\n            <input matInput placeholder=\"Артикль\" name=\"article\" formControlName=\"article\">\n          </mat-form-field>\n          <mat-form-field>\n            <input matInput placeholder=\"Артикль клиента\" name=\"client_article\" formControlName=\"client_article\">\n          </mat-form-field>\n          <button mat-raised-button type=\"submit\" color=\"primary\" class=\"px-2\"\n                  [disabled]=\"deviceForm.controls['productName'].hasError('required')\n                  || deviceForm.controls['url'].hasError('required')\n                  || deviceForm.controls['serialNumber'].hasError('required')\">\n            Добавить\n          </button>\n        </form>\n        <table class=\"device-table\">\n          <thead>\n            <tr>\n              <th>ID</th>\n              <th>Название</th>\n              <th>URL</th>\n              <th>Серийный номер</th>\n              <th>Артикль</th>\n              <th>Артикль клиента</th>\n            </tr>\n          </thead>\n          <tbody>\n          <tr *ngFor=\"let item of devices\">\n            <td>{{item['id']}}</td>\n            <td>{{item['productname']}}</td>\n            <td>{{item['url']}}</td>\n            <td>{{item['sn']}}</td>\n            <td>{{item['article']}}</td>\n            <td>{{item['client_article']}}</td>\n          </tr>\n          </tbody>\n        </table>\n      </div>\n    </mat-sidenav-container>\n  </ng-container>\n</div>\n");
 
 /***/ }),
 
@@ -524,6 +524,20 @@ let AdminComponent = class AdminComponent {
             loginControl: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
             passControl: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('')
         });
+        this.companyForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]({
+            title: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]),
+            desc: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('')
+        });
+        this.clientForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]({
+            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required])
+        });
+        this.deviceForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]({
+            productName: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]),
+            url: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]),
+            article: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
+            client_article: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](''),
+            serialNumber: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required])
+        });
     }
     ngOnInit() {
         if (localStorage.getItem('logIn') === 'true') {
@@ -537,7 +551,7 @@ let AdminComponent = class AdminComponent {
         return this.customers.filter(option => option['title'].toLowerCase().includes(filterValue));
     }
     getCustomer() {
-        this.api.getCustomers().subscribe(result => {
+        this.api.getCompany().subscribe(result => {
             this.customers = result;
         });
     }
@@ -551,6 +565,50 @@ let AdminComponent = class AdminComponent {
         this.api.getDevices(this.cuid, this.cid, this.isDevOn).subscribe(result => {
             this.devices = result;
             console.log(this.devices);
+        });
+    }
+    addCompany() {
+        const body = {
+            title: this.companyForm.controls['title'].value,
+            desc: this.companyForm.controls['desc'].value
+        };
+        this.api.addCompany(body).subscribe(result => {
+            this.reqCompany = result;
+            if (result['status'] === 'success') {
+                this.getCustomer();
+            }
+        });
+    }
+    addClient() {
+        const body = {
+            name: this.clientForm.controls['name'].value,
+            customers_id: this.cuid
+        };
+        this.api.addClient(body).subscribe(result => {
+            console.log(result);
+            this.reqClient = result;
+            if (result['status'] === 'success') {
+                this.getClient();
+            }
+        });
+    }
+    addDevice() {
+        const body = {
+            productName: this.deviceForm.controls['productName'].value,
+            url: this.deviceForm.controls['url'].value,
+            init_client: this.cid,
+            company_id: this.cuid,
+            article: this.deviceForm.controls['article'].value,
+            client_article: this.deviceForm.controls['client_article'].value,
+            serialNumber: this.deviceForm.controls['serialNumber'].value,
+            enable: 1
+        };
+        this.api.addDevice(body).subscribe(result => {
+            console.log(result);
+            this.reqDevice = result;
+            if (result['status'] === 'success') {
+                this.getDevices();
+            }
         });
     }
     setCustomer(id) {
@@ -829,7 +887,7 @@ let DevicesComponent = class DevicesComponent {
         return this.customers.filter(option => option['title'].toLowerCase().includes(filterValue));
     }
     getCustomer() {
-        this.api.getCustomers().subscribe(result => {
+        this.api.getCompany().subscribe(result => {
             this.customers = result;
         });
     }
@@ -989,7 +1047,7 @@ let APIService = class APIService {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpHeaders"]({ 'Content-Type': 'application/json' })
         };
     }
-    getCustomers() {
+    getCompany() {
         return this.http.get(this.url + 'company', this.httpOptions);
     }
     getClient(cuid) {
@@ -1006,6 +1064,15 @@ let APIService = class APIService {
     }
     getErrors() {
         return this.http.get(this.url + 'errors', this.httpOptions);
+    }
+    addCompany(body) {
+        return this.http.put(this.url + 'company', body, this.httpOptions);
+    }
+    addClient(body) {
+        return this.http.put(this.url + 'client', body, this.httpOptions);
+    }
+    addDevice(body) {
+        return this.http.put(this.url + 'device', body, this.httpOptions);
     }
 };
 APIService.ctorParameters = () => [
@@ -1251,8 +1318,8 @@ __webpack_require__.r(__webpack_exports__);
 
 const environment = {
     production: false,
-    apiURL: 'http://116.203.243.136:5000/api/'
-    /*apiURL: 'http://localhost:5000/api/'*/
+    /*apiURL: 'http://116.203.243.136:5000/api/'*/
+    apiURL: 'http://localhost:5000/api/'
 };
 /*
  * For easier debugging in development mode, you can import the following file
