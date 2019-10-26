@@ -141,12 +141,13 @@ function addCustomer(title, description, callback) {
         }
     })().catch(e => {
         console.log(e.stack);
-        return {error: e.detail};
+        callback ({status: 'error', result: e.detail});
+        return {status: 'error', result: e.detail};
     });
 }
 
-function addClient(token, name, url, customers_id, callback) {
-    qacl = "INSERT INTO rdata.clients (token, name, url, customers_id) VALUES ('"+ token +"', '"+ name +"', '"+ url +"', "+ customers_id +");";
+function addClient(name, customers_id, callback) {
+    qacl = "INSERT INTO rdata.clients (name, customers_id) VALUES ('"+ name  +"', "+ customers_id +");";
     (async () => {
         const client = await pool.connect();
         try {
@@ -158,6 +159,7 @@ function addClient(token, name, url, customers_id, callback) {
         }
     })().catch(e => {
         console.log(e.stack);
+        callback ({status: 'error', result: e.detail});
         return {error: e.detail};
     });
 }
@@ -176,35 +178,19 @@ function addAddress(address, callback) {
         }
     })().catch(e => {
         console.log(e.stack);
+        callback ({status: 'error', result: e.detail});
         return {error: e.detail};
     });
 }
 
-function addDevice(init_client, company_id, address_id, url, status, cartridge, KIT,
-                   productName, serialNumber, maintenanceKitCount, printCycles,
-                   scanCycles, adfCycles, log, article, client_article, company_id, callback) {
-    var d = new Date();
-    var n = d.toJSON();
-    qda = "DO $$ " +
-        "DECLARE lastId INTEGER = 0; " +
-        "BEGIN " +
-        "INSERT INTO rdata.devices (productname, url, client_id, company_id, article, client_article, sn)  " +
+function addDevice(productName, url, init_client, company_id, article, client_article, serialNumber, enable, callback) {
+    qda = "INSERT INTO rdata.devices (productname, url, client_id, company_id, article, client_article, sn, enabled) " +
         "VALUES ('"+productName+"', '"+url+"', "+init_client+", "+company_id;
     if (article) {qda += ", '" + article + "'";} else {qda += ", NULL";}
     if (client_article) {qda += ", '" + client_article + "'";} else {qda += ", NULL";}
-    qda += ", 'VCG7428977'"+") RETURNING id INTO lastId; " +
-        "INSERT INTO rdata.info (printcycles, scancycles, status, kit, cartridge, log, maintenancekitcount, adfcycles, datetime, device_id) VALUES (";
-    if (printCycles) {qda += printCycles;} else {qda += "NULL";}
-    if (scanCycles) {qda += ", " + scanCycles + "";} else {qda += ", NULL";}
-    if (status) {qda += ", '" + status + "'";} else {qda += ", NULL";}
-    if (KIT) {qda += ", '" + JSON.stringify(KIT) + "'";} else {qda += ", NULL";}
-    if (cartridge) {qda += ", '" + JSON.stringify(cartridge) + "'";} else {qda += ", NULL";}
-    if (log) {qda += ", '" + JSON.stringify(log) + "'";} else {qda += ", NULL";}
-    if (maintenanceKitCount) {qda += ", " + maintenanceKitCount + "";} else {qda += ", NULL";}
-    if (adfCycles) {qda += ", " + adfCycles + "";} else {qda += ", NULL";}
-    qda += ",'" +n+ "', lastId); END $$";
-
-    console.log(qda);
+    if (serialNumber) {qda += ", '" + serialNumber + "'";} else {qda += ", NULL";}
+    if (enable) {qda += ", " + enable;} else {qda += ", NULL";}
+    qda += ");";
     (async () => {
         const client = await pool.connect();
         try {
@@ -216,6 +202,7 @@ function addDevice(init_client, company_id, address_id, url, status, cartridge, 
         }
     })().catch(e => {
         console.log(e.stack);
+        callback ({status: 'error', result: e.detail});
         return {error: e.detail};
     });
 }
@@ -253,6 +240,7 @@ function addInfo (init_client, company_id, address_id, url, status, cartridge, K
         }
     })().catch(e => {
         console.log(e.stack);
+        callback ({status: 'error', result: e.detail});
         return {error: e.detail};
     });
 }

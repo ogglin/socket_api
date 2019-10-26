@@ -14,8 +14,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
 
 header {
   background-color: rgba(0, 0, 0, 0.7);
-  height: 90px;
+  height: 100px;
   color: aliceblue;
+  overflow: hidden;
 }
 mat-sidenav-container {
   height: calc(100vh - 90px);
@@ -30,8 +31,13 @@ mat-sidenav-container {
 .cursor-pointer {
   cursor: pointer;
 }
+.float-left {float: left;}
+.float-right {float: right;}
 .border {
   border: 2px solid #e27a0b;
+}
+.p-2 {
+  padding: 1em;
 }
 .py-2 {
   padding-top: 1em;
@@ -131,5 +137,21 @@ mat-list-item:hover {
   }
   button {
     margin: 0 auto;
+  }
+}
+.device-form {
+  mat-form-field {
+    margin: 0 2px;
+  }
+}
+.device-table {
+  width: 100%;
+  margin: 20px 0;
+  tr {
+    border: 1px solid #cacaca;
+  }
+  td, th {
+    padding: 4px;
+    text-align: center;
   }
 }

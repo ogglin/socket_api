@@ -1,6 +1,8 @@
 var multer = require('multer');
 var multipart = multer();
+var bodyParser = require('body-parser');
 
+var jsonParser = bodyParser.json();
 var db = require('./dbconnect');
 
 module.exports = function (app) {
@@ -56,5 +58,28 @@ module.exports = function (app) {
         db.getDevicesO(req.query['cuid'], req.query['cid'], req.query['on']).subscribe(result=>{
             res.send(result);
         });
+    });
+
+    /* Put company */
+    app.put('/api/company', jsonParser, function (req, res) {
+        db.addCustomerO(req.body['title'], req.body['desc']).subscribe(result=>{
+            res.send(result);
+        });
+    });
+
+    /* Put client */
+    app.put('/api/client', multipart.array(), function (req, res) {
+       db.addClientO(req.body['name'], req.body['customers_id']).subscribe(result=>{
+           res.send(result);
+       });
+    });
+
+    /* Put device */
+    app.put('/api/device', multipart.array(), function (req, res) {
+       db.addDeviceO(req.body['productName'], req.body['url'], req.body['init_client'], req.body['company_id'],
+                req.body['article'], req.body['client_article'], req.body['serialNumber'], req.body['enable']
+       ).subscribe(result=>{
+           res.send(result);
+       });
     });
 };

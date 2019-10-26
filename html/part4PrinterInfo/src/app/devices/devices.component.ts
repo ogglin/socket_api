@@ -47,7 +47,7 @@ export class DevicesComponent implements OnInit {
   }
 
   getCustomer() {
-    this.api.getCustomers().subscribe(result=>{
+    this.api.getCompany().subscribe(result=>{
       this.customers = result;
     });
   }

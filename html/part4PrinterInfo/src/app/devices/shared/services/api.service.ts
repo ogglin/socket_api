@@ -21,7 +21,7 @@ export class APIService {
 
   }
 
-  getCustomers(): Observable<any[]> {
+  getCompany(): Observable<any[]> {
     return this.http.get<any>(this.url + 'company', this.httpOptions);
   }
 
@@ -42,5 +42,17 @@ export class APIService {
 
   getErrors(): Observable<any[]> {
     return this.http.get<any>(this.url + 'errors', this.httpOptions);
+  }
+
+  addCompany(body): Observable<any[]> {
+    return this.http.put<any>(this.url + 'company', body, this.httpOptions);
+  }
+
+  addClient(body): Observable<any[]> {
+    return this.http.put<any>(this.url + 'client', body, this.httpOptions);
+  }
+
+  addDevice(body): Observable<any[]> {
+    return this.http.put<any>(this.url + 'device', body, this.httpOptions);
   }
 }

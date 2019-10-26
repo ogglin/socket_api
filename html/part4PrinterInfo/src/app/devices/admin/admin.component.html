@@ -15,7 +15,7 @@
 
   <ng-container *ngIf="isLogIn">
     <header class="container">
-      <div class="pt-2">
+      <div class="p-2 float-left">
         <mat-form-field class="" style="width: 250px;">
           <input type="text" placeholder="Поиск помпании" aria-label="Number" matInput [formControl]="customerControl"
                  [matAutocomplete]="auto">
@@ -26,6 +26,19 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
+      </div>
+      <div class="p-2 float-left">
+        <form [formGroup]="companyForm" (ngSubmit)="addCompany()">
+          <mat-form-field>
+            <input matInput placeholder="Название" name="title" formControlName="title" required>
+            <mat-hint *ngIf="reqCompany === undefined">Добавить новую компанию</mat-hint>
+            <mat-hint *ngIf="reqCompany !== undefined" class="text-orange">{{reqCompany['status']}}
+              : {{reqCompany['result']}}</mat-hint>
+          </mat-form-field>
+          <button mat-raised-button type="submit" color="primary" class="px-2"
+                  [disabled]="companyForm.controls['title'].hasError('required')">Добавить
+          </button>
+        </form>
       </div>
       <div class="socket-init">
         <button mat-raised-button color="accent" (click)="go('device')">Выход</button>
@@ -42,9 +55,68 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+
+        <form [formGroup]="clientForm" (ngSubmit)="addClient()" *ngIf="cuid !== 0">
+          <mat-form-field>
+            <input matInput placeholder="Название" name="name" formControlName="name" required>
+            <mat-hint *ngIf="reqClient === undefined">Добавить новый клиент</mat-hint>
+            <mat-hint *ngIf="reqClient !== undefined" class="text-orange">{{reqClient['status']}}
+              : {{reqClient['result']}}</mat-hint>
+          </mat-form-field>
+          <button mat-raised-button type="submit" color="primary" class="px-2"
+                  [disabled]="clientForm.controls['name'].hasError('required')">Добавить
+          </button>
+        </form>
       </mat-sidenav>
-      <div class="container">
-        {{devices | json}}
+      <div class="container" *ngIf="clients.length">
+        <form [formGroup]="deviceForm" (ngSubmit)="addDevice()" class="device-form">
+          <mat-form-field>
+            <input matInput placeholder="Название" name="productName" formControlName="productName" required>
+            <mat-hint *ngIf="reqDevice === undefined">Добавить новое устройство</mat-hint>
+            <mat-hint *ngIf="reqDevice !== undefined" class="text-orange">{{reqDevice['status']}}
+              : {{reqDevice['result']}}</mat-hint>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="URL" name="url" formControlName="url" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="SN" name="serialNumber" formControlName="serialNumber" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Артикль" name="article" formControlName="article">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Артикль клиента" name="client_article" formControlName="client_article">
+          </mat-form-field>
+          <button mat-raised-button type="submit" color="primary" class="px-2"
+                  [disabled]="deviceForm.controls['productName'].hasError('required')
+                  || deviceForm.controls['url'].hasError('required')
+                  || deviceForm.controls['serialNumber'].hasError('required')">
+            Добавить
+          </button>
+        </form>
+        <table class="device-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Название</th>
+              <th>URL</th>
+              <th>Серийный номер</th>
+              <th>Артикль</th>
+              <th>Артикль клиента</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of devices">
+            <td>{{item['id']}}</td>
+            <td>{{item['productname']}}</td>
+            <td>{{item['url']}}</td>
+            <td>{{item['sn']}}</td>
+            <td>{{item['article']}}</td>
+            <td>{{item['client_article']}}</td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </mat-sidenav-container>
   </ng-container>

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {APIService} from "../shared/services/api.service";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
@@ -24,10 +24,30 @@ export class AdminComponent implements OnInit {
   devices: any[] = [];
   device: any;
   isDevOn: number = 1;
+  reqCompany: any;
+  reqClient: any;
+  reqDevice: any;
 
   loginForm = new FormGroup({
     loginControl: new FormControl(''),
     passControl: new FormControl('')
+  });
+
+  companyForm = new FormGroup({
+    title: new FormControl('', [Validators.required]),
+    desc: new FormControl('')
+  });
+
+  clientForm = new FormGroup({
+    name: new FormControl('', [Validators.required])
+  });
+
+  deviceForm = new FormGroup({
+    productName: new FormControl('', [Validators.required]),
+    url: new FormControl('', [Validators.required]),
+    article: new FormControl(''),
+    client_article: new FormControl(''),
+    serialNumber: new FormControl('', [Validators.required])
   });
 
   constructor(private api: APIService, private router: Router) {
@@ -49,7 +69,7 @@ export class AdminComponent implements OnInit {
   }
 
   getCustomer() {
-    this.api.getCustomers().subscribe(result=>{
+    this.api.getCompany().subscribe(result=>{
       this.customers = result;
     });
   }
@@ -65,6 +85,54 @@ export class AdminComponent implements OnInit {
       console.log(this.devices);
     });
   }
+
+  addCompany(){
+    const body = {
+      title: this.companyForm.controls['title'].value,
+      desc: this.companyForm.controls['desc'].value
+    };
+    this.api.addCompany(body).subscribe(result=>{
+      this.reqCompany = result;
+      if(result['status'] === 'success') {
+        this.getCustomer();
+      }
+    });
+  }
+
+  addClient(){
+    const body = {
+      name: this.clientForm.controls['name'].value,
+      customers_id: this.cuid
+    };
+    this.api.addClient(body).subscribe(result=>{
+      console.log(result);
+      this.reqClient = result;
+      if(result['status'] === 'success') {
+        this.getClient();
+      }
+    });
+  }
+
+  addDevice(){
+    const body = {
+      productName: this.deviceForm.controls['productName'].value,
+      url: this.deviceForm.controls['url'].value,
+      init_client: this.cid,
+      company_id: this.cuid,
+      article: this.deviceForm.controls['article'].value,
+      client_article: this.deviceForm.controls['client_article'].value,
+      serialNumber: this.deviceForm.controls['serialNumber'].value,
+      enable: 1
+    };
+    this.api.addDevice(body).subscribe(result=>{
+      console.log(result);
+      this.reqDevice = result;
+      if(result['status'] === 'success') {
+        this.getDevices();
+      }
+    });
+  }
+
   setCustomer(id) {
     this.cuid = id;
     this.getClient();
