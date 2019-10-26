@@ -2,7 +2,7 @@ var Rx = require('rxjs/Rx');
 
 const dbConfig = {
     user: 'part4',
-    host: '116.203.243.136',
+    host: 'localhost',
     database: 'remote_info',
     password: 'q1w2e3r4t5',
     port: 5432,
@@ -229,7 +229,7 @@ function addInfo (init_client, company_id, address_id, url, status, cartridge, K
     qai += ", '"+n+"', lastId);" +
         "END $$";
     console.log(qai);
-    /*(async () => {
+    (async () => {
         const client = await pool.connect();
         try {
             const result = await client.query(qai);
@@ -242,7 +242,7 @@ function addInfo (init_client, company_id, address_id, url, status, cartridge, K
         console.log(e.stack);
         callback ({status: 'error', result: e.detail});
         return {error: e.detail};
-    });*/
+    });
 }
 
 function addError(init_client_error, device_id, error, callback) {
