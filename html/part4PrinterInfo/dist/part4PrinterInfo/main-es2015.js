@@ -1027,6 +1027,7 @@ let DevicesComponent = class DevicesComponent {
     }
     getDevices() {
         this.devices = [];
+        this.initDevices = [];
         this.api.getDevices(this.cuid, this.cid, 1).subscribe(result => {
             this.devices = result;
             console.log(this.devices);

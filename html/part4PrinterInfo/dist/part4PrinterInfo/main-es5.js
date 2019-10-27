@@ -1030,6 +1030,7 @@
                 DevicesComponent.prototype.getDevices = function () {
                     var _this = this;
                     this.devices = [];
+                    this.initDevices = [];
                     this.api.getDevices(this.cuid, this.cid, 1).subscribe(function (result) {
                         _this.devices = result;
                         console.log(_this.devices);
