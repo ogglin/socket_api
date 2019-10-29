@@ -48,7 +48,7 @@ module.exports = function (app) {
 
     /* Get Errors */
     app.get('/api/errors', function (req, res) {
-        db.getErrorsO().subscribe(result => {
+        db.getErrorsO(req.query['did']).subscribe(result => {
             res.send(result);
         });
     });
@@ -58,6 +58,13 @@ module.exports = function (app) {
         db.getDevicesO(req.query['cuid'], req.query['cid'], req.query['on']).subscribe(result => {
             res.send(result);
         });
+    });
+
+    /* Get info to cvs */
+    app.get('/api/cvs', function (req, res) {
+       db.getInfoCSVO(req.query['cuid'], req.query['smonth'], req.query['emonth']).subscribe(result => {
+           res.send(result);
+       });
     });
 
     /* Put company */

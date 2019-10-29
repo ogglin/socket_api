@@ -63,15 +63,17 @@ mat-sidenav-container {
   position: absolute;
   left: 10px;
   top: 0;
+  width: 170px;
   max-width: 170px;
   display: flex !important;
   flex-flow: column;
-  height: calc(100vh - 110px);
+  height: calc(100vh - 115px);
   overflow: hidden;
-  padding-right: 15px;
+  padding-right: 5px;
   border-right: 2px solid #4c4c4c;
 }
 .dateList mat-list-item {
+  width: 155px !important;
   font-size: 13px !important;
   display: inline-flex !important;
   margin-bottom: 3px;
@@ -160,4 +162,7 @@ mat-list-item:hover {
 }
 mat-icon {
   cursor: pointer;
+}
+.error-text {
+  color: #ff0000;
 }

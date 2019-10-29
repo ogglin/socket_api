@@ -1,6 +1,6 @@
 <div class="">
   <header class="container">
-    <div class="pt-2">
+    <div class="pt-2 float-left">
       <mat-form-field class="" style="width: 250px;">
         <input type="text" placeholder="Поиск помпании" aria-label="Number" matInput [formControl]="customerControl"
                [matAutocomplete]="auto">
@@ -12,6 +12,10 @@
         </mat-autocomplete>
       </mat-form-field>
     </div>
+    <div class="float-left p-2" style="width: 250px;">
+      <button mat-raised-button (click)="downloadFile(csvData)" [disabled]="!csvReady">Экспорт данных (csv)</button>
+    </div>
+
     <div class="socket-init">
       <button mat-raised-button id="btnInit" [disabled]="cid === 0">Получить данные с устройств</button>
       <input type="hidden" id="info_query" [value]="getQuery">
@@ -23,14 +27,15 @@
     <mat-sidenav opened mode="side" class="px-2 sidenav">
       <h3>Офис:</h3>
       <mat-form-field class="full-width" *ngIf="clients.length > 0">
-        <mat-select>
+        <mat-select [(value)]="client">
           <mat-option *ngFor="let option of clients" [value]="option['name']" (click)="setClient(option['id'])">
             {{option['name']}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <div class="urls-nav" *ngIf="devices.length > 0">
-        <div *ngFor="let item of devices, let i = index" (click)="setInfo(item['id']); toggleActive(i, 'dev')" [ngClass]="i===devLI ? 'active': ''">
+        <div *ngFor="let item of devices, let i = index" (click)="setInfo(item['id']); toggleActive(i, 'dev')"
+             [ngClass]="i===devLI ? 'active': ''">
           <h4 class="cursor-pointer">{{item['productname']}} <br>
             <small class="text-orange">
               {{item['url']}} <br> {{item['sn']}}
@@ -45,10 +50,13 @@
       <ng-container *ngIf="dates.length">
         <mat-list role="list" class="dateList">
           <h4>Даты:</h4>
-          <mat-list-item *ngFor="let date of dates, let i = index" role="listitem" (click)="setDate(date); toggleActive(i, 'data')"
-                         [ngClass]="i===dataLI ? 'cursor-pointer border active': 'cursor-pointer border'">
-            {{date | date:'yyyy-MM-dd HH:mm:ss'}}
-          </mat-list-item>
+          <ng-scrollbar appearance="standart">
+            <mat-list-item *ngFor="let date of dates, let i = index" role="listitem"
+                           (click)="setDate(date); toggleActive(i, 'data')"
+                           [ngClass]="i===dataLI ? 'cursor-pointer border active': 'cursor-pointer border'">
+              {{date | date:'yyyy-MM-dd HH:mm:ss'}}
+            </mat-list-item>
+          </ng-scrollbar>
         </mat-list>
         <div class="device-info">&nbsp;
           <ng-container *ngIf="device">
@@ -56,6 +64,7 @@
             <p>Статус: {{device['status']}}</p>
             <p>Серийный номер: {{device['sn']}}</p>
             <p>Сетевой адрес: {{device['url']}}</p>
+            <p *ngIf="device['error']" class="error-text">{{device['error']}}</p>
             <ng-container *ngFor="let color of device['cartridge']">
               <p *ngIf="color['black']">Черный {{color['black'].replace('%', '')}}<br><br>
                 <mat-progress-bar mode="determinate" [value]="color['black'].replace('%', '')"

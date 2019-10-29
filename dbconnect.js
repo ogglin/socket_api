@@ -2,7 +2,7 @@ var Rx = require('rxjs/Rx');
 
 const dbConfig = {
     user: 'part4',
-    host: 'localhost',
+    host: '116.203.243.136',
     database: 'remote_info',
     password: 'q1w2e3r4t5',
     port: 5432,
@@ -86,7 +86,7 @@ function getInfo(devid, callback) {
     qgi = "SELECT rdata.devices.productname, rdata.devices.article, rdata.devices.client_article, rdata.devices.sn, " +
         "rdata.devices.url, rdata.info.printcycles, rdata.info.scancycles, rdata.info.status, rdata.info.kit, " +
         "rdata.info.cartridge, rdata.info.maintenancekitcount, rdata.info.log, rdata.info.adfcycles, " +
-        "rdata.info.datetime " +
+        "rdata.info.datetime, rdata.info.error " +
         "FROM rdata.devices " +
         "INNER JOIN rdata.info ON rdata.info.device_id = rdata.devices.\"id\"";
     if (devid !== 0) {
@@ -108,15 +108,40 @@ function getInfo(devid, callback) {
     });
 }
 
-function getErrors(callback) {
-    var oldD = new Date();
+function getErrors(did, callback) {
+    /*var oldD = new Date();
     var newD = new Date();
-    newD.setTime(oldD.getTime() - (30 * 60 * 1000));
-    qea = "SELECT * FROM rdata.errors where datetime >=" + newD;
+    newD.setTime(oldD.getTime() - (30 * 60 * 1000));*/
+    qea = "SELECT * FROM rdata.errors WHERE device_id =" + did + ";";
     (async () => {
         const client = await pool.connect();
         try {
             const result = await client.query(qea);
+            callback (result.rows);
+            return result.rows;
+        } finally {
+            client.release()
+        }
+    })().catch(e => {
+        console.log(e.stack);
+        return {error: e.detail};
+    });
+}
+
+function getInfoCSV(cuid, smonth, emonth, callback) {
+    var qgic = "SELECT * FROM ( SELECT rank() over (partition by \"productname\" order by i.datetime desc) n, " +
+        "date_part('month', datetime) ts, co.title company, c.name office, d.productname, d.article," +
+        " d.client_article, d.sn, d.url, i.printcycles, i.datetime " +
+        "FROM rdata.devices d " +
+        "INNER JOIN rdata.info i ON i.device_id = d.id " +
+        "INNER JOIN rdata.clients c on d.client_id = c.id " +
+        "INNER JOIN rdata.company co on co.id = c.customers_id " +
+        "WHERE d.company_id = "+cuid+" AND i.printcycles is not NULL " +
+        "AND datetime BETWEEN (now() - '"+smonth+" month'::interval) and (now() - '"+emonth+" month'::interval) ) A WHERE n = 1";
+    (async () => {
+        const client = await pool.connect();
+        try {
+            const result = await client.query(qgic);
             callback (result.rows);
             return result.rows;
         } finally {
@@ -248,7 +273,7 @@ function addInfo (init_client, company_id, address_id, url, status, cartridge, K
 function addError(init_client_error, device_id, error, callback) {
     var d = new Date();
     var n = d.toJSON();
-    qaa = "INSERT INTO rdata.errors VALUES ("+init_client_error+", "+ device_id +", '"+ error +"', '"+n+"');";
+    qaa = "INSERT INTO rdata.info (error, datetime, device_id) VALUES ('"+error+"', '"+n+"', "+ device_id+");";
     console.log(qaa);
     (async () => {
         const client = await pool.connect();
@@ -354,5 +379,6 @@ module.exports = {
     getErrorsO: Rx.Observable.bindCallback(getErrors),
     editDeviceO: Rx.Observable.bindCallback(editDevice),
     editCompanyO: Rx.Observable.bindCallback(editCompany),
-    editClientO: Rx.Observable.bindCallback(editClient)
+    editClientO: Rx.Observable.bindCallback(editClient),
+    getInfoCSVO: Rx.Observable.bindCallback(getInfoCSV)
 };

@@ -40,8 +40,14 @@ export class APIService {
     return this.http.get<any>(this.url+'info'+param, this.httpOptions);
   }
 
-  getErrors(): Observable<any[]> {
-    return this.http.get<any>(this.url + 'errors', this.httpOptions);
+  getErrors(did): Observable<any[]> {
+    const param = "?did="+did;
+    return this.http.get<any>(this.url + 'errors'+param, this.httpOptions);
+  }
+
+  getCSV(cuid, smonth, emonth): Observable<any[]> {
+    const param = "?cuid="+cuid+"&smonth="+smonth+"&emonth="+emonth;
+    return this.http.get<any>(this.url + 'cvs'+param, this.httpOptions);
   }
 
   addCompany(body): Observable<any[]> {

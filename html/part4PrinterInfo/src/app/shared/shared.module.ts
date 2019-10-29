@@ -8,6 +8,7 @@ import { DeviceComponent } from '../devices/admin/device/device.component';
 import { ManageComponent } from '../devices/admin/manage/manage.component';
 import { AdminComponent } from '../devices/admin/admin.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import {NgScrollbarModule} from "ngx-scrollbar";
 
 
 @NgModule({
@@ -16,11 +17,13 @@ import {ReactiveFormsModule} from "@angular/forms";
     CommonModule,
     MaterialModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgScrollbarModule
   ],
   exports: [
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    NgScrollbarModule
   ]
 })
 export class SharedModule { }
