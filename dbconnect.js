@@ -3,6 +3,7 @@ var Rx = require('rxjs/Rx');
 const dbConfig = {
     user: 'part4',
     host: 'localhost',
+    //host: '116.203.243.136',
     database: 'remote_info',
     password: 'q1w2e3r4t5',
     port: 5432,
@@ -66,7 +67,8 @@ function getAddress(callback) {
 }
 
 function getDevices(cuid, cid, on, callback) {
-    qda = "SELECT * FROM rdata.devices WHERE company_id = "+cuid+" AND client_id= "+ cid+"  AND enabled ="+on+";";
+    qda = "SELECT * FROM rdata.devices WHERE company_id = "+cuid+" AND client_id= "+ cid;
+     if(on){qda += " AND enabled ="+on+";";}
     (async () => {
         const client = await pool.connect();
         try {
@@ -337,7 +339,7 @@ function editDevice(id, productName, url, init_client, company_id, article, clie
     if(article) {qed += ",article"}
     if(client_article) {qed += ",client_article"}
     if(serialNumber) {qed += ",sn"}
-    if(enable) {qed += ",enabled"}
+    if(enable !== undefined) {qed += ",enabled"}
     qed += ") = (";
     if(productName) {qed += "'"+productName+"'"}
     if(url) {qed += ",'"+url+"'"}
@@ -346,7 +348,7 @@ function editDevice(id, productName, url, init_client, company_id, article, clie
     if(article) {qed += ",'"+article+"'"}
     if(client_article) {qed += ",'"+client_article+"'"}
     if(serialNumber) {qed += ",'"+serialNumber+"'"}
-    if(enable) {qed += ","+enable}
+    if(enable !== undefined) {qed += ","+enable}
     qed += ") WHERE devices.id = "+id+";";
     (async () => {
         const client = await pool.connect();

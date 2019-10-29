@@ -50,7 +50,8 @@ export class AdminComponent implements OnInit {
     url: new FormControl('', [Validators.required]),
     article: new FormControl(''),
     client_article: new FormControl(''),
-    serialNumber: new FormControl('', [Validators.required])
+    serialNumber: new FormControl('', [Validators.required]),
+    enabled: new FormControl(true)
   });
 
   constructor(private api: APIService, private router: Router) {
@@ -164,6 +165,12 @@ export class AdminComponent implements OnInit {
   }
 
   editDevice(){
+    let enable = 1;
+    if(this.deviceForm.controls['enabled'].value) {
+      enable = 1;
+    } else {
+      enable = 0;
+    }
     const body = {
       id: this.did,
       productName: this.deviceForm.controls['productName'].value,
@@ -173,8 +180,9 @@ export class AdminComponent implements OnInit {
       article: this.deviceForm.controls['article'].value,
       client_article: this.deviceForm.controls['client_article'].value,
       serialNumber: this.deviceForm.controls['serialNumber'].value,
-      enable: 1
+      enable: enable
     };
+    console.log(body);
     this.api.editDevice(body).subscribe(result=>{
       console.log(result);
       this.reqDevice = result;
@@ -232,6 +240,11 @@ export class AdminComponent implements OnInit {
           this.deviceForm.controls['article'].setValue(item['article']);
           this.deviceForm.controls['client_article'].setValue(item['client_article']);
           this.deviceForm.controls['serialNumber'].setValue(item['sn']);
+          if(item['enabled'] === 1) {
+            this.deviceForm.controls['enabled'].setValue(true);
+          } else {
+            this.deviceForm.controls['enabled'].setValue(false);
+          }
           this.did = id;
           console.log(this.device);
         }
@@ -269,6 +282,15 @@ export class AdminComponent implements OnInit {
   go(url) {
     switch (url) {
       case 'device': this.router.navigate(['/']); break;
+    }
+  }
+
+  toggle(){
+    if(this.isDevOn === 0) {
+      this.isDevOn = 1; this.getDevices(); return;
+    }
+    if (this.isDevOn === 1) {
+      this.isDevOn = 0; this.getDevices(); return;
     }
   }
 }

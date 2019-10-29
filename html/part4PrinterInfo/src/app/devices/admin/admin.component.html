@@ -53,7 +53,7 @@
     </header>
     <mat-sidenav-container *ngIf="customers">
       <mat-sidenav opened mode="side" class="px-2 sidenav">
-        <h3>Офис:</h3>
+        <h3>Офис: </h3>
         <mat-form-field class="full-width" *ngIf="clients.length > 0">
           <mat-select>
             <mat-option *ngFor="let option of clients" [value]="option['name']" (click)="setClient(option['id'])">
@@ -102,6 +102,7 @@
           <mat-form-field>
             <input matInput placeholder="Артикул клиента" name="client_article" formControlName="client_article">
           </mat-form-field>
+          <mat-checkbox class="mx-2" formControlName="enabled">Активное</mat-checkbox>
           <button mat-raised-button type="submit" color="primary" class="mx-2"
                   [disabled]="deviceForm.controls['productName'].hasError('required')
                   || deviceForm.controls['url'].hasError('required')
@@ -109,7 +110,7 @@
             Добавить
           </button>
         </form>
-        <div>
+        <div class="my-2">
           <button mat-raised-button (click)="editDevice()" color="accent" class="mx-2" *ngIf="did"
                   [disabled]="deviceForm.controls['productName'].hasError('required')
                   || deviceForm.controls['url'].hasError('required')
@@ -118,6 +119,13 @@
           </button>
           <button mat-raised-button color="warn" (click)="clear('device')" class="float-right">Сброс</button>
         </div>
+        <div class="my-2">Выключенные<mat-slide-toggle
+          class=""
+          [checked]="isDevOn === 1"
+          (change)="toggle()"
+        >
+          Активные
+        </mat-slide-toggle></div>
         <table class="device-table">
           <thead>
             <tr>

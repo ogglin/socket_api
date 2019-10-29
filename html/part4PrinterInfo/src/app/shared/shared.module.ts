@@ -7,7 +7,7 @@ import { ClientComponent } from '../devices/admin/client/client.component';
 import { DeviceComponent } from '../devices/admin/device/device.component';
 import { ManageComponent } from '../devices/admin/manage/manage.component';
 import { AdminComponent } from '../devices/admin/admin.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgScrollbarModule} from "ngx-scrollbar";
 
 
@@ -18,7 +18,8 @@ import {NgScrollbarModule} from "ngx-scrollbar";
     MaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NgScrollbarModule
+    NgScrollbarModule,
+    FormsModule
   ],
   exports: [
     MaterialModule,
