@@ -110,7 +110,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"\">\r\n  <header class=\"container\">\r\n    <div class=\"pt-2\">\r\n      <mat-form-field class=\"\" style=\"width: 250px;\">\r\n        <input type=\"text\" placeholder=\"Поиск помпании\" aria-label=\"Number\" matInput [formControl]=\"customerControl\"\r\n               [matAutocomplete]=\"auto\">\r\n        <mat-autocomplete #auto=\"matAutocomplete\">\r\n          <mat-option *ngFor=\"let option of filteredCustomers | async\" [value]=\"option['title']\"\r\n                      (click)=\"setCustomer(option['id'])\">\r\n            {{option['title']}}\r\n          </mat-option>\r\n        </mat-autocomplete>\r\n      </mat-form-field>\r\n    </div>\r\n    <div class=\"socket-init\">\r\n      <button mat-raised-button id=\"btnInit\" [disabled]=\"cid === 0\">Получить данные с устройств</button>\r\n      <input type=\"hidden\" id=\"info_query\" [value]=\"getQuery\">\r\n      <button mat-raised-button (click)=\"go('admin')\">Админ</button>\r\n      <!--button mat-raised-button id=\"addDevice\">Добавить</button-->\r\n    </div>\r\n  </header>\r\n  <mat-sidenav-container *ngIf=\"customers\">\r\n    <mat-sidenav opened mode=\"side\" class=\"px-2 sidenav\">\r\n      <h3>Офис:</h3>\r\n      <mat-form-field class=\"full-width\" *ngIf=\"clients.length > 0\">\r\n        <mat-select>\r\n          <mat-option *ngFor=\"let option of clients\" [value]=\"option['name']\" (click)=\"setClient(option['id'])\">\r\n            {{option['name']}}\r\n          </mat-option>\r\n        </mat-select>\r\n      </mat-form-field>\r\n      <div class=\"urls-nav\" *ngIf=\"devices.length > 0\">\r\n        <div *ngFor=\"let item of devices, let i = index\" (click)=\"setInfo(item['id']); toggleActive(i, 'dev')\" [ngClass]=\"i===devLI ? 'active': ''\">\r\n          <h4 class=\"cursor-pointer\">{{item['productname']}} <br>\r\n            <small class=\"text-orange\">\r\n              {{item['url']}} <br> {{item['sn']}}\r\n            </small>\r\n          </h4>\r\n        </div>\r\n      </div>\r\n      <input type=\"hidden\" id=\"clientId\" [value]=\"cid\">\r\n      <div class=\"console\" id=\"console\"></div>\r\n    </mat-sidenav>\r\n    <div class=\"container\">\r\n      <ng-container *ngIf=\"dates.length\">\r\n        <mat-list role=\"list\" class=\"dateList\">\r\n          <h4>Даты:</h4>\r\n          <mat-list-item *ngFor=\"let date of dates, let i = index\" role=\"listitem\" (click)=\"setDate(date); toggleActive(i, 'data')\"\r\n                         [ngClass]=\"i===dataLI ? 'cursor-pointer border active': 'cursor-pointer border'\">\r\n            {{date | date:'yyyy-MM-dd HH:mm:ss'}}\r\n          </mat-list-item>\r\n        </mat-list>\r\n        <div class=\"device-info\">&nbsp;\r\n          <ng-container *ngIf=\"device\">\r\n            <h2>{{device['productname']}}</h2>\r\n            <p>Статус: {{device['status']}}</p>\r\n            <p>Серийный номер: {{device['sn']}}</p>\r\n            <p>Сетевой адрес: {{device['url']}}</p>\r\n            <ng-container *ngFor=\"let color of device['cartridge']\">\r\n              <p *ngIf=\"color['black']\">Черный {{color['black'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['black'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['yellow']\">Желтый {{color['yellow'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['yellow'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['magenta']\">Пурпурный {{color['magenta'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['magenta'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['blue']\">Голубой {{color['blue'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['blue'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n            </ng-container>\r\n            <p *ngIf=\"device['printcycles']\">Цикл механизма: {{device['printcycles']}}</p>\r\n            <p *ngIf=\"device['kit']\">Счетчик технического обслуживания:\r\n              <ng-container *ngIf=\"device['kit']\">\r\n                <ng-container *ngIf=\"device['kit'][0]['adfCycles']\">{{device['kit'][0]['adfCycles']}}</ng-container>\r\n                <ng-container\r\n                  *ngIf=\"device['kit'][0]['maintenanceKitCount']\">{{device['kit'][0]['maintenanceKitCount']}}</ng-container>\r\n              </ng-container>\r\n            </p>\r\n            <p *ngIf=\"device['scancycles']\">Цикл сканирования: {{device['scancycles']}}</p>\r\n            <h4 *ngIf=\"device['log']\">Лог:</h4>\r\n            <table>\r\n              <tbody>\r\n              <tr *ngFor=\"let log of device['log']\">\r\n                <td>{{log['date']}}</td>\r\n                <td>{{log['message']}}</td>\r\n              </tr>\r\n              </tbody>\r\n            </table>\r\n          </ng-container>\r\n        </div>\r\n      </ng-container>\r\n    </div>\r\n  </mat-sidenav-container>\r\n</div>\r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"\">\r\n  <header class=\"container\">\r\n    <div class=\"pt-2 float-left\">\r\n      <mat-form-field class=\"\" style=\"width: 250px;\">\r\n        <input type=\"text\" placeholder=\"Поиск помпании\" aria-label=\"Number\" matInput [formControl]=\"customerControl\"\r\n               [matAutocomplete]=\"auto\">\r\n        <mat-autocomplete #auto=\"matAutocomplete\">\r\n          <mat-option *ngFor=\"let option of filteredCustomers | async\" [value]=\"option['title']\"\r\n                      (click)=\"setCustomer(option['id'])\">\r\n            {{option['title']}}\r\n          </mat-option>\r\n        </mat-autocomplete>\r\n      </mat-form-field>\r\n    </div>\r\n    <div class=\"float-left p-2\" style=\"width: 250px;\">\r\n      <button mat-raised-button (click)=\"downloadFile(csvData)\" [disabled]=\"!csvReady\">Экспорт данных (csv)</button>\r\n    </div>\r\n\r\n    <div class=\"socket-init\">\r\n      <button mat-raised-button id=\"btnInit\" [disabled]=\"cid === 0\">Получить данные с устройств</button>\r\n      <input type=\"hidden\" id=\"info_query\" [value]=\"getQuery\">\r\n      <button mat-raised-button (click)=\"go('admin')\">Админ</button>\r\n      <!--button mat-raised-button id=\"addDevice\">Добавить</button-->\r\n    </div>\r\n  </header>\r\n  <mat-sidenav-container *ngIf=\"customers\">\r\n    <mat-sidenav opened mode=\"side\" class=\"px-2 sidenav\">\r\n      <h3>Офис:</h3>\r\n      <mat-form-field class=\"full-width\" *ngIf=\"clients.length > 0\">\r\n        <mat-select [(value)]=\"client\">\r\n          <mat-option *ngFor=\"let option of clients\" [value]=\"option['name']\" (click)=\"setClient(option['id'])\">\r\n            {{option['name']}}\r\n          </mat-option>\r\n        </mat-select>\r\n      </mat-form-field>\r\n      <div class=\"urls-nav\" *ngIf=\"devices.length > 0\">\r\n        <div *ngFor=\"let item of devices, let i = index\" (click)=\"setInfo(item['id']); toggleActive(i, 'dev')\"\r\n             [ngClass]=\"i===devLI ? 'active': ''\">\r\n          <h4 class=\"cursor-pointer\">{{item['productname']}} <br>\r\n            <small class=\"text-orange\">\r\n              {{item['url']}} <br> {{item['sn']}}\r\n            </small>\r\n          </h4>\r\n        </div>\r\n      </div>\r\n      <input type=\"hidden\" id=\"clientId\" [value]=\"cid\">\r\n      <div class=\"console\" id=\"console\"></div>\r\n    </mat-sidenav>\r\n    <div class=\"container\">\r\n      <ng-container *ngIf=\"dates.length\">\r\n        <mat-list role=\"list\" class=\"dateList\">\r\n          <h4>Даты:</h4>\r\n          <ng-scrollbar appearance=\"standart\">\r\n            <mat-list-item *ngFor=\"let date of dates, let i = index\" role=\"listitem\"\r\n                           (click)=\"setDate(date); toggleActive(i, 'data')\"\r\n                           [ngClass]=\"i===dataLI ? 'cursor-pointer border active': 'cursor-pointer border'\">\r\n              {{date | date:'yyyy-MM-dd HH:mm:ss'}}\r\n            </mat-list-item>\r\n          </ng-scrollbar>\r\n        </mat-list>\r\n        <div class=\"device-info\">&nbsp;\r\n          <ng-container *ngIf=\"device\">\r\n            <h2>{{device['productname']}}</h2>\r\n            <p>Статус: {{device['status']}}</p>\r\n            <p>Серийный номер: {{device['sn']}}</p>\r\n            <p>Сетевой адрес: {{device['url']}}</p>\r\n            <p *ngIf=\"device['error']\" class=\"error-text\">{{device['error']}}</p>\r\n            <ng-container *ngFor=\"let color of device['cartridge']\">\r\n              <p *ngIf=\"color['black']\">Черный {{color['black'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['black'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['yellow']\">Желтый {{color['yellow'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['yellow'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['magenta']\">Пурпурный {{color['magenta'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['magenta'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n              <p *ngIf=\"color['blue']\">Голубой {{color['blue'].replace('%', '')}}<br><br>\r\n                <mat-progress-bar mode=\"determinate\" [value]=\"color['blue'].replace('%', '')\"\r\n                                  color=\"warn\"></mat-progress-bar>\r\n              </p>\r\n            </ng-container>\r\n            <p *ngIf=\"device['printcycles']\">Цикл механизма: {{device['printcycles']}}</p>\r\n            <p *ngIf=\"device['kit']\">Счетчик технического обслуживания:\r\n              <ng-container *ngIf=\"device['kit']\">\r\n                <ng-container *ngIf=\"device['kit'][0]['adfCycles']\">{{device['kit'][0]['adfCycles']}}</ng-container>\r\n                <ng-container\r\n                  *ngIf=\"device['kit'][0]['maintenanceKitCount']\">{{device['kit'][0]['maintenanceKitCount']}}</ng-container>\r\n              </ng-container>\r\n            </p>\r\n            <p *ngIf=\"device['scancycles']\">Цикл сканирования: {{device['scancycles']}}</p>\r\n            <h4 *ngIf=\"device['log']\">Лог:</h4>\r\n            <table>\r\n              <tbody>\r\n              <tr *ngFor=\"let log of device['log']\">\r\n                <td>{{log['date']}}</td>\r\n                <td>{{log['message']}}</td>\r\n              </tr>\r\n              </tbody>\r\n            </table>\r\n          </ng-container>\r\n        </div>\r\n      </ng-container>\r\n    </div>\r\n  </mat-sidenav-container>\r\n</div>\r\n");
 
 /***/ }),
 
@@ -1006,6 +1006,8 @@ let DevicesComponent = class DevicesComponent {
         this.dates = [];
         this.dataLI = 0;
         this.devLI = 0;
+        this.csvData = [];
+        this.csvReady = false;
     }
     ngOnInit() {
         this.getCustomer();
@@ -1015,6 +1017,26 @@ let DevicesComponent = class DevicesComponent {
         const filterValue = value.toLowerCase();
         return this.customers.filter(option => option['title'].toLowerCase().includes(filterValue));
     }
+    getCSV() {
+        this.api.getCSV(this.cuid, 1, 0).subscribe(result => {
+            console.log(result);
+            result.forEach(item => {
+                let data = new Date(item['datetime']);
+                this.csvData.push({
+                    company: item['company'],
+                    office: item['office'],
+                    product: item['productname'],
+                    sn: item['sn'],
+                    article: item['article'],
+                    client_article: item['client_article'],
+                    data: data.toLocaleDateString('ru-RU'),
+                    printcycles: item['printcycles']
+                });
+            });
+            console.log(this.csvData);
+            this.csvReady = true;
+        });
+    }
     getCustomer() {
         this.api.getCompany().subscribe(result => {
             this.customers = result;
@@ -1023,6 +1045,10 @@ let DevicesComponent = class DevicesComponent {
     getClient() {
         this.api.getClient(this.cuid).subscribe(result => {
             this.clients = result;
+            if (this.clients.length) {
+                this.client = this.clients[0]['name'];
+                this.setClient(this.clients[0]['id']);
+            }
         });
     }
     getDevices() {
@@ -1030,6 +1056,9 @@ let DevicesComponent = class DevicesComponent {
         this.initDevices = [];
         this.api.getDevices(this.cuid, this.cid, 1).subscribe(result => {
             this.devices = result;
+            if (this.devices.length) {
+                this.setInfo(this.devices[0]['id']);
+            }
             console.log(this.devices);
             this.devices.forEach(item => {
                 this.initDevices.push({
@@ -1041,7 +1070,6 @@ let DevicesComponent = class DevicesComponent {
             });
             this.getQuery = '{"server_init": "getInfo", "init_company":' + this.cuid + ',"init_client": ' + this.cid + ',"devices": ' +
                 JSON.stringify(this.initDevices) + '}';
-            console.log(this.getQuery);
         });
     }
     getInfo() {
@@ -1052,11 +1080,13 @@ let DevicesComponent = class DevicesComponent {
             this.infos.forEach(item => {
                 this.dates.push(item['datetime']);
             });
+            this.setDate(this.infos[0]['datetime']);
         });
     }
     setCustomer(id) {
         this.cuid = id;
         this.getClient();
+        this.getCSV();
     }
     setClient(id) {
         this.cid = id;
@@ -1091,6 +1121,20 @@ let DevicesComponent = class DevicesComponent {
                 this.router.navigate(['/admin']);
                 break;
         }
+    }
+    downloadFile(data) {
+        const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
+        const header = Object.keys(data[0]);
+        let csv = data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'));
+        csv.unshift(header.join(';'));
+        let csvArray = csv.join('\r\n');
+        var a = document.createElement('a');
+        var blob = new Blob([csvArray], { type: 'text/csv;charset=utf-8' }), url = window.URL.createObjectURL(blob);
+        a.href = url;
+        a.download = "Export.csv";
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
     }
 };
 DevicesComponent.ctorParameters = () => [
@@ -1193,8 +1237,13 @@ let APIService = class APIService {
         const param = '?client=' + id;
         return this.http.get(this.url + 'info' + param, this.httpOptions);
     }
-    getErrors() {
-        return this.http.get(this.url + 'errors', this.httpOptions);
+    getErrors(did) {
+        const param = "?did=" + did;
+        return this.http.get(this.url + 'errors' + param, this.httpOptions);
+    }
+    getCSV(cuid, smonth, emonth) {
+        const param = "?cuid=" + cuid + "&smonth=" + smonth + "&emonth=" + emonth;
+        return this.http.get(this.url + 'cvs' + param, this.httpOptions);
     }
     addCompany(body) {
         return this.http.put(this.url + 'company', body, this.httpOptions);
@@ -1408,6 +1457,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _devices_admin_manage_manage_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../devices/admin/manage/manage.component */ "./src/app/devices/admin/manage/manage.component.ts");
 /* harmony import */ var _devices_admin_admin_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../devices/admin/admin.component */ "./src/app/devices/admin/admin.component.ts");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var ngx_scrollbar__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ngx-scrollbar */ "./node_modules/ngx-scrollbar/fesm2015/ngx-scrollbar.js");
+
 
 
 
@@ -1428,11 +1479,13 @@ SharedModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
             _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
             _material_material_module__WEBPACK_IMPORTED_MODULE_3__["MaterialModule"],
             _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClientModule"],
-            _angular_forms__WEBPACK_IMPORTED_MODULE_10__["ReactiveFormsModule"]
+            _angular_forms__WEBPACK_IMPORTED_MODULE_10__["ReactiveFormsModule"],
+            ngx_scrollbar__WEBPACK_IMPORTED_MODULE_11__["NgScrollbarModule"]
         ],
         exports: [
             _material_material_module__WEBPACK_IMPORTED_MODULE_3__["MaterialModule"],
-            _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClientModule"]
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClientModule"],
+            ngx_scrollbar__WEBPACK_IMPORTED_MODULE_11__["NgScrollbarModule"]
         ]
     })
 ], SharedModule);
@@ -1458,8 +1511,8 @@ __webpack_require__.r(__webpack_exports__);
 
 const environment = {
     production: false,
-    apiURL: 'http://116.203.243.136:5000/api/'
-    //apiURL: 'http://localhost:5000/api/'
+    //apiURL: 'http://116.203.243.136:5000/api/'
+    apiURL: 'http://localhost:5000/api/'
 };
 /*
  * For easier debugging in development mode, you can import the following file
