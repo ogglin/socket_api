@@ -61,10 +61,10 @@
         <div class="device-info">&nbsp;
           <ng-container *ngIf="device">
             <h2>{{device['productname']}}</h2>
-            <p>Статус: {{device['status']}}</p>
+            <p>Статус: {{device['status']}} <span *ngIf="device['error']" class="error-text">{{device['error']}}</span></p>
             <p>Серийный номер: {{device['sn']}}</p>
             <p>Сетевой адрес: {{device['url']}}</p>
-            <p *ngIf="device['error']" class="error-text">{{device['error']}}</p>
+
             <ng-container *ngFor="let color of device['cartridge']">
               <p *ngIf="color['black']">Черный {{color['black'].replace('%', '')}}<br><br>
                 <mat-progress-bar mode="determinate" [value]="color['black'].replace('%', '')"
