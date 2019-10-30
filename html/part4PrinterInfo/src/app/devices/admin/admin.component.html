@@ -47,11 +47,15 @@
         </form>
       </div>
       <div class="socket-init">
-        <button mat-raised-button color="accent" (click)="go('device')">Выход</button>
+        <button mat-raised-button id="btnInit" [disabled]="cid === 0">Получить данные с устройств</button>
+        <input type="hidden" id="info_query" [value]="getQuery">
         <!--button mat-raised-button id="addDevice">Добавить</button-->
+        <button mat-raised-button color="accent" class="mx-2" (click)="go('device')">Выход</button>
       </div>
     </header>
     <mat-sidenav-container *ngIf="customers">
+      <input type="hidden" id="clientId" [value]="cid">
+      <div class="console" id="console"></div>
       <mat-sidenav opened mode="side" class="px-2 sidenav">
         <h3>Офис: </h3>
         <mat-form-field class="full-width" *ngIf="clients.length > 0">

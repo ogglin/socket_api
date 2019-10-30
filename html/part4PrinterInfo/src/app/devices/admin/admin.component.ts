@@ -30,6 +30,8 @@ export class AdminComponent implements OnInit {
   did: number;
   saveCompany: boolean = false;
   saveClient: boolean = false;
+  initDevices: any[] = [];
+  getQuery: string;
 
   loginForm = new FormGroup({
     loginControl: new FormControl(''),
@@ -84,9 +86,20 @@ export class AdminComponent implements OnInit {
   }
   getDevices() {
     this.devices = [];
-    this.api.getDevices(this.cuid, this.cid, this.isDevOn).subscribe(result=>{
+    this.initDevices = [];
+    this.api.getDevices(this.cuid, this.cid, 1).subscribe(result=>{
       this.devices = result;
       console.log(this.devices);
+      this.devices.forEach(item=>{
+        this.initDevices.push({
+          productName: item['productname'],
+          url: item['url'],
+          serialNumber: item['sn'],
+          device_id: item['id']
+        });
+      });
+      this.getQuery = '{"server_init": "getInfo", "init_company":' + this.cuid+',"init_client": '+this.cid+',"devices": '+
+        JSON.stringify(this.initDevices) +'}';
     });
   }
 
