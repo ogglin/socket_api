@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // For cors
-const whitelist = ['http://localhost:4200', 'http://localhost:3000', 'http://socket.api.part4.info'];
+const whitelist = ['http://localhost:4200', 'http://localhost:3000', 'http://socket.api.part4.info', '*'];
 const corsOptions = {
     credentials: true, // This is important.
     origin: (origin, callback) => {
