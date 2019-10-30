@@ -3,10 +3,10 @@
     <div class="login-form bg-black">
       <form [formGroup]="loginForm" (ngSubmit)="logIn()">
         <mat-form-field>
-          <input matInput placeholder="Login" name="login" formControlName="loginControl">
+          <input matInput type="text" placeholder="Login" name="login" formControlName="loginControl">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Password" name="password" formControlName="passControl">
+          <input matInput type="password" placeholder="Password" name="password" formControlName="passControl">
         </mat-form-field>
         <button mat-raised-button type="submit" color="primary">Вход</button>
       </form>
