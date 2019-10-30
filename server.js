@@ -74,7 +74,7 @@ io.on('connection', function(socket){
                     obj['article'],
                     obj['client_article']
                 ).subscribe(res => {
-                    io.emit('message', JSON.stringify(res));
+                    socket.emit('message', JSON.stringify(res));
                 });
             }
             if (obj['init_client'] && obj['new'] === 1) {
@@ -112,10 +112,11 @@ io.on('connection', function(socket){
                 });
             }
             if (obj['server_init'] === 'getInfo' && !obj['status']) {
-                for (var key in clients) {
+                socket.emit('message', '{"status":' + data + '}');
+                /*for (var key in clients) {
                     socket.emit('message', '{"status":' + data + '}');
                     //clients[key].send('{"status":' + data + '}');
-                }
+                }*/
             }
             //{"server_init": "getInfo", "client": 1} - old variant
             /*if (obj['server_init'] === 'getInfo' && !obj['status']) {
