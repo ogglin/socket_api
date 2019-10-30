@@ -12,7 +12,25 @@
 <body>
   <app-root></app-root>
 
+  <script src="assets/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script>
+      $(function () {
+          var socket = io('http://localhost:3000');
+          //var socket = io('http://116.203.243.136:3000');
+          document.getElementById('btnInit').onclick = function () {
+              var q = document.getElementById('info_query').value;
+              var t = '{"test": "test"}';
+              console.log(q);
+              socket.emit('message', q);
+          };
+          socket.on('message', function(msg){
+              $('#console').append($('<li>').text(msg));
+          });
+      });
+  </script>
+
+  <!--script>
       var socket = new WebSocket("ws://116.203.243.136:8080/ws");
       document.addEventListener('DOMContentLoaded', function() {
           socket.onopen = function () {
@@ -54,6 +72,6 @@
               socket.send('{"new":0,"init_client":2,"cartridge":[{"black":"99"}],"serialNumber":"VCG7428977","scanCycles":29969,"url":"http://192.168.1.205","article":"0","client_article":"0","printCycles":87255,"productName":"Kyocera ECOSYS M2540dn","status":"Режим ожидания....", "company_id": 1}');
           };*/
       });
-  </script>
+  </script-->
 <script src="runtime-es2015.js" type="module"></script><script src="runtime-es5.js" nomodule defer></script><script src="polyfills-es5.js" nomodule defer></script><script src="polyfills-es2015.js" type="module"></script><script src="styles-es2015.js" type="module"></script><script src="styles-es5.js" nomodule defer></script><script src="vendor-es2015.js" type="module"></script><script src="vendor-es5.js" nomodule defer></script><script src="main-es2015.js" type="module"></script><script src="main-es5.js" nomodule defer></script></body>
 </html>
