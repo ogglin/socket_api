@@ -2,8 +2,8 @@ var Rx = require('rxjs/Rx');
 
 const dbConfig = {
     user: 'part4',
-    host: 'localhost',
-    //host: '116.203.243.136',
+    //host: 'localhost',
+    host: '116.203.243.136',
     database: 'remote_info',
     password: 'q1w2e3r4t5',
     port: 5432,

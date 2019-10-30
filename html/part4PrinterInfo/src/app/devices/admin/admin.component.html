@@ -50,7 +50,8 @@
         <button mat-raised-button id="btnInit" [disabled]="cid === 0">Получить данные с устройств</button>
         <input type="hidden" id="info_query" [value]="getQuery">
         <!--button mat-raised-button id="addDevice">Добавить</button-->
-        <button mat-raised-button color="accent" class="mx-2" (click)="go('device')">Выход</button>
+        <button mat-raised-button color="accent" class="mx-2" (click)="go('device')">Фронт</button>
+        <button mat-raised-button color="accent" class="mx-2" (click)="go('device_exit')">Выход</button>
       </div>
     </header>
     <mat-sidenav-container *ngIf="customers">

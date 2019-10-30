@@ -87,7 +87,7 @@ export class AdminComponent implements OnInit {
   getDevices() {
     this.devices = [];
     this.initDevices = [];
-    this.api.getDevices(this.cuid, this.cid, 1).subscribe(result=>{
+    this.api.getDevices(this.cuid, this.cid, this.isDevOn).subscribe(result=>{
       this.devices = result;
       console.log(this.devices);
       this.devices.forEach(item=>{
@@ -295,6 +295,7 @@ export class AdminComponent implements OnInit {
   go(url) {
     switch (url) {
       case 'device': this.router.navigate(['/']); break;
+      case 'device_exit': localStorage.setItem('logIn', 'false'); this.router.navigate(['/']); break;
     }
   }
 
