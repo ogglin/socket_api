@@ -49,10 +49,9 @@ const wss = new WebSocket.Server({ port: 8080 });
 io.on('connection', function(socket){
     var id = Math.random();
     clients[id] = socket;
-    console.log("новое соединение " + id);
+    console.log("client " + id);
     socket.on('message', function(data){
         var isJson = IsJsonString(data);
-        console.log(data, isJson);
         if (isJson) {
             var obj = JSON.parse(data);
             if (obj['init_client'] && !obj['server_init']) {
@@ -112,6 +111,7 @@ io.on('connection', function(socket){
                 });
             }
             if (obj['server_init'] === 'getInfo' && !obj['status']) {
+                console.log('getInfo', data);
                 socket.broadcast.emit('message', '{"status":' + data + '}');
                 /*for (var key in clients) {
                     socket.emit('message', '{"status":' + data + '}');
