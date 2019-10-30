@@ -16,8 +16,8 @@
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script>
       $(function () {
-          var socket = io('http://localhost:3000');
-          //var socket = io('http://116.203.243.136:3000');
+          //var socket = io('http://localhost:3000');
+          var socket = io('http://116.203.243.136:3000');
           document.getElementById('btnInit').onclick = function () {
               var q = document.getElementById('info_query').value;
               var t = '{"test": "test"}';
