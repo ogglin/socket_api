@@ -97,23 +97,23 @@ io.on('connection', function(socket){
                     obj['client_article'],
                     obj['company_id']
                 ).subscribe(res => {
-                    io.emit('message', JSON.stringify(res));
+                    socket.emit('message', JSON.stringify(res));
                 });
             }
             //{"init_client_error": 1, "device_id": 1, "error": "Нет связи с устройством, по адресу: https://192.168.1.233"}
             if (obj['init_client_error']) {
-                io.emit('message', '{"status": '+ obj['error'] +'}');
+                socket.emit('message', '{"status": '+ obj['error'] +'}');
                 db.addErrorO(
                     obj['init_client_error'],
                     obj['device_id'],
                     obj['error']
                 ).subscribe(res => {
-                    io.emit('message', JSON.stringify(res));
+                    socket.emit('message', JSON.stringify(res));
                 });
             }
             if (obj['server_init'] === 'getInfo' && !obj['status']) {
                 for (var key in clients) {
-                    io.emit('message', '{"status":' + data + '}');
+                    socket.emit('message', '{"status":' + data + '}');
                     //clients[key].send('{"status":' + data + '}');
                 }
             }
@@ -128,29 +128,29 @@ io.on('connection', function(socket){
             //{"server_init": "getCustomers"}
             if (obj['server_init'] === 'getCustomers' && !obj['status']) {
                 db.getCustomersO().subscribe(res => {
-                    io.emit('message', JSON.stringify(res));
+                    socket.emit('message', JSON.stringify(res));
                 });
             }
             //{"server_init": "getClient", "cuid": 1}
             if (obj['server_init'] === 'getClient' && !obj['status']) {
                 if (obj['cuid'] !== undefined) {
                     db.addClientO(obj['cuid']).subscribe(res => {
-                        io.emit('message', JSON.stringify(res));
+                        socket.emit('message', JSON.stringify(res));
                     });
                 }
             }
             //{"server_init": "getAddress"}
             if (obj['server_init'] === 'getAddress' && !obj['status']) {
                 db.getAddressO().subscribe(res => {
-                    io.emit('message', JSON.stringify(res));
+                    socket.emit('message', JSON.stringify(res));
                 });
             }
             if (obj['test']) {
                 console.log(obj);
-                io.emit('message', obj['test']);
+                socket.emit('message', obj['test']);
             }
         } else {
-            io.emit('message', data);
+            socket.emit('message', data);
         }
     });
 });
