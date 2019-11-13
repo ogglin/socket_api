@@ -25,11 +25,11 @@
               {{option['title']}}
             </mat-option>
           </mat-autocomplete>
-          <mat-icon matSuffix *ngIf="cuid" (click)="setCompany(cuid)">mode_edit</mat-icon>
+          <mat-icon matSuffix *ngIf="cuid && uid === 0" (click)="setCompany(cuid)">mode_edit</mat-icon>
           <mat-hint>ID компании: {{cuid}}</mat-hint>
         </mat-form-field>
       </div>
-      <div class="p-2 float-left">
+      <div *ngIf="uid === 0" class="p-2 float-left">
         <form [formGroup]="companyForm" (ngSubmit)="addCompany()">
           <mat-form-field>
             <input matInput placeholder="Название" name="title" formControlName="title" required>
@@ -69,12 +69,12 @@
           <mat-hint>ID клиента: {{cid}}</mat-hint>
         </mat-form-field>
 
-        <form [formGroup]="clientForm" (ngSubmit)="addClient()" *ngIf="cuid !== 0">
+        <form [formGroup]="clientForm" (ngSubmit)="addClient()" *ngIf="cuid !== 0 && uid === 0">
           <mat-form-field>
             <input matInput placeholder="Название" name="name" formControlName="name" required>
             <mat-icon *ngIf="clientForm.controls['name'].value !== ''" matSuffix (click)="clear('client')">close</mat-icon>
-            <mat-hint *ngIf="reqClient === undefined && !saveClient">Добавить новый клиент</mat-hint>
-            <mat-hint *ngIf="reqClient === undefined && saveClient">Сохранить клиент</mat-hint>
+            <mat-hint *ngIf="reqClient === undefined && !saveClient">Добавить новый офис</mat-hint>
+            <mat-hint *ngIf="reqClient === undefined && saveClient">Сохранить офис</mat-hint>
             <mat-hint *ngIf="reqClient !== undefined" class="text-orange">{{reqClient['status']}}
               : {{reqClient['result']}}</mat-hint>
           </mat-form-field>
@@ -87,10 +87,20 @@
         </form>
       </mat-sidenav>
       <div class="container" *ngIf="clients.length">
+        <mat-form-field class="">
+          <input type="text" placeholder="Местоположение:" aria-label="Number" matInput [formControl]="deviceControl"
+                 [matAutocomplete]="auto">
+          <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="setDevices('');">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredDevice | async" [value]="option['placement']"
+                        (click)="setDevices(option['placement'])">
+              {{option['placement']}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
         <form [formGroup]="deviceForm" (ngSubmit)="addDevice()" class="device-form">
-          <mat-form-field>
-            <input matInput placeholder="Местоположение" name="placement" formControlName="placement">
-          </mat-form-field>
           <mat-form-field>
             <input matInput placeholder="Название" name="productName" formControlName="productName" required>
             <mat-hint *ngIf="reqDevice === undefined && !did">Добавить новое устройство</mat-hint>
@@ -144,7 +154,7 @@
             </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let item of devices">
+          <tr *ngFor="let item of fdevices" [ngClass]="{'disable-color': item['enabled']===0 }">
             <td>{{item['id']}}</td>
             <td>{{item['placement']}}</td>
             <td>{{item['productname']}}</td>

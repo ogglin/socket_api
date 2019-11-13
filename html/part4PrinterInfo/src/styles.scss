@@ -155,12 +155,14 @@ mat-list-item:hover {
 .device-table {
   width: 100%;
   margin: 20px 0;
+  border-spacing: 0;
   tr {
     border: 1px solid #cacaca;
   }
   td, th {
     padding: 4px;
     text-align: center;
+    border: 1px solid #cacaca;
   }
 }
 mat-icon {
@@ -168,4 +170,7 @@ mat-icon {
 }
 .error-text {
   color: #ff0000;
+}
+.disable-color {
+  color: #898989;
 }

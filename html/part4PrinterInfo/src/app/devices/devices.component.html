@@ -20,7 +20,7 @@
     <div class="socket-init">
       <button mat-raised-button id="btnInit" [disabled]="cid === 0">Получить данные с устройств</button>
       <input type="hidden" id="info_query" [value]="getQuery">
-      <button mat-raised-button class="mx-2" (click)="go('admin')" *ngIf="uid === 0">Админ</button>
+      <button mat-raised-button class="mx-2" (click)="go('admin')">Админ</button>
       <button mat-raised-button class="mx-2" (click)="logOut()">Выйти</button>
       <!--button mat-raised-button id="addDevice">Добавить</button-->
     </div>
@@ -35,11 +35,24 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <div *ngIf="devices.length > 0">
+        <mat-form-field class="">
+          <input type="text" placeholder="Местоположение:" aria-label="Number" matInput [formControl]="deviceControl"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredDevice | async" [value]="option['placement']"
+                        (click)="setDevice(option['placement'])">
+              {{option['placement']}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <button mat-raised-button color="warn" (click)="setDevice('');" class="mx-2">Все</button>
+      </div>
       <div class="urls-nav" *ngIf="devices.length > 0">
-        <div *ngFor="let item of devices, let i = index" (click)="setInfo(item['id']); toggleActive(i, 'dev')"
+        <div *ngFor="let item of fdevices, let i = index" (click)="setInfo(item['id']); toggleActive(i, 'dev')"
              [ngClass]="i===devLI ? 'active': ''">
           <h4 class="cursor-pointer">{{item['productname']}} <br>
-            <small class="text-orange">
+            <small class="text-orange"> {{item['placement']}} <br>
               {{item['url']}} <br> {{item['sn']}}
             </small>
           </h4>

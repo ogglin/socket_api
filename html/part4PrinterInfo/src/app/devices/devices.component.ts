@@ -17,6 +17,10 @@ export class DevicesComponent implements OnInit {
   customerControl = new FormControl();
   customers: any[] = [];
   filteredCustomers: Observable<string[]>;
+  deviceControl = new FormControl();
+  filteredDevice: Observable<any[]>;
+  fdevices: any[] = [];
+  devices: any[] = [];
   cuid: number = 0;
   clients: any[] = [];
   client: any;
@@ -24,7 +28,6 @@ export class DevicesComponent implements OnInit {
   infos: any[] = [];
   infoUrl: string = '';
   infoDate: any;
-  devices: any[] = [];
   device: any;
   initDevices: any[] = [];
   devId: number;
@@ -44,6 +47,8 @@ export class DevicesComponent implements OnInit {
       this.isLogin = true;
       this.uid = parseInt(localStorage.getItem('uid'), 10);
       this.cuid = this.uid;
+    } else {
+      this.isLogin = false;
     }
     if (this.isLogin) {
       this.getCustomer();
@@ -52,8 +57,15 @@ export class DevicesComponent implements OnInit {
       startWith(''),
       map(value => this._filterCustomer(value))
     );
+    this.filteredDevice = this.deviceControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterDevice(value))
+    );
   }
-
+  private _filterDevice(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.devices.filter(option => option['placement'].toLowerCase().includes(filterValue)).filter(option => option['placement'] !== ' ');
+  }
   private _filterCustomer(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.customers.filter(option => option['title'].toLowerCase().includes(filterValue));
@@ -75,7 +87,6 @@ export class DevicesComponent implements OnInit {
   }
   getCSV() {
     this.api.getCSV(this.cuid, 1, 0).subscribe(result=>{
-      console.log(result);
       result.forEach(item=>{
         let data = new Date(item['datetime']);
         this.csvData.push({
@@ -89,13 +100,11 @@ export class DevicesComponent implements OnInit {
           printcycles: item['printcycles']
         });
       });
-      console.log(this.csvData);
       this.csvReady = true;
     });
   }
   getCustomer() {
     this.api.getCompany(this.uid).subscribe(result=>{
-      console.log(result);
       this.customers = result;
       if (this.uid !== 0) {
         this.customerControl.setValue(result[0]['title']);
@@ -119,8 +128,8 @@ export class DevicesComponent implements OnInit {
       this.devices = result;
       if(this.devices.length) {
         this.setInfo(this.devices[0]['id']);
+        this.fdevices = this.devices.filter(item=>item['enabled'] === 1);
       }
-      console.log(this.devices);
       this.devices.forEach(item=>{
         this.initDevices.push({
           productName: item['productname'],
@@ -137,7 +146,6 @@ export class DevicesComponent implements OnInit {
     this.dates = [];
     this.api.getInfo(this.devId).subscribe(result=>{
       this.infos = result['content'];
-      console.log(result);
       if (this.infos.length) {
         this.infos.forEach(item=>{
           this.dates.push(item['datetime']);
@@ -156,8 +164,16 @@ export class DevicesComponent implements OnInit {
     this.cid = id;
     this.getDevices();
   }
+  setDevice(e){
+    if(e === '') {
+      this.fdevices = this.devices.filter(el=>el['enabled'] === 1);
+      this.deviceControl.setValue('');
+    } else {
+      this.fdevices = this.devices.filter(item => item['placement'] === e).filter(el=>el['enabled'] === 1);
+    }
+    console.log(this.fdevices);
+  }
   setInfo(id){
-    console.log(id);
     this.devId = id;
     this.getInfo();
   }
@@ -166,7 +182,6 @@ export class DevicesComponent implements OnInit {
     this.infos.forEach(info => {
       if(info['datetime'] === date){
         this.device = info;
-        console.log(this.device);
       }
     });
   }

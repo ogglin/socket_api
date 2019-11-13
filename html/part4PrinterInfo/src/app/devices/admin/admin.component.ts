@@ -18,10 +18,13 @@ export class AdminComponent implements OnInit {
   customerControl = new FormControl();
   customers: any[] = [];
   filteredCustomers: Observable<string[]>;
+  deviceControl = new FormControl();
+  filteredDevice: Observable<any[]>;
+  fdevices: any[] = [];
+  devices: any[] = [];
   cuid: number = 0;
   clients: any[] = [];
   cid: number = 0;
-  devices: any[] = [];
   device: any;
   isDevOn: number = 1;
   reqCompany: any;
@@ -32,6 +35,7 @@ export class AdminComponent implements OnInit {
   saveClient: boolean = false;
   initDevices: any[] = [];
   getQuery: string;
+  uid: number;
 
   loginForm = new FormGroup({
     loginControl: new FormControl(''),
@@ -63,21 +67,32 @@ export class AdminComponent implements OnInit {
     if(localStorage.getItem('login') === 'true') {
       this.isLogIn = true;
       this.cuid = parseInt(localStorage.getItem('uid'), 10);
+      this.uid = parseInt(localStorage.getItem('uid'), 10);
     }
     this.getCustomer();
     this.filteredCustomers = this.customerControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterCustomer(value))
     );
+    this.filteredDevice = this.deviceControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterDevice(value))
+    );
   }
   private _filterCustomer(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.customers.filter(option => option['title'].toLowerCase().includes(filterValue));
   }
-
+  private _filterDevice(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.devices.filter(option => option['placement'].toLowerCase().includes(filterValue)).filter(option => option['placement'] !== ' ');
+  }
   getCustomer() {
     this.api.getCompany(this.cuid).subscribe(result=>{
       this.customers = result;
+      if(this.uid !== 0) {
+        this.customerControl.setValue(result[0]['title']);
+      }
     });
   }
   getClient() {
@@ -91,6 +106,7 @@ export class AdminComponent implements OnInit {
     this.api.getDevices(this.cuid, this.cid, this.isDevOn).subscribe(result=>{
       this.devices = result;
       console.log(this.devices);
+      this.fdevices = this.devices;
       this.devices.forEach(item=>{
         this.initDevices.push({
           productName: item['productname'],
@@ -170,7 +186,6 @@ export class AdminComponent implements OnInit {
       enable: 1
     };
     this.api.addDevice(body).subscribe(result=>{
-      console.log(result);
       this.reqDevice = result;
       if(result['status'] === 'success') {
         this.getDevices();
@@ -196,9 +211,7 @@ export class AdminComponent implements OnInit {
       serialNumber: this.deviceForm.controls['serialNumber'].value,
       enable: enable
     };
-    console.log(body);
     this.api.editDevice(body).subscribe(result=>{
-      console.log(result);
       this.reqDevice = result;
       if(result['status'] === 'success') {
         this.getDevices();
@@ -243,7 +256,15 @@ export class AdminComponent implements OnInit {
       this.saveClient = false;
     }
   }
-
+  setDevices(e){
+    if(e === '') {
+      this.fdevices = this.devices;
+      this.deviceControl.setValue('');
+    } else {
+      this.fdevices = this.devices.filter(item => item['placement'] === e);
+    }
+    console.log(this.fdevices);
+  }
   setDevice(id){
     if(id !== 0) {
       this.devices.forEach(item=>{
@@ -252,7 +273,7 @@ export class AdminComponent implements OnInit {
           this.deviceForm.controls['productName'].setValue(item['productname']);
           this.deviceForm.controls['url'].setValue(item['url']);
           this.deviceForm.controls['article'].setValue(item['article']);
-          this.deviceForm.controls['client_article'].setValue(item['client_article']);
+          this.deviceControl.setValue(item['placement']);
           this.deviceForm.controls['serialNumber'].setValue(item['sn']);
           if(item['enabled'] === 1) {
             this.deviceForm.controls['enabled'].setValue(true);
@@ -296,7 +317,7 @@ export class AdminComponent implements OnInit {
   go(url) {
     switch (url) {
       case 'device': this.router.navigate(['/']); break;
-      case 'device_exit': localStorage.setItem('logIn', 'false'); this.router.navigate(['/']); break;
+      case 'device_exit': localStorage.removeItem('logIn'); localStorage.removeItem('uid');; this.router.navigate(['/']); break;
     }
   }
 
