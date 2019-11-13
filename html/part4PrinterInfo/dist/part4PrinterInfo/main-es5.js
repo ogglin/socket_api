@@ -1258,6 +1258,7 @@
                     this.getDevices();
                 };
                 DevicesComponent.prototype.setInfo = function (id) {
+                    console.log(id);
                     this.devId = id;
                     this.getInfo();
                 };

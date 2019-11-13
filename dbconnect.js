@@ -92,7 +92,7 @@ function getDevices(cuid, cid, on, callback) {
 }
 
 function getInfo(devid, callback) {
-    qgi = "SELECT rdata.devices.productname, rdata.devices.article, rdata.devices.client_article, rdata.devices.sn, " +
+    qgi = "SELECT rdata.devices.productname, rdata.devices.article, rdata.devices.placement, rdata.devices.sn, " +
         "rdata.devices.url, rdata.info.printcycles, rdata.info.scancycles, rdata.info.status, rdata.info.kit, " +
         "rdata.info.cartridge, rdata.info.maintenancekitcount, rdata.info.log, rdata.info.adfcycles, " +
         "rdata.info.datetime, rdata.info.error " +
@@ -217,11 +217,11 @@ function addAddress(address, callback) {
     });
 }
 
-function addDevice(productName, url, init_client, company_id, article, client_article, serialNumber, enable, callback) {
-    qda = "INSERT INTO rdata.devices (productname, url, client_id, company_id, article, client_article, sn, enabled) " +
+function addDevice(productName, url, init_client, company_id, article, placement, serialNumber, enable, callback) {
+    qda = "INSERT INTO rdata.devices (productname, url, client_id, company_id, article, placement, sn, enabled) " +
         "VALUES ('"+productName+"', '"+url+"', "+init_client+", "+company_id;
     if (article) {qda += ", '" + article + "'";} else {qda += ", NULL";}
-    if (client_article) {qda += ", '" + client_article + "'";} else {qda += ", NULL";}
+    if (placement) {qda += ", '" + placement + "'";} else {qda += ", NULL";}
     if (serialNumber) {qda += ", '" + serialNumber + "'";} else {qda += ", NULL";}
     if (enable) {qda += ", " + enable;} else {qda += ", NULL";}
     qda += ");";
@@ -243,7 +243,7 @@ function addDevice(productName, url, init_client, company_id, article, client_ar
 
 function addInfo(init_client, company_id, address_id, url, status, cartridge, KIT,
                   productName, serialNumber, maintenanceKitCount, printCycles,
-                  scanCycles, adfCycles, log, article, client_article, callback) {
+                  scanCycles, adfCycles, log, article, placement, callback) {
     var d = new Date();
     var n = d.toJSON();
     qai = "DO $$ " +
@@ -337,14 +337,14 @@ function editClient(id, name, callback) {
     });
 }
 
-function editDevice(id, productName, url, init_client, company_id, article, client_article, serialNumber, enable, callback) {
+function editDevice(id, productName, url, init_client, company_id, article, placement, serialNumber, enable, callback) {
     var qed = "UPDATE rdata.devices SET (";
     if(productName) {qed += "productname"}
     if(url) {qed += ",url"}
     if(init_client) {qed += ",client_id"}
     if(company_id) {qed += ",company_id"}
     if(article) {qed += ",article"}
-    if(client_article) {qed += ",client_article"}
+    if(placement) {qed += ",placement"}
     if(serialNumber) {qed += ",sn"}
     if(enable !== undefined) {qed += ",enabled"}
     qed += ") = (";
@@ -353,7 +353,7 @@ function editDevice(id, productName, url, init_client, company_id, article, clie
     if(init_client) {qed += ","+init_client}
     if(company_id) {qed += ","+company_id}
     if(article) {qed += ",'"+article+"'"}
-    if(client_article) {qed += ",'"+client_article+"'"}
+    if(placement) {qed += ",'"+placement+"'"}
     if(serialNumber) {qed += ",'"+serialNumber+"'"}
     if(enable !== undefined) {qed += ","+enable}
     qed += ") WHERE devices.id = "+id+";";

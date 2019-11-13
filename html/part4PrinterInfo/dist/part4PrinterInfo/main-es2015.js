@@ -1263,6 +1263,7 @@ let DevicesComponent = class DevicesComponent {
         this.getDevices();
     }
     setInfo(id) {
+        console.log(id);
         this.devId = id;
         this.getInfo();
     }
