@@ -130,7 +130,7 @@ export class DevicesComponent implements OnInit {
         this.setInfo(this.devices[0]['id']);
         this.fdevices = this.devices.filter(item=>item['enabled'] === 1);
       }
-      this.devices.forEach(item=>{
+      this.fdevices.forEach(item=>{
         this.initDevices.push({
           productName: item['productname'],
           url: item['url'],

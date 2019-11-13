@@ -752,7 +752,7 @@ let AdminComponent = class AdminComponent {
             init_client: this.cid,
             company_id: this.cuid,
             article: this.deviceForm.controls['article'].value,
-            placement: this.deviceForm.controls['placement'].value,
+            placement: this.deviceControl.value,
             serialNumber: this.deviceForm.controls['serialNumber'].value,
             enable: 1
         };
@@ -861,7 +861,7 @@ let AdminComponent = class AdminComponent {
             this.deviceForm.controls['productName'].setValue('');
             this.deviceForm.controls['url'].setValue('');
             this.deviceForm.controls['article'].setValue('');
-            this.deviceForm.controls['client_article'].setValue('');
+            this.deviceForm.controls['placement'].setValue('');
             this.deviceForm.controls['serialNumber'].setValue('');
         }
     }
@@ -1256,7 +1256,7 @@ let DevicesComponent = class DevicesComponent {
                 this.setInfo(this.devices[0]['id']);
                 this.fdevices = this.devices.filter(item => item['enabled'] === 1);
             }
-            this.devices.forEach(item => {
+            this.fdevices.forEach(item => {
                 this.initDevices.push({
                     productName: item['productname'],
                     url: item['url'],

@@ -181,7 +181,7 @@ export class AdminComponent implements OnInit {
       init_client: this.cid,
       company_id: this.cuid,
       article: this.deviceForm.controls['article'].value,
-      placement: this.deviceForm.controls['placement'].value,
+      placement: this.deviceControl.value,
       serialNumber: this.deviceForm.controls['serialNumber'].value,
       enable: 1
     };
@@ -289,7 +289,7 @@ export class AdminComponent implements OnInit {
       this.deviceForm.controls['productName'].setValue('');
       this.deviceForm.controls['url'].setValue('');
       this.deviceForm.controls['article'].setValue('');
-      this.deviceForm.controls['client_article'].setValue('');
+      this.deviceForm.controls['placement'].setValue('');
       this.deviceForm.controls['serialNumber'].setValue('');
     }
   }
