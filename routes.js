@@ -88,7 +88,7 @@ module.exports = function (app) {
     /* Put device */
     app.put('/api/device', multipart.array(), function (req, res) {
         db.addDeviceO(req.body['productName'], req.body['url'], req.body['init_client'], req.body['company_id'],
-            req.body['article'], req.body['client_article'], req.body['serialNumber'], req.body['enable']
+            req.body['article'], req.body['placement'], req.body['serialNumber'], req.body['enable']
         ).subscribe(result => {
             res.send(result);
         });
@@ -97,7 +97,7 @@ module.exports = function (app) {
     /* Edit device */
     app.post('/api/device', multipart.array(), function (req, res) {
         db.editDeviceO(req.body['id'], req.body['productName'], req.body['url'], req.body['init_client'], req.body['company_id'],
-            req.body['article'], req.body['client_article'], req.body['serialNumber'], req.body['enable']).subscribe(result => {
+            req.body['article'], req.body['placement'], req.body['serialNumber'], req.body['enable']).subscribe(result => {
             res.send(result);
         });
     });
