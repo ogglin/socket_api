@@ -21,8 +21,8 @@ export class APIService {
 
   }
 
-  getCompany(): Observable<any[]> {
-    return this.http.get<any>(this.url + 'company', this.httpOptions);
+  getCompany(uid): Observable<any[]> {
+    return this.http.get<any>(this.url + 'company'+'?uid='+uid, this.httpOptions);
   }
 
   getClient(cuid): Observable<any[]> {
@@ -72,5 +72,10 @@ export class APIService {
 
   editClient(body): Observable<any[]> {
     return this.http.post<any>(this.url + 'client', body, this.httpOptions);
+  }
+
+  authLogin(login, pass): Observable<any[]> {
+    const param = "?login="+login+"&pass="+pass;
+    return this.http.get<any>(this.url + 'auth' + param, this.httpOptions);
   }
 }

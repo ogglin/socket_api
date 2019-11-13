@@ -22,6 +22,7 @@
               var q = document.getElementById('info_query').value;
               var t = '{"test": "test"}';
               console.log(q);
+              $('#console').append($('<li>').text(q));
               socket.emit('message', q);
           };
           socket.on('message', function(msg){

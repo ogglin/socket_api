@@ -1,4 +1,5 @@
-<div class="">
+<app-login (check)="LogIn($event)" *ngIf="!isLogin"></app-login>
+<div class="" *ngIf="isLogin">
   <header class="container">
     <div class="pt-2 float-left">
       <mat-form-field class="" style="width: 250px;">
@@ -19,7 +20,8 @@
     <div class="socket-init">
       <button mat-raised-button id="btnInit" [disabled]="cid === 0">Получить данные с устройств</button>
       <input type="hidden" id="info_query" [value]="getQuery">
-      <button mat-raised-button class="mx-2" (click)="go('admin')">Админ</button>
+      <button mat-raised-button class="mx-2" (click)="go('admin')" *ngIf="uid === 0">Админ</button>
+      <button mat-raised-button class="mx-2" (click)="logOut()">Выйти</button>
       <!--button mat-raised-button id="addDevice">Добавить</button-->
     </div>
   </header>

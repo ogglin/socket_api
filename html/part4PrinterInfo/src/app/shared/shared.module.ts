@@ -9,10 +9,11 @@ import { ManageComponent } from '../devices/admin/manage/manage.component';
 import { AdminComponent } from '../devices/admin/admin.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgScrollbarModule} from "ngx-scrollbar";
+import { LoginComponent } from '../auth/login/login.component';
 
 
 @NgModule({
-  declarations: [CompanyComponent, ClientComponent, DeviceComponent, ManageComponent, AdminComponent],
+  declarations: [CompanyComponent, ClientComponent, DeviceComponent, ManageComponent, AdminComponent, LoginComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -24,7 +25,8 @@ import {NgScrollbarModule} from "ngx-scrollbar";
   exports: [
     MaterialModule,
     HttpClientModule,
-    NgScrollbarModule
+    NgScrollbarModule,
+    LoginComponent
   ]
 })
 export class SharedModule { }

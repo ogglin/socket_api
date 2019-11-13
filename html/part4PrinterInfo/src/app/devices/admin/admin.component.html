@@ -89,6 +89,9 @@
       <div class="container" *ngIf="clients.length">
         <form [formGroup]="deviceForm" (ngSubmit)="addDevice()" class="device-form">
           <mat-form-field>
+            <input matInput placeholder="Местоположение" name="placement" formControlName="placement">
+          </mat-form-field>
+          <mat-form-field>
             <input matInput placeholder="Название" name="productName" formControlName="productName" required>
             <mat-hint *ngIf="reqDevice === undefined && !did">Добавить новое устройство</mat-hint>
             <mat-hint *ngIf="reqDevice === undefined && did">Сохранить изменения</mat-hint>
@@ -103,9 +106,6 @@
           </mat-form-field>
           <mat-form-field>
             <input matInput placeholder="Артикул" name="article" formControlName="article">
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Артикул клиента" name="client_article" formControlName="client_article">
           </mat-form-field>
           <mat-checkbox class="mx-2" formControlName="enabled">Активное</mat-checkbox>
           <button mat-raised-button type="submit" color="primary" class="mx-2"
@@ -135,22 +135,22 @@
           <thead>
             <tr>
               <th>ID</th>
+              <th>Местоположение</th>
               <th>Название</th>
               <th>URL</th>
               <th>Серийный номер</th>
               <th>Артикул</th>
-              <th>Артикул клиента</th>
               <th>-</th>
             </tr>
           </thead>
           <tbody>
           <tr *ngFor="let item of devices">
             <td>{{item['id']}}</td>
+            <td>{{item['placement']}}</td>
             <td>{{item['productname']}}</td>
             <td>{{item['url']}}</td>
             <td>{{item['sn']}}</td>
             <td>{{item['article']}}</td>
-            <td>{{item['client_article']}}</td>
             <td><button mat-stroked-button color="primary" (click)="edit('device', item['id'])"><mat-icon>edit</mat-icon></button></td>
           </tr>
           </tbody>

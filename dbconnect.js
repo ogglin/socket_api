@@ -12,8 +12,15 @@ const dbConfig = {
 const {Pool} = require('pg');
 const pool = new Pool(dbConfig);
 
-function getCustomers(callback) {
-    qgc = "SELECT * FROM rdata.company";
+function getCompany(uid, callback) {
+    console.log(uid);
+    var qgc = '';
+    if(uid != 0) {
+        qgc = "SELECT * FROM rdata.company WHERE id = " + uid;
+    } else {
+        qgc = "SELECT * FROM rdata.company WHERE id != 0";
+    }
+    console.log(qgc);
     (async () => {
         const client = await pool.connect();
         try {
@@ -32,7 +39,7 @@ function getCustomers(callback) {
 function getClient(cuid, callback) {
     qgcl = "SELECT * FROM rdata.clients";
     if (cuid) {
-        qgcl += " WHERE rdata.clients.customers_id = " + cuid;
+        qgcl += " WHERE rdata.clients.company_id = " + cuid;
     }
     (async () => {
         const client = await pool.connect();
@@ -133,11 +140,11 @@ function getErrors(did, callback) {
 function getInfoCSV(cuid, smonth, emonth, callback) {
     var qgic = "SELECT * FROM ( SELECT rank() over (partition by \"productname\" order by i.datetime desc) n, " +
         "date_part('month', datetime) ts, co.title company, c.name office, d.productname, d.article," +
-        " d.client_article, d.sn, d.url, i.printcycles, i.datetime " +
+        " d.placement, d.sn, d.url, i.printcycles, i.datetime " +
         "FROM rdata.devices d " +
         "INNER JOIN rdata.info i ON i.device_id = d.id " +
         "INNER JOIN rdata.clients c on d.client_id = c.id " +
-        "INNER JOIN rdata.company co on co.id = c.customers_id " +
+        "INNER JOIN rdata.company co on co.id = c.company_id " +
         "WHERE d.company_id = "+cuid+" AND i.printcycles is not NULL " +
         "AND datetime BETWEEN (now() - '"+smonth+" month'::interval) and (now() - '"+emonth+" month'::interval) ) A WHERE n = 1";
     (async () => {
@@ -155,7 +162,7 @@ function getInfoCSV(cuid, smonth, emonth, callback) {
     });
 }
 
-function addCustomer(title, description, callback) {
+function addCompany(title, description, callback) {
     qac = "INSERT INTO rdata.company (title, description) VALUES ('"+ title +"', '"+ description +"');";
     (async () => {
         const client = await pool.connect();
@@ -234,7 +241,7 @@ function addDevice(productName, url, init_client, company_id, article, client_ar
     });
 }
 
-function addInfo (init_client, company_id, address_id, url, status, cartridge, KIT,
+function addInfo(init_client, company_id, address_id, url, status, cartridge, KIT,
                   productName, serialNumber, maintenanceKitCount, printCycles,
                   scanCycles, adfCycles, log, article, client_article, callback) {
     var d = new Date();
@@ -366,14 +373,34 @@ function editDevice(id, productName, url, init_client, company_id, article, clie
     });
 }
 
+// Auth
+function Auth(login, pass, callback) {
+    var qau = "SELECT rdata.users.company_id FROM rdata.users WHERE rdata.users.login = '"+login+"' AND rdata.users.pass = '"+pass+"';";
+    console.log(qau);
+    (async () => {
+        const client = await pool.connect();
+        try {
+            const result = await client.query(qau);
+            callback ({status: 'success', result: result.rows});
+            return {status: 'success', result: result.rows};
+        } finally {
+            client.release()
+        }
+    })().catch(e => {
+        console.log(e.stack);
+        callback ({status: 'error', result: e.detail});
+        return {error: e.detail};
+    });
+}
+
 module.exports = {
-    addCustomerO: Rx.Observable.bindCallback(addCustomer),
+    addCompanyO: Rx.Observable.bindCallback(addCompany),
     addClientO: Rx.Observable.bindCallback(addClient),
     addAddressO: Rx.Observable.bindCallback(addAddress),
     addDeviceO: Rx.Observable.bindCallback(addDevice),
     addInfoO: Rx.Observable.bindCallback(addInfo),
     addErrorO: Rx.Observable.bindCallback(addError),
-    getCustomersO: Rx.Observable.bindCallback(getCustomers),
+    getCompanyO: Rx.Observable.bindCallback(getCompany),
     getClientsO: Rx.Observable.bindCallback(getClient),
     getAddressO: Rx.Observable.bindCallback(getAddress),
     getDevicesO: Rx.Observable.bindCallback(getDevices),
@@ -382,5 +409,6 @@ module.exports = {
     editDeviceO: Rx.Observable.bindCallback(editDevice),
     editCompanyO: Rx.Observable.bindCallback(editCompany),
     editClientO: Rx.Observable.bindCallback(editClient),
-    getInfoCSVO: Rx.Observable.bindCallback(getInfoCSV)
+    getInfoCSVO: Rx.Observable.bindCallback(getInfoCSV),
+    AuthO: Rx.Observable.bindCallback(Auth)
 };

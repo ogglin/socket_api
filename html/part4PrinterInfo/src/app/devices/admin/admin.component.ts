@@ -51,7 +51,7 @@ export class AdminComponent implements OnInit {
     productName: new FormControl('', [Validators.required]),
     url: new FormControl('', [Validators.required]),
     article: new FormControl(''),
-    client_article: new FormControl(''),
+    placement: new FormControl(''),
     serialNumber: new FormControl('', [Validators.required]),
     enabled: new FormControl(true)
   });
@@ -60,8 +60,9 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(localStorage.getItem('logIn') === 'true') {
+    if(localStorage.getItem('login') === 'true') {
       this.isLogIn = true;
+      this.cuid = parseInt(localStorage.getItem('uid'), 10);
     }
     this.getCustomer();
     this.filteredCustomers = this.customerControl.valueChanges.pipe(
@@ -75,7 +76,7 @@ export class AdminComponent implements OnInit {
   }
 
   getCustomer() {
-    this.api.getCompany().subscribe(result=>{
+    this.api.getCompany(this.cuid).subscribe(result=>{
       this.customers = result;
     });
   }
@@ -164,7 +165,7 @@ export class AdminComponent implements OnInit {
       init_client: this.cid,
       company_id: this.cuid,
       article: this.deviceForm.controls['article'].value,
-      client_article: this.deviceForm.controls['client_article'].value,
+      placement: this.deviceForm.controls['placement'].value,
       serialNumber: this.deviceForm.controls['serialNumber'].value,
       enable: 1
     };
@@ -191,7 +192,7 @@ export class AdminComponent implements OnInit {
       init_client: this.cid,
       company_id: this.cuid,
       article: this.deviceForm.controls['article'].value,
-      client_article: this.deviceForm.controls['client_article'].value,
+      placement: this.deviceForm.controls['placement'].value,
       serialNumber: this.deviceForm.controls['serialNumber'].value,
       enable: enable
     };

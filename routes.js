@@ -11,9 +11,14 @@ module.exports = function (app) {
     app.get('/api/company', function (req, res) {
         var d = new Date();
         var n = d.toJSON();
-        db.getCustomersO().subscribe(result => {
-            return res.send(result);
-        });
+        if(req.query['uid']) {
+            db.getCompanyO(req.query['uid']).subscribe(result => {
+                return res.send(result);
+            });
+        } else {
+            res.send('Error: need user id - uid');
+        }
+
     });
 
     /* Get Client */
@@ -23,7 +28,7 @@ module.exports = function (app) {
                 return res.send(result);
             });
         } else {
-            res.send('Error: need customer id - cuid');
+            res.send('Error: need company id - cuid');
         }
     });
 
@@ -68,7 +73,7 @@ module.exports = function (app) {
 
     /* Put company */
     app.put('/api/company', jsonParser, function (req, res) {
-        db.addCustomerO(req.body['title'], req.body['desc']).subscribe(result => {
+        db.addCompanyO(req.body['title'], req.body['desc']).subscribe(result => {
             res.send(result);
         });
     });
@@ -109,5 +114,16 @@ module.exports = function (app) {
         db.editClientO(req.body['id'], req.body['name']).subscribe(result => {
             res.send(result);
         });
+    });
+
+    /* Auth */
+    app.get('/api/auth', function (req, res) {
+        if (req.query['login'] && req.query['pass']) {
+            db.AuthO(req.query['login'], req.query['pass']).subscribe(result => {
+                res.send(result);
+            });
+        } else {
+            res.send('Error: need login and password');
+        }
     });
 };

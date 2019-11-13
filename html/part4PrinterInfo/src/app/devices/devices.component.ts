@@ -34,11 +34,20 @@ export class DevicesComponent implements OnInit {
   getQuery: string;
   csvData: any[] = [];
   csvReady: boolean = false;
+  isLogin: boolean = false;
+  uid: number;
 
   constructor(private api: APIService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.getCustomer();
+    if(localStorage.getItem('login') === 'true' && localStorage.getItem('uid')) {
+      this.isLogin = true;
+      this.uid = parseInt(localStorage.getItem('uid'), 10);
+      this.cuid = this.uid;
+    }
+    if (this.isLogin) {
+      this.getCustomer();
+    }
     this.filteredCustomers = this.customerControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterCustomer(value))
@@ -49,7 +58,21 @@ export class DevicesComponent implements OnInit {
     const filterValue = value.toLowerCase();
     return this.customers.filter(option => option['title'].toLowerCase().includes(filterValue));
   }
-
+  LogIn(e){
+    if(e.check) {
+      this.isLogin = true;
+      this.cuid = e.id;
+      this.uid = e.id;
+      this.getCustomer();
+      localStorage.setItem('login', 'true');
+      localStorage.setItem('uid', this.uid.toString());
+    }
+  }
+  logOut() {
+    localStorage.removeItem('login');
+    localStorage.removeItem('uid');
+    this.isLogin = false;
+  }
   getCSV() {
     this.api.getCSV(this.cuid, 1, 0).subscribe(result=>{
       console.log(result);
@@ -71,8 +94,13 @@ export class DevicesComponent implements OnInit {
     });
   }
   getCustomer() {
-    this.api.getCompany().subscribe(result=>{
+    this.api.getCompany(this.uid).subscribe(result=>{
+      console.log(result);
       this.customers = result;
+      if (this.uid !== 0) {
+        this.customerControl.setValue(result[0]['title']);
+        this.setCustomer(this.cuid);
+      }
     });
   }
   getClient() {
@@ -109,11 +137,13 @@ export class DevicesComponent implements OnInit {
     this.dates = [];
     this.api.getInfo(this.devId).subscribe(result=>{
       this.infos = result['content'];
-      console.log(this.infos);
-      this.infos.forEach(item=>{
-        this.dates.push(item['datetime']);
-      });
-      this.setDate(this.infos[0]['datetime']);
+      console.log(result);
+      if (this.infos.length) {
+        this.infos.forEach(item=>{
+          this.dates.push(item['datetime']);
+        });
+        this.setDate(this.infos[0]['datetime']);
+      }
     });
   }
 
