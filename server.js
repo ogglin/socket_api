@@ -77,7 +77,7 @@ io.on('connection', function(socket){
                     socket.emit('message', JSON.stringify(res));
                 });
             }
-            if (obj['init_client'] && obj['new'] === 1) {
+            /*if (obj['init_client'] && obj['new'] === 1) {
                 db.addDeviceO(
                     obj['init_client'],
                     obj['company_id'],
@@ -99,7 +99,7 @@ io.on('connection', function(socket){
                 ).subscribe(res => {
                     socket.emit('message', JSON.stringify(res));
                 });
-            }
+            }*/
             //{"init_client_error": 1, "device_id": 1, "error": "Нет связи с устройством, по адресу: https://192.168.1.233"}
             if (obj['init_client_error']) {
                 socket.emit('message', '{"status": '+ obj['error'] +'}');
