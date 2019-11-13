@@ -51,6 +51,7 @@ io.on('connection', function(socket){
     clients[id] = socket;
     console.log("client " + id);
     socket.on('message', function(data){
+        console.log(data);
         var isJson = IsJsonString(data);
         if (isJson) {
             var obj = JSON.parse(data);
@@ -128,7 +129,7 @@ io.on('connection', function(socket){
             }*/
             //{"server_init": "getCustomers"}
             if (obj['server_init'] === 'getCustomers' && !obj['status']) {
-                db.getCustomersO().subscribe(res => {
+                db.getCompanyO(req.query['uid']).subscribe(res => {
                     socket.emit('message', JSON.stringify(res));
                 });
             }
