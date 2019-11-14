@@ -111,7 +111,7 @@ io.on('connection', function(socket){
                     socket.emit('message', JSON.stringify(res));
                 });
             }
-            if (obj['server_init'] === 'getInfo' && !obj['status']) {
+            if (obj['server_init'] === 'getDevices' && !obj['status']) {
                 console.log('getInfo', data);
                 socket.broadcast.emit('message', '{"status":' + data + '}');
                 /*for (var key in clients) {
