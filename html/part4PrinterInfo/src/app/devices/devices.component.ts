@@ -35,6 +35,8 @@ export class DevicesComponent implements OnInit {
   dataLI: number = 0;
   devLI: number = 0;
   getQuery: string;
+  getQueryList: string;
+  getQueryDevice: string;
   csvData: any[] = [];
   csvReady: boolean = false;
   isLogin: boolean = false;
@@ -138,8 +140,9 @@ export class DevicesComponent implements OnInit {
           device_id: item['id']
         });
       });
-      this.getQuery = '{"server_init": "getInfo", "init_company":' + this.cuid+',"init_client": '+this.cid+',"devices": '+
+      this.getQuery = '{"server_init": "getDevices", "company_id":' + this.cuid+',"devices": '+
        JSON.stringify(this.initDevices) +'}';
+      this.getQueryList = this.getQuery;
     });
   }
   getInfo() {
@@ -163,6 +166,7 @@ export class DevicesComponent implements OnInit {
   setClient(id) {
     this.cid = id;
     this.getDevices();
+    this.devId = null;
   }
   setDevice(e){
     if(e === '') {
@@ -171,11 +175,30 @@ export class DevicesComponent implements OnInit {
     } else {
       this.fdevices = this.devices.filter(item => item['placement'] === e).filter(el=>el['enabled'] === 1);
     }
-    console.log(this.fdevices);
+    let iDev = [];
+    this.fdevices.forEach(item=>{
+      iDev.push({
+        productName: item['productname'],
+        url: item['url'],
+        serialNumber: item['sn'],
+        device_id: item['id']
+      });
+    });
+    this.getQueryList = '{"server_init": "getDevices", "company_id":' + this.cuid+',"devices": '+
+      JSON.stringify(iDev) +'}';
   }
   setInfo(id){
     this.devId = id;
     this.getInfo();
+    let device = this.devices.filter(dev=>dev.id===id);
+    const iDev = [{
+      productName: device[0]['productname'],
+      url: device[0]['url'],
+      serialNumber: device[0]['sn'],
+      device_id: device[0]['device_id']
+    }];
+    this.getQueryDevice = '{"server_init": "getDevices", "company_id":' + this.cuid+',"devices": '+
+      JSON.stringify(iDev) +'}';
   }
   setDate(date) {
     this.infoDate = date;

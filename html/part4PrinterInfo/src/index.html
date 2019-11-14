@@ -20,10 +20,22 @@
           var socket = io('http://116.203.243.136:3000');
           document.getElementById('btnInit').onclick = function () {
               var q = document.getElementById('info_query').value;
-              var t = '{"test": "test"}';
               console.log(q);
               $('#console').append($('<li>').text(q));
               socket.emit('message', q);
+          };
+          document.getElementById('btnInitList').onclick = function () {
+              var ql = document.getElementById('info_queryList').value;
+              console.log(ql);
+              $('#console').append($('<li>').text(ql));
+              socket.emit('message', ql);
+          };
+          document.getElementById('btnInitDevice').onclick = function () {
+              var qd = document.getElementById('info_queryDevice').value;
+              var t = '{"test": "test"}';
+              console.log(qd);
+              $('#console').append($('<li>').text(qd));
+              socket.emit('message', qd);
           };
           socket.on('message', function(msg){
               $('#console').append($('<li>').text(msg));

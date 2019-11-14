@@ -51,28 +51,28 @@ io.on('connection', function(socket){
     clients[id] = socket;
     console.log("client " + id);
     socket.on('message', function(data){
-        console.log(data);
         var isJson = IsJsonString(data);
         if (isJson) {
             var obj = JSON.parse(data);
-            if (obj['init_client'] && !obj['server_init']) {
+            //{"client_init": "putDevices", "company_id":26, "device_id":8, "cartridge":[{"black":"99"}],"serialNumber":"VCG7428977","scanCycles":29974,
+            // "url":"http://192.168.1.205","article":"0","printCycles":87268,"productName":"Kyocera ECOSYS M2540dn","status":"Режим ожидания...."}
+            if (obj['init_client']==='putDevices') {
+                console.log(data);
                 db.addInfoO(
-                    obj['init_client'],
                     obj['company_id'],
-                    obj['address_id'],
-                    obj['url'],
-                    obj['status'],
+                    obj['device_id'],
                     obj['cartridge'],
-                    obj['KIT'],
-                    obj['productName'],
                     obj['serialNumber'],
-                    obj['maintenanceKitCount'],
-                    obj['printCycles'],
                     obj['scanCycles'],
-                    obj['adfCycles'],
-                    obj['log'],
+                    obj['url'],
                     obj['article'],
-                    obj['client_article']
+                    obj['printCycles'],
+                    obj['productName'],
+                    obj['status'],
+                    obj['KIT'],
+                    obj['maintenanceKitCount'],
+                    obj['adfCycles'],
+                    obj['log']
                 ).subscribe(res => {
                     socket.emit('message', JSON.stringify(res));
                 });

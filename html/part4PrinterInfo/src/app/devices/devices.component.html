@@ -18,7 +18,7 @@
     </div>
 
     <div class="socket-init">
-      <button mat-raised-button id="btnInit" [disabled]="cid === 0">Получить данные с устройств</button>
+      <button mat-raised-button id="btnInit" [disabled]="cid === 0">Получить данные с устройств компании</button>
       <input type="hidden" id="info_query" [value]="getQuery">
       <button mat-raised-button class="mx-2" (click)="go('admin')">Админ</button>
       <button mat-raised-button class="mx-2" (click)="logOut()">Выйти</button>
@@ -48,6 +48,10 @@
         </mat-form-field>
         <button mat-raised-button color="warn" (click)="setDevice('');" class="mx-2">Все</button>
       </div>
+      <div class="p-2 my-2">
+        <button mat-raised-button id="btnInitList" color="primary" [disabled]="cid === 0">Получить данные по списку</button>
+        <input type="hidden" id="info_queryList" [value]="getQueryList">
+      </div>
       <div class="urls-nav" *ngIf="devices.length > 0">
         <div *ngFor="let item of fdevices, let i = index" (click)="setInfo(item['id']); toggleActive(i, 'dev')"
              [ngClass]="i===devLI ? 'active': ''">
@@ -62,6 +66,10 @@
       <div class="console" id="console"></div>
     </mat-sidenav>
     <div class="container">
+      <div class="btnGetInfo">
+        <button mat-raised-button id="btnInitDevice" color="primary" [disabled]="!devId">Получить данные устройства</button>
+        <input type="hidden" id="info_queryDevice" [value]="getQueryDevice">
+      </div>
       <ng-container *ngIf="dates.length">
         <mat-list role="list" class="dateList">
           <h4>Даты:</h4>
@@ -75,7 +83,8 @@
         </mat-list>
         <div class="device-info">&nbsp;
           <ng-container *ngIf="device">
-            <h2>{{device['productname']}}</h2>
+            <h2>{{device['productname']}}
+            </h2>
             <p>Статус: {{device['status']}} <span *ngIf="device['error']" class="error-text">{{device['error']}}</span></p>
             <p>Серийный номер: {{device['sn']}}</p>
             <p>Сетевой адрес: {{device['url']}}</p>

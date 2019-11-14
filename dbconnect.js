@@ -93,7 +93,7 @@ function getDevices(cuid, cid, on, callback) {
 }
 
 function getInfo(devid, callback) {
-    qgi = "SELECT rdata.devices.productname, rdata.devices.article, rdata.devices.placement, rdata.devices.sn, " +
+    qgi = "SELECT rdata.info.device_id, rdata.devices.productname, rdata.devices.article, rdata.devices.placement, rdata.devices.sn, " +
         "rdata.devices.url, rdata.info.printcycles, rdata.info.scancycles, rdata.info.status, rdata.info.kit, " +
         "rdata.info.cartridge, rdata.info.maintenancekitcount, rdata.info.log, rdata.info.adfcycles, " +
         "rdata.info.datetime, rdata.info.error " +
@@ -243,7 +243,55 @@ function addDevice(productName, url, init_client, company_id, article, placement
     });
 }
 
-function addInfo(init_client, company_id, address_id, url, status, cartridge, KIT,
+/*
+obj['company_id'],
+obj['device_id'],
+obj['cartridge'],
+obj['serialNumber'],
+obj['scanCycles'],
+obj['url'],
+obj['article'],
+obj['printCycles'],
+obj['productName'],
+obj['status'],
+obj['KIT'],
+obj['maintenanceKitCount'],
+obj['adfCycles'],
+obj['log']
+*/
+
+function addInfo(company_id, device_id, cartridge, serialNumber, scanCycles, url, article, printCycles, productName,
+                 status, KIT, maintenanceKitCount, adfCycles, log, callback) {
+    var d = new Date();
+    var n = d.toJSON();
+    qai = "INSERT INTO rdata.info (printcycles, scancycles, status, kit, cartridge, log, maintenancekitcount, adfcycles, datetime, device_id) VALUES (";
+    if (printCycles) {qai += printCycles;} else {qai += "NULL"}
+    if (scanCycles) {qai += ", "+scanCycles;} else {qai += ", NULL"}
+    if (status) {qai += ", '" + status + "'";} else {qai += ", NULL"}
+    if (KIT) {qai += ", '" + JSON.stringify(KIT) + "'";} else {qai += ", NULL"}
+    if (cartridge) {qai += ", '" + JSON.stringify(cartridge) + "'";} else {qai += ", NULL"}
+    if (log) {qai += ", '" + JSON.stringify(log) + "'";} else {qai += ", NULL"}
+    if (maintenanceKitCount) {qai += ", " + maintenanceKitCount;} else {qai += ", NULL"}
+    if (adfCycles) {qai += ", " + adfCycles;} else {qai += ", NULL"}
+    qai += ", '"+n+"', "+device_id+");" ;
+    console.log(qai);
+    (async () => {
+        const client = await pool.connect();
+        try {
+            const result = await client.query(qai);
+            callback ({status: 'success', result: result.rows});
+            return {status: 'success', result: result.rows};
+        } finally {
+            client.release()
+        }
+    })().catch(e => {
+        console.log(e.stack);
+        callback ({status: 'error', result: e.detail});
+        return {error: e.detail};
+    });
+}
+
+/*function addInfo(init_client, company_id, address_id, url, status, cartridge, KIT,
                   productName, serialNumber, maintenanceKitCount, printCycles,
                   scanCycles, adfCycles, log, article, placement, callback) {
     var d = new Date();
@@ -279,7 +327,7 @@ function addInfo(init_client, company_id, address_id, url, status, cartridge, KI
         callback ({status: 'error', result: e.detail});
         return {error: e.detail};
     });
-}
+}*/
 
 function addError(init_client_error, device_id, error, callback) {
     var d = new Date();
