@@ -278,8 +278,8 @@ function addInfo(company_id, device_id, cartridge, serialNumber, scanCycles, url
         const client = await pool.connect();
         try {
             const result = await client.query(qai);
-            callback ({status: 'success', result: result.rows});
-            return {status: 'success', result: result.rows};
+            callback ({status:{result: 'success'}});
+            return {status:{result:'success'}};
         } finally {
             client.release()
         }
