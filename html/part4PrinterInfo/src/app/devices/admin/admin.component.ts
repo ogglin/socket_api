@@ -20,6 +20,7 @@ export class AdminComponent implements OnInit {
   filteredCustomers: Observable<string[]>;
   deviceControl = new FormControl();
   filteredDevice: Observable<any[]>;
+  filteredPlacement: any[] = [];
   fdevices: any[] = [];
   devices: any[] = [];
   cuid: number = 0;
@@ -85,7 +86,7 @@ export class AdminComponent implements OnInit {
   }
   private _filterDevice(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.devices.filter(option => option['placement'].toLowerCase().includes(filterValue)).filter(option => option['placement'] !== ' ');
+    return this.filteredPlacement.filter(option => option.toLowerCase().includes(filterValue));
   }
   getCustomer() {
     this.api.getCompany(this.cuid).subscribe(result=>{
@@ -105,9 +106,14 @@ export class AdminComponent implements OnInit {
     this.initDevices = [];
     this.api.getDevices(this.cuid, this.cid, this.isDevOn).subscribe(result=>{
       this.devices = result;
-      console.log(this.devices);
+      this.filteredPlacement = [];
       this.fdevices = this.devices;
       this.devices.forEach(item=>{
+        if(this.filteredPlacement.length === 0 && item['placement'] !== ' ') {
+          this.filteredPlacement.push(item['placement']);
+        } else if(this.filteredPlacement.indexOf(item['placement']) < 0 && item['placement'] !== ' ') {
+          this.filteredPlacement.push(item['placement']);
+        }
         this.initDevices.push({
           productName: item['productname'],
           url: item['url'],

@@ -94,9 +94,9 @@
             <mat-icon>close</mat-icon>
           </button>
           <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let option of filteredDevice | async" [value]="option['placement']"
-                        (click)="setDevices(option['placement'])">
-              {{option['placement']}}
+            <mat-option *ngFor="let option of filteredDevice | async" [value]="option"
+                        (click)="setDevices(option)">
+              {{option}}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>

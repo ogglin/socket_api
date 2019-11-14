@@ -19,6 +19,7 @@ export class DevicesComponent implements OnInit {
   filteredCustomers: Observable<string[]>;
   deviceControl = new FormControl();
   filteredDevice: Observable<any[]>;
+  filteredPlacement: any[] = [];
   fdevices: any[] = [];
   devices: any[] = [];
   cuid: number = 0;
@@ -66,7 +67,7 @@ export class DevicesComponent implements OnInit {
   }
   private _filterDevice(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.devices.filter(option => option['placement'].toLowerCase().includes(filterValue)).filter(option => option['placement'] !== ' ');
+    return this.filteredPlacement.filter(option => option.toLowerCase().includes(filterValue));
   }
   private _filterCustomer(value: string): string[] {
     const filterValue = value.toLowerCase();
@@ -133,6 +134,11 @@ export class DevicesComponent implements OnInit {
         this.fdevices = this.devices.filter(item=>item['enabled'] === 1);
       }
       this.fdevices.forEach(item=>{
+        if(this.filteredPlacement.length === 0 && item['placement'] !== ' ') {
+          this.filteredPlacement.push(item['placement']);
+        } else if(this.filteredPlacement.indexOf(item['placement']) < 0 && item['placement'] !== ' ') {
+          this.filteredPlacement.push(item['placement']);
+        }
         this.initDevices.push({
           productName: item['productname'],
           url: item['url'],

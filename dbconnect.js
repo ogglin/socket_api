@@ -181,7 +181,7 @@ function addCompany(title, description, callback) {
 }
 
 function addClient(name, customers_id, callback) {
-    qacl = "INSERT INTO rdata.clients (name, customers_id) VALUES ('"+ name  +"', "+ customers_id +");";
+    qacl = "INSERT INTO rdata.clients (name, company_id) VALUES ('"+ name  +"', "+ customers_id +");";
     (async () => {
         const client = await pool.connect();
         try {
