@@ -36,6 +36,8 @@ export class AdminComponent implements OnInit {
   saveClient: boolean = false;
   initDevices: any[] = [];
   getQuery: string;
+  getQueryList: string;
+  getQueryDevice: string;
   uid: number;
 
   loginForm = new FormGroup({
@@ -123,6 +125,7 @@ export class AdminComponent implements OnInit {
       });
       this.getQuery = '{"server_init": "getInfo", "init_company":' + this.cuid+',"init_client": '+this.cid+',"devices": '+
         JSON.stringify(this.initDevices) +'}';
+      this.getQueryList = this.getQuery;
     });
   }
 
@@ -213,7 +216,7 @@ export class AdminComponent implements OnInit {
       init_client: this.cid,
       company_id: this.cuid,
       article: this.deviceForm.controls['article'].value,
-      placement: this.deviceForm.controls['placement'].value,
+      placement: this.deviceControl.value,
       serialNumber: this.deviceForm.controls['serialNumber'].value,
       enable: enable
     };
@@ -269,7 +272,20 @@ export class AdminComponent implements OnInit {
     } else {
       this.fdevices = this.devices.filter(item => item['placement'] === e);
     }
+    let iDev = [];
+    this.fdevices.forEach(item=>{
+      iDev.push({
+        productName: item['productname'],
+        url: item['url'],
+        serialNumber: item['sn'],
+        device_id: item['id']
+      });
+    });
+    this.getQueryList = '{"server_init": "getDevices", "company_id":' + this.cuid+',"devices": '+
+      JSON.stringify(iDev) +'}';
     console.log(this.fdevices);
+    this.getQueryDevice = '{"server_init": "getDevices", "company_id":' + this.cuid+',"devices": '+
+      JSON.stringify(iDev) +'}';
   }
   setDevice(id){
     if(id !== 0) {

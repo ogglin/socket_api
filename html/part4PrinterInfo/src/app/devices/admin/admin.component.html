@@ -85,6 +85,14 @@
                   [disabled]="clientForm.controls['name'].hasError('required')">Сохранить
           </button>
         </form>
+        <div class="p-2 my-2">
+          <button mat-raised-button id="btnInitList" color="primary" [disabled]="cid === 0">Получить данные по списку</button>
+          <input type="hidden" id="info_queryList" [value]="getQueryList">
+        </div>
+        <div class="btnGetInfo" style="position: absolute; left: -99999px">
+          <button mat-raised-button id="btnInitDevice" color="primary" [disabled]="true">Получить данные устройства</button>
+          <input type="hidden" id="info_queryDevice" [value]="getQueryDevice">
+        </div>
       </mat-sidenav>
       <div class="container" *ngIf="clients.length">
         <mat-form-field class="">
