@@ -406,6 +406,7 @@ function editDevice(id, productName, url, init_client, company_id, article, plac
     if(serialNumber) {qed += ",'"+serialNumber+"'"}
     if(enable !== undefined) {qed += ","+enable}
     qed += ") WHERE devices.id = "+id+";";
+    console.log(qed);
     (async () => {
         const client = await pool.connect();
         try {
