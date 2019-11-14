@@ -197,11 +197,12 @@ export class DevicesComponent implements OnInit {
     this.devId = id;
     this.getInfo();
     let device = this.devices.filter(dev=>dev.id===id);
+    console.log(device);
     const iDev = [{
       productName: device[0]['productname'],
       url: device[0]['url'],
       serialNumber: device[0]['sn'],
-      device_id: device[0]['device_id']
+      device_id: device[0]['id']
     }];
     this.getQueryDevice = '{"server_init": "getDevices", "company_id":' + this.cuid+',"devices": '+
       JSON.stringify(iDev) +'}';

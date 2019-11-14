@@ -54,6 +54,7 @@ io.on('connection', function(socket){
     clients[socket.id] = true;
     console.log(clients);
     socket.on('message', function(data){
+        console.log(data);
         var isJson = IsJsonString(data);
         if (isJson) {
             var obj = JSON.parse(data);
