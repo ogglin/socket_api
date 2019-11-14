@@ -114,10 +114,7 @@ io.on('connection', function(socket){
             }
             if (obj['server_init'] === 'getDevices' && !obj['status']) {
                 console.log('get: ', data);
-                clients.forEach(client=>{
-                    socket.clients[client].emit('message', '{"status":' + data + '}');
-                });
-
+                socket.broadcast.emit('message', '{"status":' + data + '}');
                 /*for (var key in clients) {
                     socket.emit('message', '{"status":' + data + '}');
                     //clients[key].send('{"status":' + data + '}');
