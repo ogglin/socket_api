@@ -1666,8 +1666,8 @@
             var environment = {
                 production: false,
                 //apiURL: 'http://116.203.243.136:5000/api/'
-                //apiURL: 'http://socket.api.part4.info:5000/api/'
-                apiURL: 'http://localhost:5000/api/'
+                apiURL: 'http://socket.api.part4.info:5000/api/'
+                //apiURL: 'http://localhost:5000/api/'
             };
             /*
              * For easier debugging in development mode, you can import the following file
