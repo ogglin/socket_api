@@ -1338,11 +1338,12 @@
                     this.devId = id;
                     this.getInfo();
                     var device = this.devices.filter(function (dev) { return dev.id === id; });
+                    console.log(device);
                     var iDev = [{
                             productName: device[0]['productname'],
                             url: device[0]['url'],
                             serialNumber: device[0]['sn'],
-                            device_id: device[0]['device_id']
+                            device_id: device[0]['id']
                         }];
                     this.getQueryDevice = '{"server_init": "getDevices", "company_id":' + this.cuid + ',"devices": ' +
                         JSON.stringify(iDev) + '}';

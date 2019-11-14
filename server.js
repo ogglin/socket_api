@@ -69,7 +69,7 @@ io.on('connection', function(socket){
             }
             //{"client_init": "putDevices", "company_id":26, "device_id":8, "cartridge":[{"black":"99"}],"serialNumber":"VCG7428977","scanCycles":29974,
             // "url":"http://192.168.1.205","article":"0","printCycles":87268,"productName":"Kyocera ECOSYS M2540dn","status":"Режим ожидания...."}
-            if (obj['init_client']==='putDevices') {
+            if (obj['client_init']==='putDevices') {
                 db.addInfoO(
                     obj['company_id'],
                     obj['device_id'],
@@ -113,7 +113,7 @@ io.on('connection', function(socket){
                 });
             }*/
             //{"init_client_error": 1, "device_id": 1, "error": "Нет связи с устройством, по адресу: https://192.168.1.233"}
-            if (obj['init_client_error']) {
+            if (obj['client_init_error']) {
                 socket.emit('message', '{"status": '+ obj['error'] +'}');
                 db.addErrorO(
                     obj['init_client_error'],
