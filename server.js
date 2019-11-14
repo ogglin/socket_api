@@ -47,9 +47,8 @@ var clients = {};
 const wss = new WebSocket.Server({ port: 8080 });
 
 io.on('connection', function(socket){
-    var id = Math.random();
-    clients[id] = socket;
-    console.log("client " + id);
+    clients[socket.id] = true;
+    console.log(clients);
     socket.on('message', function(data){
         var isJson = IsJsonString(data);
         if (isJson) {
@@ -57,7 +56,6 @@ io.on('connection', function(socket){
             //{"client_init": "putDevices", "company_id":26, "device_id":8, "cartridge":[{"black":"99"}],"serialNumber":"VCG7428977","scanCycles":29974,
             // "url":"http://192.168.1.205","article":"0","printCycles":87268,"productName":"Kyocera ECOSYS M2540dn","status":"Режим ожидания...."}
             if (obj['init_client']==='putDevices') {
-                console.log(data);
                 db.addInfoO(
                     obj['company_id'],
                     obj['device_id'],
@@ -111,9 +109,12 @@ io.on('connection', function(socket){
                     socket.emit('message', JSON.stringify(res));
                 });
             }
+            if (obj['status']) {
+                console.log(data);
+            }
             if (obj['server_init'] === 'getDevices' && !obj['status']) {
-                console.log('getInfo', data);
-                socket.broadcast.emit('message', '{"status":' + data + '}');
+                console.log('get: ', data);
+                socket.emit('message', '{"status":' + data + '}');
                 /*for (var key in clients) {
                     socket.emit('message', '{"status":' + data + '}');
                     //clients[key].send('{"status":' + data + '}');
