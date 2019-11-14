@@ -285,7 +285,7 @@ function addInfo(company_id, device_id, cartridge, serialNumber, scanCycles, url
         }
     })().catch(e => {
         console.log(e.stack);
-        callback ({status: 'error', result: e.detail});
+        callback ({status:{result:'error'}});
         return {error: e.detail};
     });
 }
