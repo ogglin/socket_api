@@ -33,11 +33,12 @@ const corsOptions = {
     credentials: true, // This is important.
     methods: "POST, PUT, OPTIONS, DELETE, GET, *",
     optionsSuccessStatus: 200,
-    origin: (origin, callback) => {
+    origin: "*"
+    /*origin: (origin, callback) => {
         if (whitelist.includes(origin))
             return callback(null, true);
         callback(new Error('Not allowed by CORS'));
-    }
+    }*/
 };
 app.use(cors(corsOptions));
 /*app.use(cors());
