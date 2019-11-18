@@ -1,0 +1,22 @@
+<mat-form-field class="" style="width: 250px;">
+  <input type="text" placeholder="Поиск помпании" aria-label="Number" matInput [formControl]="companyControl"
+         [matAutocomplete]="auto">
+  <mat-hint align="start" *ngIf="edit === 'true' && id"><strong>Вы меняете название</strong> </mat-hint>
+  <mat-hint align="start" *ngIf="edit === 'true' && !id"><strong>Вы добавите компанию</strong> </mat-hint>
+  <mat-hint align="end" *ngIf="edit === 'true' && id" >ID компании: {{id}}</mat-hint>
+  <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="edit === 'true'"
+          (click)="companyControl.setValue(''); id = null"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let option of filtered | async" [value]="option['title']"
+                (click)="toggle(option['id'])">
+      {{option['title']}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+<button mat-button *ngIf="edit === 'true'" mat-icon-button (click)="addCompany()" color="primary">
+  <mat-icon>save</mat-icon>
+</button>
+<span class="text-orange" *ngIf="edit === 'true'">{{result}}</span>

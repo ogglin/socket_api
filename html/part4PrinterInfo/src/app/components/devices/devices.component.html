@@ -1,0 +1,25 @@
+<div class="py-2">
+  <mat-form-field>
+    <mat-select [(value)]="selected">
+      <mat-option (click)="setPlace('')" [value]="'Все'">Все</mat-option>
+      <mat-option *ngFor="let place of places" (click)="setPlace(place)" [value]="place">
+        {{place}}
+      </mat-option>
+    </mat-select>
+    <mat-hint>Выбрать местоположение</mat-hint>
+  </mat-form-field>
+</div>
+
+<div class="py-2">
+  <button mat-raised-button (click)="sendQuery()" color="primary">Получить данные по списку</button>
+</div>
+<div class="urls-nav" *ngIf="initDevices.length > 0">
+  <div *ngFor="let item of initDevices" (click)="toggle(item['id']);"
+       [ngClass]="cdid === item['id']? 'active': ''">
+    <h4 class="cursor-pointer">{{item['productname']}} <br>
+      <small class="text-orange"> {{item['placement']}} <br>
+        {{item['url']}} <br> {{item['sn']}}
+      </small>
+    </h4>
+  </div>
+</div>

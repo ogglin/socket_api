@@ -1,0 +1,74 @@
+<div class="py-2">
+  <form [formGroup]="deviceForm" (ngSubmit)="saveDevice()">
+    <mat-form-field class="pr-2">
+      <input matInput placeholder="Модель" formControlName="productName" required>
+      <mat-hint align="start">модель устройства</mat-hint>
+      <mat-error align="end" *ngIf="deviceForm.status === 'INVALID'">обязательно</mat-error>
+    </mat-form-field>
+    <mat-form-field class="pr-2">
+      <input matInput placeholder="URL" formControlName="url" required>
+      <mat-hint align="start">пример: http://127.0.0.1</mat-hint>
+      <mat-error align="end" *ngIf="deviceForm.status === 'INVALID'">обязательно</mat-error>
+    </mat-form-field>
+    <mat-form-field class="pr-2">
+      <input matInput placeholder="Артикул" formControlName="article">
+      <mat-hint>артикул устройства</mat-hint>
+    </mat-form-field>
+    <mat-form-field class="pr-2">
+      <input matInput placeholder="Местоположение" formControlName="placement">
+      <mat-hint>пример: здание 1 этаж 1</mat-hint>
+    </mat-form-field>
+    <mat-form-field class="pr-2">
+      <input matInput placeholder="S/N" formControlName="serialNumber">
+      <mat-hint>серийный номер устройства</mat-hint>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" *ngIf="!id" [disabled]="deviceForm.status === 'INVALID'">
+      Добавить
+    </button>
+    <button mat-raised-button color="primary" type="submit" *ngIf="id" [disabled]="deviceForm.status === 'INVALID'">
+      Сохранить
+    </button>
+    <span class="pl-2 display_inline_block"><mat-icon class="color-red" *ngIf="id" (click)="clear()">clear</mat-icon></span>
+  </form>
+</div>
+<div class="py-2">
+  <mat-form-field>
+    <mat-select [(value)]="selected">
+      <mat-option (click)="setPlace('')" [value]="'Все'">Все</mat-option>
+      <mat-option *ngFor="let place of places" (click)="setPlace(place)" [value]="place">
+        {{place}}
+      </mat-option>
+    </mat-select>
+    <mat-hint>Выбрать местоположение</mat-hint>
+  </mat-form-field>
+  <table class="device-table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Местоположение</th>
+      <th>Название</th>
+      <th>URL</th>
+      <th>Серийный номер</th>
+      <th>Артикул</th>
+      <th>
+        <mat-icon *ngIf="!result" class="color-muted">done</mat-icon>
+        <mat-icon *ngIf="result" class="color-green" (click)="result = null">done</mat-icon></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of initDevices" [ngClass]="{'disable-color': item['enabled']===0 }">
+      <td>{{item['id']}}</td>
+      <td>{{item['placement']}}</td>
+      <td>{{item['productname']}}</td>
+      <td>{{item['url']}}</td>
+      <td>{{item['sn']}}</td>
+      <td>{{item['article']}}</td>
+      <td>
+        <button mat-button mat-icon-button color="primary" (click)="init(item['id'], $event)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

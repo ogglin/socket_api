@@ -10,10 +10,17 @@ import { AdminComponent } from '../devices/admin/admin.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgScrollbarModule} from "ngx-scrollbar";
 import { LoginComponent } from '../auth/login/login.component';
+import { MainComponent } from './socket/main/main.component';
+import { CompanyesComponent } from '../components/companyes/companyes.component';
+import { OfficesComponent } from '../components/offices/offices.component';
+import { DevicesComponent } from '../components/devices/devices.component';
+import { InfoComponent } from '../components/info/info.component';
+import { ExportComponent } from '../components/export/export.component';
+import { DeviceManageComponent } from '../components/device-manage/device-manage.component';
 
 
 @NgModule({
-  declarations: [CompanyComponent, ClientComponent, DeviceComponent, ManageComponent, AdminComponent, LoginComponent],
+  declarations: [CompanyComponent, ClientComponent, DeviceComponent, ManageComponent, AdminComponent, LoginComponent, MainComponent, CompanyesComponent, OfficesComponent, DevicesComponent, InfoComponent, ExportComponent, DeviceManageComponent],
   imports: [
     CommonModule,
     MaterialModule,

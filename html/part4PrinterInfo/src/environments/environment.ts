@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  //apiURL: 'http://116.203.243.136:5000/api/'
-  apiURL: 'http://socket.api.part4.info:5000/api/'
-  //apiURL: 'http://localhost:5000/api/'
+  //apiURL: 'https://116.203.243.136:5000/api/'
+  //apiURL: 'https://socket.api.part4.info:5000/api/'
+  apiURL: 'https://localhost:5000/api/'
 };
 
 /*

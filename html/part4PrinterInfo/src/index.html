@@ -23,7 +23,6 @@
               get = io('http://116.203.243.136:3000/get');
 
           get.on('connect', function () {
-              console.log('hi get');
               get.emit('hi!');
           });
           get.on('a message', function (msg) {

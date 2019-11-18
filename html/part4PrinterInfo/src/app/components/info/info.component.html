@@ -1,0 +1,60 @@
+<mat-list role="list" class="dateList">
+  <h4>Даты:</h4>
+  <ng-scrollbar appearance="standart">
+    <mat-list-item *ngFor="let info of infos, let i = index" role="listitem"
+                   (click)="setDate(info['datetime']);"
+                   [ngClass]="data===info['datetime'] ? 'cursor-pointer border active': 'cursor-pointer border'">
+      {{info['datetime'] | date:'yyyy-MM-dd HH:mm:ss'}}
+    </mat-list-item>
+  </ng-scrollbar>
+</mat-list>
+<div class="device-info">&nbsp;
+  <ng-container *ngIf="info">
+    <div class="btnGetInfo">
+      <button mat-raised-button color="primary" (click)="sendQuery()">Получить данные устройства</button>
+    </div>
+    <p>{{data | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+    <h2>{{info['productname']}}
+    </h2>
+    <p>Статус: {{info['status']}} <span *ngIf="info['error']" class="error-text">{{info['error']}}</span></p>
+    <p>Серийный номер: {{info['sn']}}</p>
+    <p>Сетевой адрес: {{info['url']}}</p>
+
+    <ng-container *ngFor="let color of info['cartridge']">
+      <p *ngIf="color['black']">Черный {{color['black'].replace('%', '')}}<br><br>
+        <mat-progress-bar mode="determinate" [value]="color['black'].replace('%', '')"
+                          color="warn"></mat-progress-bar>
+      </p>
+      <p *ngIf="color['yellow']">Желтый {{color['yellow'].replace('%', '')}}<br><br>
+        <mat-progress-bar mode="determinate" [value]="color['yellow'].replace('%', '')"
+                          color="warn"></mat-progress-bar>
+      </p>
+      <p *ngIf="color['magenta']">Пурпурный {{color['magenta'].replace('%', '')}}<br><br>
+        <mat-progress-bar mode="determinate" [value]="color['magenta'].replace('%', '')"
+                          color="warn"></mat-progress-bar>
+      </p>
+      <p *ngIf="color['blue']">Голубой {{color['blue'].replace('%', '')}}<br><br>
+        <mat-progress-bar mode="determinate" [value]="color['blue'].replace('%', '')"
+                          color="warn"></mat-progress-bar>
+      </p>
+    </ng-container>
+    <p *ngIf="info['printcycles']">Цикл механизма: {{info['printcycles']}}</p>
+    <p *ngIf="info['kit']">Счетчик технического обслуживания:
+      <ng-container *ngIf="info['kit']">
+        <ng-container *ngIf="info['kit'][0]['adfCycles']">{{info['kit'][0]['adfCycles']}}</ng-container>
+        <ng-container
+          *ngIf="info['kit'][0]['maintenanceKitCount']">{{info['kit'][0]['maintenanceKitCount']}}</ng-container>
+      </ng-container>
+    </p>
+    <p *ngIf="info['scancycles']">Цикл сканирования: {{info['scancycles']}}</p>
+    <h4 *ngIf="info['log']">Лог:</h4>
+    <table>
+      <tbody>
+      <tr *ngFor="let log of info['log']">
+        <td>{{log['date']}}</td>
+        <td>{{log['message']}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </ng-container>
+</div>

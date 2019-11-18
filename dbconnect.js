@@ -2,8 +2,8 @@ var Rx = require('rxjs/Rx');
 
 const dbConfig = {
     user: 'part4',
-    host: 'localhost',
-    //host: '116.203.243.136',
+    //host: 'localhost',
+    host: '116.203.243.136',
     database: 'remote_info',
     password: 'q1w2e3r4t5',
     port: 5432,
@@ -13,14 +13,12 @@ const {Pool} = require('pg');
 const pool = new Pool(dbConfig);
 
 function getCompany(uid, callback) {
-    console.log(uid);
     var qgc = '';
     if(uid != 0) {
         qgc = "SELECT * FROM rdata.company WHERE id = " + uid;
     } else {
         qgc = "SELECT * FROM rdata.company WHERE id != 0";
     }
-    console.log(qgc);
     (async () => {
         const client = await pool.connect();
         try {
@@ -137,16 +135,14 @@ function getErrors(did, callback) {
     });
 }
 
-function getInfoCSV(cuid, smonth, emonth, callback) {
-    var qgic = "SELECT * FROM ( SELECT rank() over (partition by \"productname\" order by i.datetime desc) n, " +
-        "date_part('month', datetime) ts, co.title company, c.name office, d.productname, d.article," +
-        " d.placement, d.sn, d.url, i.printcycles, i.datetime " +
-        "FROM rdata.devices d " +
-        "INNER JOIN rdata.info i ON i.device_id = d.id " +
-        "INNER JOIN rdata.clients c on d.client_id = c.id " +
-        "INNER JOIN rdata.company co on co.id = c.company_id " +
-        "WHERE d.company_id = "+cuid+" AND i.printcycles is not NULL " +
-        "AND datetime BETWEEN (now() - '"+smonth+" month'::interval) and (now() - '"+emonth+" month'::interval) ) A WHERE n = 1";
+function getInfoCSV(cid, smonth, emonth, callback) {
+    var qgic = "SELECT * FROM (SELECT RANK () OVER ( PARTITION BY \"productname\" ORDER BY i.datetime DESC ) n, " +
+        "date_part( 'month', datetime ) month_num, co.title company, c.name office, d.productname, " +
+        "d.article, d.placement, d.sn, d.url, i.printcycles, i.datetime " +
+        "FROM rdata.devices d INNER JOIN rdata.info i ON i.device_id = d.id " +
+        "INNER JOIN rdata.clients c ON d.client_id = c.id INNER JOIN rdata.company co ON co.id = c.company_id " +
+        "WHERE d.company_id = "+cid+" AND i.printcycles IS NOT NULL AND i.datetime < (now() - '"+smonth+" month' :: INTERVAL ) " +
+        "AND i.datetime > (now() - '"+emonth+" month' :: INTERVAL ) ) sub WHERE n = 1";
     (async () => {
         const client = await pool.connect();
         try {

@@ -2,27 +2,32 @@
 var fs = require('fs');
 var db = require('./dbconnect');
 var bodyParser = require('body-parser');
-var WebSocket  = require('ws');
 var https = require('https');
 var cors = require('cors');
 var express = require('express');
 var app = express();
 
-const server = https.createServer({
-    cert: fs.readFileSync('cert/rootCA.pem'),
-    key: fs.readFileSync('cert/rootCA-key.pem')
-});
+//var http = require('http').createServer(app);
+//var WebSocket  = require('ws');
+
+const ssl = {
+    key: fs.readFileSync('cert/localhost-key.pem'),
+    cert: fs.readFileSync('cert/localhost.pem')
+};
+const serverPort = 443;
+
+const server = https.createServer(ssl, app);
 
 //For BodyParser
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 // For cors
-const whitelist = ['http://localhost:4200', 'http://localhost:3000', 'http://socket.api.part4.info', '*'];
+const whitelist = ['https://localhost:4200', 'https://localhost:3000', 'https://socket.api.part4.info', '*'];
 const corsOptions = {
     credentials: true, // This is important.
     origin: (origin, callback) => {
-        if(whitelist.includes(origin))
+        if (whitelist.includes(origin))
             return callback(null, true);
 
         callback(new Error('Not allowed by CORS'));
@@ -32,44 +37,161 @@ app.use(cors(corsOptions));
 /*app.use(cors());
 app.options('*', cors());*/
 
-var http = require('http').createServer(app);
-var io = require('socket.io')(http);
+var io = require('socket.io')(server);
 
 function IsJsonString(str) {
-    try { JSON.parse(str); }
-    catch (e) { return false; }
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
     return true;
 }
 
 // подключённые клиенты
 var clients = {};
 
-const wss = new WebSocket.Server({ port: 8080 });
-
-var get = io.of('/get').on('connection', function () {
-
+io.set('origins', '*:*');
+const get = io.of('/get');
+get.on('connection', function (socket) {
+    socket.on('get', function (data) {
+        console.log(data);
+        var isJson = IsJsonString(data);
+        if (isJson) {
+            var obj = JSON.parse(data);
+            if (obj['auth']) {
+                db.AuthO(obj['auth']['login'], obj['auth']['pass']).subscribe(res => {
+                    get.emit('get', '{"auth":' + JSON.stringify(res) + '}');
+                });
+            }
+            if (obj['getCompany'] || obj['getCompany'] === 0) {
+                db.getCompanyO(obj['getCompany']).subscribe(res => {
+                    get.emit('get', '{"companies":' + JSON.stringify(res) + '}');
+                });
+            }
+            if (obj['getOffice'] || obj['getOffice'] === 0) {
+                db.getClientsO(obj['getOffice']).subscribe(res => {
+                    get.emit('get', '{"offices":' + JSON.stringify(res) + '}');
+                });
+            }
+            if (obj['getDevices'] || obj['getDevices'] === 0) {
+                db.getDevicesO(obj['cid'], obj['oid'], obj['getDevices']).subscribe(res => {
+                    get.emit('get', '{"devices":' + JSON.stringify(res) + '}');
+                });
+            }
+            if (obj['getinfo'] || obj['getinfo'] === 0) {
+                db.getInfoO(obj['getinfo']).subscribe(res => {
+                    get.emit('get', '{"infos":' + JSON.stringify(res) + '}');
+                });
+            }
+            if (obj['getCSV'] || obj['getCSV'] === 0) {
+                db.getInfoCSVO(obj['getCSV'], obj['smonth'], obj['emonth']).subscribe(res => {
+                    get.emit('get', '{"getCSV":' + JSON.stringify(res) + '}');
+                });
+            }
+        } else {
+            socket.emit('get', data);
+        }
+    });
+});
+const put = io.of('/put');
+put.on('connection', function (socket) {
+    socket.on('put', function (data) {
+        console.log(data);
+        var isJson = IsJsonString(data);
+        if (isJson) {
+            var obj = JSON.parse(data);
+            console.log(obj);
+            if (obj['client_init'] === 'putDevices') {
+                db.addInfoO(
+                    obj['company_id'],
+                    obj['device_id'],
+                    obj['cartridge'],
+                    obj['serialNumber'],
+                    obj['scanCycles'],
+                    obj['url'],
+                    obj['article'],
+                    obj['printCycles'],
+                    obj['productName'],
+                    obj['status'],
+                    obj['KIT'],
+                    obj['maintenanceKitCount'],
+                    obj['adfCycles'],
+                    obj['log']
+                ).subscribe(res => {
+                    get.emit('get', JSON.stringify(res));
+                });
+            }
+            if (obj['client_init'] === 'addCompany') {
+                db.addCompanyO(obj['title'], obj['description']).subscribe(res => {
+                    get.emit('get', '{"putCompany":' + JSON.stringify(res) + '}');
+                });
+            }
+            if (obj['client_init'] === 'editCompany') {
+                db.editCompanyO(obj['id'], obj['title']).subscribe(res => {
+                    get.emit('get', '{"putCompany":' + JSON.stringify(res) + '}');
+                });
+            }
+            if (obj['client_init'] === 'addOffice') {
+                db.addClientO(obj['name'], obj['cid']).subscribe(res => {
+                    get.emit('get', '{"putOffice":' + JSON.stringify(res) + '}');
+                });
+            }
+            if (obj['client_init'] === 'editOffice') {
+                db.editClientO(obj['id'], obj['name']).subscribe(res => {
+                    get.emit('get', '{"putOffice":' + JSON.stringify(res) + '}');
+                });
+            }
+            if (obj['client_init'] === 'addDevice') {
+                db.addDeviceO(
+                    obj['productName'],
+                    obj['url'],
+                    obj['oid'],
+                    obj['cid'],
+                    obj['article'],
+                    obj['placement'],
+                    obj['serialNumber'],
+                    obj['enable']
+                ).subscribe(res => {
+                    get.emit('get', '{"putDevice":' + JSON.stringify(res) + '}');
+                });
+            }
+            if (obj['client_init'] === 'editDevice') {
+                db.editDeviceO(
+                    obj['id'],
+                    obj['productName'],
+                    obj['url'],
+                    obj['oid'],
+                    obj['cid'],
+                    obj['article'],
+                    obj['placement'],
+                    obj['serialNumber'],
+                    obj['enable']
+                ).subscribe(res => {
+                    get.emit('get', '{"putDevice":' + JSON.stringify(res) + '}');
+                });
+            }
+        } else {
+            get.emit('get', 'Check, request is not JSON: ' + data)
+        }
+    });
 });
 
-io.on('connection', function(socket){
+io.on('connection', function (socket) {
     clients[socket.id] = true;
     console.log(clients);
-    socket.on('message', function(data){
+    socket.on('message', function (data) {
         console.log(data);
         var isJson = IsJsonString(data);
         if (isJson) {
             var obj = JSON.parse(data);
             if (obj['server_init'] === 'getDevices' && !obj['status']) {
-                console.log('get: ', data);
                 socket.broadcast.emit('message', '{"status":' + data + '}');
                 get.emit('a message', '{"status":' + data + '}');
-                /*for (var key in clients) {
-                    //socket.emit('message', '{"status":' + data + '}');
-                    clients[key].send('{"status":' + data + '}');
-                }*/
             }
             //{"client_init": "putDevices", "company_id":26, "device_id":8, "cartridge":[{"black":"99"}],"serialNumber":"VCG7428977","scanCycles":29974,
             // "url":"http://192.168.1.205","article":"0","printCycles":87268,"productName":"Kyocera ECOSYS M2540dn","status":"Режим ожидания...."}
-            if (obj['client_init']==='putDevices') {
+            if (obj['client_init'] === 'putDevices') {
                 db.addInfoO(
                     obj['company_id'],
                     obj['device_id'],
@@ -87,53 +209,24 @@ io.on('connection', function(socket){
                     obj['log']
                 ).subscribe(res => {
                     socket.emit('message', JSON.stringify(res));
+                    get.emit('get', '{"putInfo":' + JSON.stringify(res) + '}');
                 });
             }
-            /*if (obj['init_client'] && obj['new'] === 1) {
-                db.addDeviceO(
-                    obj['init_client'],
-                    obj['company_id'],
-                    obj['address_id'],
-                    obj['url'],
-                    obj['status'],
-                    obj['cartridge'],
-                    obj['KIT'],
-                    obj['productName'],
-                    obj['serialNumber'],
-                    obj['maintenanceKitCount'],
-                    obj['printCycles'],
-                    obj['scanCycles'],
-                    obj['adfCycles'],
-                    obj['log'],
-                    obj['article'],
-                    obj['client_article'],
-                    obj['company_id']
-                ).subscribe(res => {
-                    socket.emit('message', JSON.stringify(res));
-                });
-            }*/
             //{"init_client_error": 1, "device_id": 1, "error": "Нет связи с устройством, по адресу: https://192.168.1.233"}
             if (obj['client_init_error']) {
-                socket.emit('message', '{"status": '+ obj['error'] +'}');
+                socket.emit('message', '{"status": ' + obj['error'] + '}');
                 db.addErrorO(
                     obj['init_client_error'],
                     obj['device_id'],
                     obj['error']
                 ).subscribe(res => {
                     socket.emit('message', JSON.stringify(res));
+                    get.emit('get', '{"putError":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['status']) {
                 console.log(data);
             }
-            //{"server_init": "getInfo", "client": 1} - old variant
-            /*if (obj['server_init'] === 'getInfo' && !obj['status']) {
-                if (obj['client'] !== undefined) {
-                    db.getInfoO(obj['client']).subscribe(res => {
-                        ws.send(JSON.stringify(res));
-                    });
-                }
-            }*/
             //{"server_init": "getCustomers"}
             if (obj['server_init'] === 'getCustomers' && !obj['status']) {
                 db.getCompanyO(req.query['uid']).subscribe(res => {
@@ -166,12 +259,15 @@ io.on('connection', function(socket){
 
 require('./routes')(app);
 
-app.listen(5000, function(err) {
+app.listen(5000, function (err) {
     if (!err)
         console.log("Site is live");
     else console.log(err)
 });
 
-http.listen(3000, function(){
-    console.log('listening on *:3000');
+server.listen(serverPort, function () {
+    console.log('server up and running at %s port', serverPort);
 });
+/*http.listen(3000, function(){
+    console.log('listening on *:3000');
+});*/
