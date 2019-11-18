@@ -26,6 +26,8 @@ app.use(bodyParser.json());
 const whitelist = ['https://localhost:4200', 'https://localhost:3000', 'https://localhost:443',
     'https://socket.api.part4.info/',
     'https://socket.api.part4.info/*',
+    '116.203.243.136:443',
+    '116.203.243.136',
     'https://socket.api.part4.info', '*'];
 const corsOptions = {
     credentials: true, // This is important.
