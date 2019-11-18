@@ -13,7 +13,7 @@
     <div class="btnGetInfo">
       <button mat-raised-button color="primary" (click)="sendQuery()">Получить данные устройства</button>
     </div>
-    <p>{{data | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+    <p><strong>{{office}} - {{info['placement']}} </strong> <small> {{data | date:'yyyy-MM-dd HH:mm:ss'}}</small></p>
     <h2>{{info['productname']}}
     </h2>
     <p>Статус: {{info['status']}} <span *ngIf="info['error']" class="error-text">{{info['error']}}</span></p>

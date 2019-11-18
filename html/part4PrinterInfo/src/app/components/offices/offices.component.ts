@@ -20,6 +20,7 @@ export class OfficesComponent implements OnInit {
   officeControl = new FormControl('');
   offices: any;
   id: number;
+  office: string;
   result: any;
   ioConnection: any;
   constructor(private sIO: SocketService, private json: ToJsonService) { }
@@ -35,8 +36,10 @@ export class OfficesComponent implements OnInit {
               this.officeControl.setValue(this.offices[0]['name']);
               const e = {
                 init: 'office',
-                id: this.offices[0]['id']
+                id: this.offices[0]['id'],
+                office: this.offices[0]['name']
               };
+              this.office = this.offices[0]['name'];
               this.id = this.offices[0]['id'];
               this.oid.emit(e);
             }
@@ -59,13 +62,15 @@ export class OfficesComponent implements OnInit {
     return this.offices.filter(option => option['name'].toLowerCase().includes(filterValue));
   }
 
-  toggle(id){
+  toggle(id, name){
     const e = {
       init: 'office',
-      id: id
+      id: id,
+      office: this.officeControl.value
     };
     this.oid.emit(e);
     this.id = id;
+    this.office = name;
   }
 
   saveOffice() {

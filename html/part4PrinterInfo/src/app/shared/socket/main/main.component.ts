@@ -22,6 +22,7 @@ export class MainComponent implements OnInit {
   cid:number = null;
   oid: number = null;
   did: number = null;
+  office: string;
   isEdit: string = 'false';
   constructor(private sIO: SocketService) { }
 
@@ -87,7 +88,7 @@ export class MainComponent implements OnInit {
   setId(e) {
     switch (e.init) {
       case "company": this.cid = null; setTimeout(()=>{this.cid = e.id}, 10); break;
-      case "office": this.oid = null; setTimeout(()=>{this.oid = e.id}, 10); break;
+      case "office": this.oid = null; setTimeout(()=>{this.oid = e.id; this.office = e.office}, 10); break;
       case "device": this.did = null; setTimeout(()=>{this.did = e.id}, 10); break;
     }
   }

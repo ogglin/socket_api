@@ -11,7 +11,7 @@
   </button>
   <mat-autocomplete #auto="matAutocomplete">
     <mat-option *ngFor="let option of filtered | async" [value]="option['name']"
-                (click)="toggle(option['id'])">
+                (click)="toggle(option['id'], option['name'])">
       {{option['name']}}
     </mat-option>
   </mat-autocomplete>

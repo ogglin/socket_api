@@ -11,9 +11,11 @@ export class InfoComponent implements OnInit {
 
   @Input() did: number;
   @Input() cid: number;
+  @Input() office: string;
   @Output() date = new EventEmitter<any>();
   infos: any[] = [];
   info: any;
+  place: string;
   ioConnection: any;
   data: any;
   result: any;

@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiURL: 'http://localhost:5000/api/'
+  apiURL: 'https://socket.api.part4.info:5000/api/'
 };
