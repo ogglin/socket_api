@@ -11,8 +11,8 @@ var app = express();
 //var WebSocket  = require('ws');
 
 const ssl = {
-    key: fs.readFileSync('cert/localhost-key.pem'),
-    cert: fs.readFileSync('cert/localhost.pem')
+    key: fs.readFileSync('cert/privkey1.pem'),
+    cert: fs.readFileSync('cert/cert1.pem')
 };
 const serverPort = 443;
 
