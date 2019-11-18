@@ -16,10 +16,8 @@ const ssl = {
 };
 const serverPort = 443;
 
-const server = https.createServer(ssl, app);
-
 app.use(function(req, res, next) {
-    res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' https://apis.google.com");
+    res.setHeader("Content-Security-Policy", "default-src 'self'");
     return next();
 });
 
@@ -48,6 +46,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 /*app.use(cors());
 app.options('*', cors());*/
+
+const server = https.createServer(ssl, app);
 
 var io = require('socket.io')(server);
 
