@@ -23,13 +23,15 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 // For cors
-const whitelist = ['https://localhost:4200', 'https://localhost:3000', 'https://socket.api.part4.info', '*'];
+const whitelist = ['https://localhost:4200', 'https://localhost:3000', 'https://localhost:443',
+    'https://socket.api.part4.info/',
+    'https://socket.api.part4.info/*',
+    'https://socket.api.part4.info', '*'];
 const corsOptions = {
     credentials: true, // This is important.
     origin: (origin, callback) => {
         if (whitelist.includes(origin))
             return callback(null, true);
-
         callback(new Error('Not allowed by CORS'));
     }
 };
