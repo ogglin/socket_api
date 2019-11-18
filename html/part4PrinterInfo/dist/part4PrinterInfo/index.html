@@ -5,6 +5,7 @@
   <title>Part4PrinterInfo</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -14,7 +15,7 @@
 
   <script src="assets/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-  <script>
+  <!--script>
       $(function () {
           /*var socket = io('http://localhost:3000'),
               get = io('http://localhost:3000/get');*/
@@ -45,7 +46,7 @@
               socket.emit('message', qd);
           };
       });
-  </script>
+  </script-->
 
   <!--script>
       var socket = new WebSocket("ws://116.203.243.136:8080/ws");
