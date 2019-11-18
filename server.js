@@ -18,6 +18,11 @@ const serverPort = 443;
 
 const server = https.createServer(ssl, app);
 
+app.use(function(req, res, next) {
+    res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' https://apis.google.com");
+    return next();
+});
+
 //For BodyParser
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
