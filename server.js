@@ -31,6 +31,8 @@ const whitelist = ['https://localhost:4200', 'https://localhost:3000', 'https://
     'https://socket.api.part4.info', '*'];
 const corsOptions = {
     credentials: true, // This is important.
+    methods: "POST, PUT, OPTIONS, DELETE, GET, *",
+    optionsSuccessStatus: 200,
     origin: (origin, callback) => {
         if (whitelist.includes(origin))
             return callback(null, true);
