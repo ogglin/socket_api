@@ -8,7 +8,7 @@ import {MainComponent} from "./shared/socket/main/main.component";
 const routes: Routes = [
   {path: 'admin', component: AdminComponent},
   {path: 'main', component: MainComponent},
-  {path: '**', component: DevicesComponent}
+  {path: '**', component: MainComponent}
 ];
 
 @NgModule({
