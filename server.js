@@ -137,6 +137,7 @@ put.on('connection', function (socket) {
                     obj['log']
                 ).subscribe(res => {
                     get.emit('get', JSON.stringify(res));
+                    put.emit('get', JSON.stringify(res));
                 });
             }
             if (obj['client_init'] === 'addCompany') {
