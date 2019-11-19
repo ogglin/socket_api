@@ -117,7 +117,7 @@ put.on('connection', function (socket) {
             if (obj['server_init'] === 'getDevices') {
                 //put.emit('put', data);
                 put.emit('get', data);
-                //socket.emit('message', data);
+                socket.emit('message', data);
             }
             if (obj['client_init'] === 'putDevices') {
                 db.addInfoO(
