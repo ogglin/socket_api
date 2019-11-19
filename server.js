@@ -14,7 +14,7 @@ const ssl = {
     key: fs.readFileSync('cert/privkey1.pem'),
     cert: fs.readFileSync('cert/cert1.pem')
 };
-const serverPort = 443;
+const serverPort = 8443;
 
 app.use(function(req, res, next) {
     res.setHeader("Content-Security-Policy", "default-src 'self'");
