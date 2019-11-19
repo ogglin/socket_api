@@ -2902,8 +2902,8 @@ __webpack_require__.r(__webpack_exports__);
 
 /*const SERVER_URL_GET = 'https://localhost:443/get';
 const SERVER_URL_PUT = 'https://localhost:443/put';*/
-const SERVER_URL_GET = 'https://socket.api.part4.info:443/get';
-const SERVER_URL_PUT = 'https://socket.api.part4.info:443/put';
+const SERVER_URL_GET = 'https://socket.api.part4.info:8443/get';
+const SERVER_URL_PUT = 'https://socket.api.part4.info:8443/put';
 let SocketService = class SocketService {
     constructor() { }
     initSocket() {

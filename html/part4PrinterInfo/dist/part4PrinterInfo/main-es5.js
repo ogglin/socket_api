@@ -2723,8 +2723,8 @@
             /* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/ __webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_3__);
             /*const SERVER_URL_GET = 'https://localhost:443/get';
             const SERVER_URL_PUT = 'https://localhost:443/put';*/
-            var SERVER_URL_GET = 'https://socket.api.part4.info:443/get';
-            var SERVER_URL_PUT = 'https://socket.api.part4.info:443/put';
+            var SERVER_URL_GET = 'https://socket.api.part4.info:8443/get';
+            var SERVER_URL_PUT = 'https://socket.api.part4.info:8443/put';
             var SocketService = /** @class */ (function () {
                 function SocketService() {
                 }
