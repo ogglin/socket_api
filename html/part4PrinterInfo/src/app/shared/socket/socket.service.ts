@@ -9,8 +9,8 @@ import {Event} from './model/event';
 
 import io from 'socket.io-client';
 
-/*const SERVER_URL_GET = 'https://localhost:443/get';
-const SERVER_URL_PUT = 'https://localhost:443/put';*/
+/*const SERVER_URL_GET = 'https://localhost:8443/get';
+const SERVER_URL_PUT = 'https://localhost:8443/put';*/
 const SERVER_URL_GET = 'https://socket.api.part4.info:8443/get';
 const SERVER_URL_PUT = 'https://socket.api.part4.info:8443/put';
 
@@ -60,11 +60,11 @@ export class SocketService {
   public getDevices(cid: number, oid: number, did: number): void {
     this._get.emit('get', '{"getDevices":'+did+',"cid":'+cid+',"oid":'+oid+'}');
   }
-  public getInfos(did): void {
-    this._get.emit('get', '{"getinfo":'+did+'}');
+  public getInfos(did, start, end): void {
+    this._get.emit('get', '{"getinfo":'+did+',"start":"'+start+'","end":"'+end+'"}');
   }
-  public getCSV(cid: number, smonth, emonth): void {
-    this._get.emit('get', '{"getCSV":'+cid+',"smonth":'+smonth+',"emonth":'+emonth+'}');
+  public getCSV(cid: number, start, end): void {
+    this._get.emit('get', '{"getCSV":'+cid+',"start":"'+start+'","end":"'+end+'"}');
   }
 
   constructor() { }

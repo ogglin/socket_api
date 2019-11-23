@@ -20,6 +20,288 @@
             webpackEmptyAsyncContext.id = "./$$_lazy_route_resource lazy recursive";
             /***/ 
         }),
+        /***/ "./node_modules/moment/locale sync recursive ^\\.\\/.*$": 
+        /*!**************************************************!*\
+          !*** ./node_modules/moment/locale sync ^\.\/.*$ ***!
+          \**************************************************/
+        /*! no static exports found */
+        /***/ (function (module, exports, __webpack_require__) {
+            var map = {
+                "./af": "./node_modules/moment/locale/af.js",
+                "./af.js": "./node_modules/moment/locale/af.js",
+                "./ar": "./node_modules/moment/locale/ar.js",
+                "./ar-dz": "./node_modules/moment/locale/ar-dz.js",
+                "./ar-dz.js": "./node_modules/moment/locale/ar-dz.js",
+                "./ar-kw": "./node_modules/moment/locale/ar-kw.js",
+                "./ar-kw.js": "./node_modules/moment/locale/ar-kw.js",
+                "./ar-ly": "./node_modules/moment/locale/ar-ly.js",
+                "./ar-ly.js": "./node_modules/moment/locale/ar-ly.js",
+                "./ar-ma": "./node_modules/moment/locale/ar-ma.js",
+                "./ar-ma.js": "./node_modules/moment/locale/ar-ma.js",
+                "./ar-sa": "./node_modules/moment/locale/ar-sa.js",
+                "./ar-sa.js": "./node_modules/moment/locale/ar-sa.js",
+                "./ar-tn": "./node_modules/moment/locale/ar-tn.js",
+                "./ar-tn.js": "./node_modules/moment/locale/ar-tn.js",
+                "./ar.js": "./node_modules/moment/locale/ar.js",
+                "./az": "./node_modules/moment/locale/az.js",
+                "./az.js": "./node_modules/moment/locale/az.js",
+                "./be": "./node_modules/moment/locale/be.js",
+                "./be.js": "./node_modules/moment/locale/be.js",
+                "./bg": "./node_modules/moment/locale/bg.js",
+                "./bg.js": "./node_modules/moment/locale/bg.js",
+                "./bm": "./node_modules/moment/locale/bm.js",
+                "./bm.js": "./node_modules/moment/locale/bm.js",
+                "./bn": "./node_modules/moment/locale/bn.js",
+                "./bn.js": "./node_modules/moment/locale/bn.js",
+                "./bo": "./node_modules/moment/locale/bo.js",
+                "./bo.js": "./node_modules/moment/locale/bo.js",
+                "./br": "./node_modules/moment/locale/br.js",
+                "./br.js": "./node_modules/moment/locale/br.js",
+                "./bs": "./node_modules/moment/locale/bs.js",
+                "./bs.js": "./node_modules/moment/locale/bs.js",
+                "./ca": "./node_modules/moment/locale/ca.js",
+                "./ca.js": "./node_modules/moment/locale/ca.js",
+                "./cs": "./node_modules/moment/locale/cs.js",
+                "./cs.js": "./node_modules/moment/locale/cs.js",
+                "./cv": "./node_modules/moment/locale/cv.js",
+                "./cv.js": "./node_modules/moment/locale/cv.js",
+                "./cy": "./node_modules/moment/locale/cy.js",
+                "./cy.js": "./node_modules/moment/locale/cy.js",
+                "./da": "./node_modules/moment/locale/da.js",
+                "./da.js": "./node_modules/moment/locale/da.js",
+                "./de": "./node_modules/moment/locale/de.js",
+                "./de-at": "./node_modules/moment/locale/de-at.js",
+                "./de-at.js": "./node_modules/moment/locale/de-at.js",
+                "./de-ch": "./node_modules/moment/locale/de-ch.js",
+                "./de-ch.js": "./node_modules/moment/locale/de-ch.js",
+                "./de.js": "./node_modules/moment/locale/de.js",
+                "./dv": "./node_modules/moment/locale/dv.js",
+                "./dv.js": "./node_modules/moment/locale/dv.js",
+                "./el": "./node_modules/moment/locale/el.js",
+                "./el.js": "./node_modules/moment/locale/el.js",
+                "./en-SG": "./node_modules/moment/locale/en-SG.js",
+                "./en-SG.js": "./node_modules/moment/locale/en-SG.js",
+                "./en-au": "./node_modules/moment/locale/en-au.js",
+                "./en-au.js": "./node_modules/moment/locale/en-au.js",
+                "./en-ca": "./node_modules/moment/locale/en-ca.js",
+                "./en-ca.js": "./node_modules/moment/locale/en-ca.js",
+                "./en-gb": "./node_modules/moment/locale/en-gb.js",
+                "./en-gb.js": "./node_modules/moment/locale/en-gb.js",
+                "./en-ie": "./node_modules/moment/locale/en-ie.js",
+                "./en-ie.js": "./node_modules/moment/locale/en-ie.js",
+                "./en-il": "./node_modules/moment/locale/en-il.js",
+                "./en-il.js": "./node_modules/moment/locale/en-il.js",
+                "./en-nz": "./node_modules/moment/locale/en-nz.js",
+                "./en-nz.js": "./node_modules/moment/locale/en-nz.js",
+                "./eo": "./node_modules/moment/locale/eo.js",
+                "./eo.js": "./node_modules/moment/locale/eo.js",
+                "./es": "./node_modules/moment/locale/es.js",
+                "./es-do": "./node_modules/moment/locale/es-do.js",
+                "./es-do.js": "./node_modules/moment/locale/es-do.js",
+                "./es-us": "./node_modules/moment/locale/es-us.js",
+                "./es-us.js": "./node_modules/moment/locale/es-us.js",
+                "./es.js": "./node_modules/moment/locale/es.js",
+                "./et": "./node_modules/moment/locale/et.js",
+                "./et.js": "./node_modules/moment/locale/et.js",
+                "./eu": "./node_modules/moment/locale/eu.js",
+                "./eu.js": "./node_modules/moment/locale/eu.js",
+                "./fa": "./node_modules/moment/locale/fa.js",
+                "./fa.js": "./node_modules/moment/locale/fa.js",
+                "./fi": "./node_modules/moment/locale/fi.js",
+                "./fi.js": "./node_modules/moment/locale/fi.js",
+                "./fo": "./node_modules/moment/locale/fo.js",
+                "./fo.js": "./node_modules/moment/locale/fo.js",
+                "./fr": "./node_modules/moment/locale/fr.js",
+                "./fr-ca": "./node_modules/moment/locale/fr-ca.js",
+                "./fr-ca.js": "./node_modules/moment/locale/fr-ca.js",
+                "./fr-ch": "./node_modules/moment/locale/fr-ch.js",
+                "./fr-ch.js": "./node_modules/moment/locale/fr-ch.js",
+                "./fr.js": "./node_modules/moment/locale/fr.js",
+                "./fy": "./node_modules/moment/locale/fy.js",
+                "./fy.js": "./node_modules/moment/locale/fy.js",
+                "./ga": "./node_modules/moment/locale/ga.js",
+                "./ga.js": "./node_modules/moment/locale/ga.js",
+                "./gd": "./node_modules/moment/locale/gd.js",
+                "./gd.js": "./node_modules/moment/locale/gd.js",
+                "./gl": "./node_modules/moment/locale/gl.js",
+                "./gl.js": "./node_modules/moment/locale/gl.js",
+                "./gom-latn": "./node_modules/moment/locale/gom-latn.js",
+                "./gom-latn.js": "./node_modules/moment/locale/gom-latn.js",
+                "./gu": "./node_modules/moment/locale/gu.js",
+                "./gu.js": "./node_modules/moment/locale/gu.js",
+                "./he": "./node_modules/moment/locale/he.js",
+                "./he.js": "./node_modules/moment/locale/he.js",
+                "./hi": "./node_modules/moment/locale/hi.js",
+                "./hi.js": "./node_modules/moment/locale/hi.js",
+                "./hr": "./node_modules/moment/locale/hr.js",
+                "./hr.js": "./node_modules/moment/locale/hr.js",
+                "./hu": "./node_modules/moment/locale/hu.js",
+                "./hu.js": "./node_modules/moment/locale/hu.js",
+                "./hy-am": "./node_modules/moment/locale/hy-am.js",
+                "./hy-am.js": "./node_modules/moment/locale/hy-am.js",
+                "./id": "./node_modules/moment/locale/id.js",
+                "./id.js": "./node_modules/moment/locale/id.js",
+                "./is": "./node_modules/moment/locale/is.js",
+                "./is.js": "./node_modules/moment/locale/is.js",
+                "./it": "./node_modules/moment/locale/it.js",
+                "./it-ch": "./node_modules/moment/locale/it-ch.js",
+                "./it-ch.js": "./node_modules/moment/locale/it-ch.js",
+                "./it.js": "./node_modules/moment/locale/it.js",
+                "./ja": "./node_modules/moment/locale/ja.js",
+                "./ja.js": "./node_modules/moment/locale/ja.js",
+                "./jv": "./node_modules/moment/locale/jv.js",
+                "./jv.js": "./node_modules/moment/locale/jv.js",
+                "./ka": "./node_modules/moment/locale/ka.js",
+                "./ka.js": "./node_modules/moment/locale/ka.js",
+                "./kk": "./node_modules/moment/locale/kk.js",
+                "./kk.js": "./node_modules/moment/locale/kk.js",
+                "./km": "./node_modules/moment/locale/km.js",
+                "./km.js": "./node_modules/moment/locale/km.js",
+                "./kn": "./node_modules/moment/locale/kn.js",
+                "./kn.js": "./node_modules/moment/locale/kn.js",
+                "./ko": "./node_modules/moment/locale/ko.js",
+                "./ko.js": "./node_modules/moment/locale/ko.js",
+                "./ku": "./node_modules/moment/locale/ku.js",
+                "./ku.js": "./node_modules/moment/locale/ku.js",
+                "./ky": "./node_modules/moment/locale/ky.js",
+                "./ky.js": "./node_modules/moment/locale/ky.js",
+                "./lb": "./node_modules/moment/locale/lb.js",
+                "./lb.js": "./node_modules/moment/locale/lb.js",
+                "./lo": "./node_modules/moment/locale/lo.js",
+                "./lo.js": "./node_modules/moment/locale/lo.js",
+                "./lt": "./node_modules/moment/locale/lt.js",
+                "./lt.js": "./node_modules/moment/locale/lt.js",
+                "./lv": "./node_modules/moment/locale/lv.js",
+                "./lv.js": "./node_modules/moment/locale/lv.js",
+                "./me": "./node_modules/moment/locale/me.js",
+                "./me.js": "./node_modules/moment/locale/me.js",
+                "./mi": "./node_modules/moment/locale/mi.js",
+                "./mi.js": "./node_modules/moment/locale/mi.js",
+                "./mk": "./node_modules/moment/locale/mk.js",
+                "./mk.js": "./node_modules/moment/locale/mk.js",
+                "./ml": "./node_modules/moment/locale/ml.js",
+                "./ml.js": "./node_modules/moment/locale/ml.js",
+                "./mn": "./node_modules/moment/locale/mn.js",
+                "./mn.js": "./node_modules/moment/locale/mn.js",
+                "./mr": "./node_modules/moment/locale/mr.js",
+                "./mr.js": "./node_modules/moment/locale/mr.js",
+                "./ms": "./node_modules/moment/locale/ms.js",
+                "./ms-my": "./node_modules/moment/locale/ms-my.js",
+                "./ms-my.js": "./node_modules/moment/locale/ms-my.js",
+                "./ms.js": "./node_modules/moment/locale/ms.js",
+                "./mt": "./node_modules/moment/locale/mt.js",
+                "./mt.js": "./node_modules/moment/locale/mt.js",
+                "./my": "./node_modules/moment/locale/my.js",
+                "./my.js": "./node_modules/moment/locale/my.js",
+                "./nb": "./node_modules/moment/locale/nb.js",
+                "./nb.js": "./node_modules/moment/locale/nb.js",
+                "./ne": "./node_modules/moment/locale/ne.js",
+                "./ne.js": "./node_modules/moment/locale/ne.js",
+                "./nl": "./node_modules/moment/locale/nl.js",
+                "./nl-be": "./node_modules/moment/locale/nl-be.js",
+                "./nl-be.js": "./node_modules/moment/locale/nl-be.js",
+                "./nl.js": "./node_modules/moment/locale/nl.js",
+                "./nn": "./node_modules/moment/locale/nn.js",
+                "./nn.js": "./node_modules/moment/locale/nn.js",
+                "./pa-in": "./node_modules/moment/locale/pa-in.js",
+                "./pa-in.js": "./node_modules/moment/locale/pa-in.js",
+                "./pl": "./node_modules/moment/locale/pl.js",
+                "./pl.js": "./node_modules/moment/locale/pl.js",
+                "./pt": "./node_modules/moment/locale/pt.js",
+                "./pt-br": "./node_modules/moment/locale/pt-br.js",
+                "./pt-br.js": "./node_modules/moment/locale/pt-br.js",
+                "./pt.js": "./node_modules/moment/locale/pt.js",
+                "./ro": "./node_modules/moment/locale/ro.js",
+                "./ro.js": "./node_modules/moment/locale/ro.js",
+                "./ru": "./node_modules/moment/locale/ru.js",
+                "./ru.js": "./node_modules/moment/locale/ru.js",
+                "./sd": "./node_modules/moment/locale/sd.js",
+                "./sd.js": "./node_modules/moment/locale/sd.js",
+                "./se": "./node_modules/moment/locale/se.js",
+                "./se.js": "./node_modules/moment/locale/se.js",
+                "./si": "./node_modules/moment/locale/si.js",
+                "./si.js": "./node_modules/moment/locale/si.js",
+                "./sk": "./node_modules/moment/locale/sk.js",
+                "./sk.js": "./node_modules/moment/locale/sk.js",
+                "./sl": "./node_modules/moment/locale/sl.js",
+                "./sl.js": "./node_modules/moment/locale/sl.js",
+                "./sq": "./node_modules/moment/locale/sq.js",
+                "./sq.js": "./node_modules/moment/locale/sq.js",
+                "./sr": "./node_modules/moment/locale/sr.js",
+                "./sr-cyrl": "./node_modules/moment/locale/sr-cyrl.js",
+                "./sr-cyrl.js": "./node_modules/moment/locale/sr-cyrl.js",
+                "./sr.js": "./node_modules/moment/locale/sr.js",
+                "./ss": "./node_modules/moment/locale/ss.js",
+                "./ss.js": "./node_modules/moment/locale/ss.js",
+                "./sv": "./node_modules/moment/locale/sv.js",
+                "./sv.js": "./node_modules/moment/locale/sv.js",
+                "./sw": "./node_modules/moment/locale/sw.js",
+                "./sw.js": "./node_modules/moment/locale/sw.js",
+                "./ta": "./node_modules/moment/locale/ta.js",
+                "./ta.js": "./node_modules/moment/locale/ta.js",
+                "./te": "./node_modules/moment/locale/te.js",
+                "./te.js": "./node_modules/moment/locale/te.js",
+                "./tet": "./node_modules/moment/locale/tet.js",
+                "./tet.js": "./node_modules/moment/locale/tet.js",
+                "./tg": "./node_modules/moment/locale/tg.js",
+                "./tg.js": "./node_modules/moment/locale/tg.js",
+                "./th": "./node_modules/moment/locale/th.js",
+                "./th.js": "./node_modules/moment/locale/th.js",
+                "./tl-ph": "./node_modules/moment/locale/tl-ph.js",
+                "./tl-ph.js": "./node_modules/moment/locale/tl-ph.js",
+                "./tlh": "./node_modules/moment/locale/tlh.js",
+                "./tlh.js": "./node_modules/moment/locale/tlh.js",
+                "./tr": "./node_modules/moment/locale/tr.js",
+                "./tr.js": "./node_modules/moment/locale/tr.js",
+                "./tzl": "./node_modules/moment/locale/tzl.js",
+                "./tzl.js": "./node_modules/moment/locale/tzl.js",
+                "./tzm": "./node_modules/moment/locale/tzm.js",
+                "./tzm-latn": "./node_modules/moment/locale/tzm-latn.js",
+                "./tzm-latn.js": "./node_modules/moment/locale/tzm-latn.js",
+                "./tzm.js": "./node_modules/moment/locale/tzm.js",
+                "./ug-cn": "./node_modules/moment/locale/ug-cn.js",
+                "./ug-cn.js": "./node_modules/moment/locale/ug-cn.js",
+                "./uk": "./node_modules/moment/locale/uk.js",
+                "./uk.js": "./node_modules/moment/locale/uk.js",
+                "./ur": "./node_modules/moment/locale/ur.js",
+                "./ur.js": "./node_modules/moment/locale/ur.js",
+                "./uz": "./node_modules/moment/locale/uz.js",
+                "./uz-latn": "./node_modules/moment/locale/uz-latn.js",
+                "./uz-latn.js": "./node_modules/moment/locale/uz-latn.js",
+                "./uz.js": "./node_modules/moment/locale/uz.js",
+                "./vi": "./node_modules/moment/locale/vi.js",
+                "./vi.js": "./node_modules/moment/locale/vi.js",
+                "./x-pseudo": "./node_modules/moment/locale/x-pseudo.js",
+                "./x-pseudo.js": "./node_modules/moment/locale/x-pseudo.js",
+                "./yo": "./node_modules/moment/locale/yo.js",
+                "./yo.js": "./node_modules/moment/locale/yo.js",
+                "./zh-cn": "./node_modules/moment/locale/zh-cn.js",
+                "./zh-cn.js": "./node_modules/moment/locale/zh-cn.js",
+                "./zh-hk": "./node_modules/moment/locale/zh-hk.js",
+                "./zh-hk.js": "./node_modules/moment/locale/zh-hk.js",
+                "./zh-tw": "./node_modules/moment/locale/zh-tw.js",
+                "./zh-tw.js": "./node_modules/moment/locale/zh-tw.js"
+            };
+            function webpackContext(req) {
+                var id = webpackContextResolve(req);
+                return __webpack_require__(id);
+            }
+            function webpackContextResolve(req) {
+                if (!__webpack_require__.o(map, req)) {
+                    var e = new Error("Cannot find module '" + req + "'");
+                    e.code = 'MODULE_NOT_FOUND';
+                    throw e;
+                }
+                return map[req];
+            }
+            webpackContext.keys = function webpackContextKeys() {
+                return Object.keys(map);
+            };
+            webpackContext.resolve = webpackContextResolve;
+            module.exports = webpackContext;
+            webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
+            /***/ 
+        }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/app.component.html": 
         /*!**************************************************************************!*\
           !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/app.component.html ***!
@@ -51,6 +333,17 @@
             "use strict";
             __webpack_require__.r(__webpack_exports__);
             /* harmony default export */ __webpack_exports__["default"] = ("<mat-form-field class=\"\" style=\"width: 250px;\">\n  <input type=\"text\" placeholder=\"Поиск помпании\" aria-label=\"Number\" matInput [formControl]=\"companyControl\"\n         [matAutocomplete]=\"auto\">\n  <mat-hint align=\"start\" *ngIf=\"edit === 'true' && id\"><strong>Вы меняете название</strong> </mat-hint>\n  <mat-hint align=\"start\" *ngIf=\"edit === 'true' && !id\"><strong>Вы добавите компанию</strong> </mat-hint>\n  <mat-hint align=\"end\" *ngIf=\"edit === 'true' && id\" >ID компании: {{id}}</mat-hint>\n  <button mat-button matSuffix mat-icon-button aria-label=\"Clear\" *ngIf=\"edit === 'true'\"\n          (click)=\"companyControl.setValue(''); id = null\"\n  >\n    <mat-icon>close</mat-icon>\n  </button>\n  <mat-autocomplete #auto=\"matAutocomplete\">\n    <mat-option *ngFor=\"let option of filtered | async\" [value]=\"option['title']\"\n                (click)=\"toggle(option['id'])\">\n      {{option['title']}}\n    </mat-option>\n  </mat-autocomplete>\n</mat-form-field>\n<button mat-button *ngIf=\"edit === 'true'\" mat-icon-button (click)=\"addCompany()\" color=\"primary\">\n  <mat-icon>save</mat-icon>\n</button>\n<span class=\"text-orange\" *ngIf=\"edit === 'true'\">{{result}}</span>\n");
+            /***/ 
+        }),
+        /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/date-interval/date-interval.component.html": 
+        /*!*************************************************************************************************************!*\
+          !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/date-interval/date-interval.component.html ***!
+          \*************************************************************************************************************/
+        /*! exports provided: default */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony default export */ __webpack_exports__["default"] = ("Показать:\n<mat-form-field class=\"mx-2\">\n  <input matInput [matDatepicker]=\"sdp\" placeholder=\"От\" [formControl]=\"start\" (dateChange)=\"setDate()\">\n  <mat-datepicker-toggle matSuffix [for]=\"sdp\"></mat-datepicker-toggle>\n  <mat-datepicker #sdp></mat-datepicker>\n</mat-form-field>\n<mat-form-field class=\"mx-2\">\n  <input matInput [matDatepicker]=\"edp\" placeholder=\"До\" [formControl]=\"end\" (dateChange)=\"setDate()\">\n  <mat-datepicker-toggle matSuffix [for]=\"edp\"></mat-datepicker-toggle>\n  <mat-datepicker #edp></mat-datepicker>\n</mat-form-field>\n");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/device-manage/device-manage.component.html": 
@@ -182,7 +475,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<app-login (check)=\"LogIn($event)\" *ngIf=\"!isLogin\"></app-login>\n<div class=\"\" *ngIf=\"isLogin\">\n  <header class=\"container\">\n    <div class=\"float-left py-2\">\n      <app-companyes [edit]=\"isEdit\" [uid]=\"uid\" (cid)=\"setId($event)\"></app-companyes>\n    </div>\n    <div class=\"float-left py-2\">\n      <app-export *ngIf=\"cid\" [cid]=\"cid\"></app-export>\n    </div>\n\n    <div class=\"socket-init\">\n      <button mat-raised-button class=\"mx-2\" *ngIf=\"uid === 0 && isEdit==='false'\" (click)=\"go('edit')\">Правка</button>\n      <button mat-raised-button class=\"mx-2\" *ngIf=\"uid === 0 && isEdit==='true'\" (click)=\"go('view')\">Просмотр</button>\n      <button mat-raised-button class=\"mx-2\" (click)=\"logOut()\">Выйти</button>\n    </div>\n  </header>\n  <mat-sidenav-container>\n    <mat-sidenav opened mode=\"side\" class=\"p-2 sidenav\">\n      <div class=\"container\" *ngIf=\"cid\">\n        <app-offices [edit]=\"isEdit\" [cid]=\"cid\" (oid)=\"setId($event)\"></app-offices>\n      </div>\n      <div class=\"container\" *ngIf=\"oid\">\n        <app-devices *ngIf=\"isEdit === 'false'\" [cid]=\"cid\" [oid]=\"oid\" (did)=\"setId($event)\"></app-devices>\n      </div>\n    </mat-sidenav>\n    <div class=\"container\">\n      <app-info *ngIf=\"isEdit === 'false' && did\" [did]=\"did\" [office]=\"office\" [cid]=\"cid\" (date)=\"setId($event)\"></app-info>\n      <app-device-manage *ngIf=\"isEdit === 'true' && oid\" [edit]=\"isEdit\" [cid]=\"cid\" [oid]=\"oid\"></app-device-manage>\n    </div>\n    <div class=\"console\">\n      <mat-card>\n        <mat-list>\n          <mat-list-item *ngFor=\"let message of messages\">\n            <h5 mat-line>{{message}}</h5>\n          </mat-list-item>\n        </mat-list>\n        <div class=\"p-2\">\n          <mat-icon>message</mat-icon>\n          <mat-form-field>\n            <input matInput\n                   #inputMessage\n                   placeholder=\"Введите сообщение\"\n                   [(ngModel)]=\"messageContent\"\n                   (keyup.enter)=\"sendMessage(messageContent)\"\n            >\n          </mat-form-field>\n        </div>\n      </mat-card>\n    </div>\n  </mat-sidenav-container>\n</div>\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("<app-login (check)=\"LogIn($event)\" *ngIf=\"!isLogin\"></app-login>\n<div class=\"\" *ngIf=\"isLogin\">\n  <header class=\"container\">\n    <div class=\"float-left py-2\">\n      <app-companyes [edit]=\"isEdit\" [uid]=\"uid\" (cid)=\"setId($event)\"></app-companyes>\n    </div>\n    <div class=\"float-left py-2\">\n      <app-export *ngIf=\"cid\" [cid]=\"cid\" [interval]=\"interval\"></app-export>\n    </div>\n    <div class=\"float-left py-2 mx-2\">\n      <app-date-interval (data)=\"interval = $event\"></app-date-interval>\n    </div>\n\n    <div class=\"socket-init\">\n      <button mat-raised-button class=\"mx-2\" *ngIf=\"uid === 0 && isEdit==='false'\" (click)=\"go('edit')\">Правка</button>\n      <button mat-raised-button class=\"mx-2\" *ngIf=\"uid === 0 && isEdit==='true'\" (click)=\"go('view')\">Просмотр</button>\n      <button mat-raised-button class=\"mx-2\" (click)=\"logOut()\">Выйти</button>\n    </div>\n  </header>\n  <mat-sidenav-container>\n    <mat-sidenav opened mode=\"side\" class=\"p-2 sidenav\">\n      <div class=\"container\" *ngIf=\"cid\">\n        <app-offices [edit]=\"isEdit\" [cid]=\"cid\" (oid)=\"setId($event)\"></app-offices>\n      </div>\n      <div class=\"container\" *ngIf=\"oid\">\n        <app-devices *ngIf=\"isEdit === 'false'\" [cid]=\"cid\" [oid]=\"oid\" (did)=\"setId($event)\"></app-devices>\n      </div>\n    </mat-sidenav>\n    <div class=\"container\">\n      <app-info *ngIf=\"isEdit === 'false' && did\" [did]=\"did\" [office]=\"office\" [cid]=\"cid\" [interval]=\"interval\" (date)=\"setId($event)\"></app-info>\n      <app-device-manage *ngIf=\"isEdit === 'true' && oid\" [edit]=\"isEdit\" [cid]=\"cid\" [oid]=\"oid\"></app-device-manage>\n    </div>\n\n    <div class=\"console\">\n      <mat-card>\n        <mat-list>\n          <mat-list-item *ngFor=\"let message of messages\">\n            <h5 mat-line>{{message}}</h5>\n          </mat-list-item>\n        </mat-list>\n        <div class=\"p-2\">\n          <mat-icon>message</mat-icon>\n          <mat-form-field>\n            <input matInput\n                   #inputMessage\n                   placeholder=\"Введите сообщение\"\n                   [(ngModel)]=\"messageContent\"\n                   (keyup.enter)=\"sendMessage(messageContent)\"\n            >\n          </mat-form-field>\n        </div>\n      </mat-card>\n    </div>\n  </mat-sidenav-container>\n</div>\n");
             /***/ 
         }),
         /***/ "./node_modules/tslib/tslib.es6.js": 
@@ -812,6 +1105,85 @@
             ], CompanyesComponent);
             /***/ 
         }),
+        /***/ "./src/app/components/date-interval/date-interval.component.scss": 
+        /*!***********************************************************************!*\
+          !*** ./src/app/components/date-interval/date-interval.component.scss ***!
+          \***********************************************************************/
+        /*! exports provided: default */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZGF0ZS1pbnRlcnZhbC9kYXRlLWludGVydmFsLmNvbXBvbmVudC5zY3NzIn0= */");
+            /***/ 
+        }),
+        /***/ "./src/app/components/date-interval/date-interval.component.ts": 
+        /*!*********************************************************************!*\
+          !*** ./src/app/components/date-interval/date-interval.component.ts ***!
+          \*********************************************************************/
+        /*! exports provided: DateIntervalComponent */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DateIntervalComponent", function () { return DateIntervalComponent; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var _angular_material_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/material/core */ "./node_modules/@angular/material/esm2015/core.js");
+            /* harmony import */ var _angular_material_moment_adapter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material-moment-adapter */ "./node_modules/@angular/material-moment-adapter/esm2015/material-moment-adapter.js");
+            /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+            /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+            /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/ __webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_5__);
+            var DateIntervalComponent = /** @class */ (function () {
+                function DateIntervalComponent(_adapter) {
+                    this._adapter = _adapter;
+                    this.data = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+                    this.start = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](moment__WEBPACK_IMPORTED_MODULE_5__([2019, 0, 1]));
+                    this.end = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"]((new Date()).toISOString());
+                }
+                DateIntervalComponent.prototype.ngOnInit = function () {
+                    this.setDate();
+                };
+                DateIntervalComponent.prototype.setDate = function () {
+                    var body;
+                    if (this.end.value instanceof Date) {
+                        body = {
+                            start: this.start.value.toISOString(),
+                            end: this.end.value.toISOString()
+                        };
+                    }
+                    else {
+                        body = {
+                            start: this.start.value.toISOString(),
+                            end: (new Date()).toISOString()
+                        };
+                    }
+                    this.data.emit(body);
+                };
+                return DateIntervalComponent;
+            }());
+            DateIntervalComponent.ctorParameters = function () { return [
+                { type: _angular_material_core__WEBPACK_IMPORTED_MODULE_2__["DateAdapter"] }
+            ]; };
+            tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])()
+            ], DateIntervalComponent.prototype, "data", void 0);
+            DateIntervalComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+                    selector: 'app-date-interval',
+                    template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./date-interval.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/date-interval/date-interval.component.html")).default,
+                    providers: [
+                        { provide: _angular_material_core__WEBPACK_IMPORTED_MODULE_2__["MAT_DATE_LOCALE"], useValue: 'ru-RU' },
+                        {
+                            provide: _angular_material_core__WEBPACK_IMPORTED_MODULE_2__["DateAdapter"],
+                            useClass: _angular_material_moment_adapter__WEBPACK_IMPORTED_MODULE_3__["MomentDateAdapter"],
+                            deps: [_angular_material_core__WEBPACK_IMPORTED_MODULE_2__["MAT_DATE_LOCALE"], _angular_material_moment_adapter__WEBPACK_IMPORTED_MODULE_3__["MAT_MOMENT_DATE_ADAPTER_OPTIONS"]]
+                        },
+                        { provide: _angular_material_core__WEBPACK_IMPORTED_MODULE_2__["MAT_DATE_FORMATS"], useValue: _angular_material_moment_adapter__WEBPACK_IMPORTED_MODULE_3__["MAT_MOMENT_DATE_FORMATS"] },
+                    ],
+                    styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./date-interval.component.scss */ "./src/app/components/date-interval/date-interval.component.scss")).default]
+                })
+            ], DateIntervalComponent);
+            /***/ 
+        }),
         /***/ "./src/app/components/device-manage/device-manage.component.scss": 
         /*!***********************************************************************!*\
           !*** ./src/app/components/device-manage/device-manage.component.scss ***!
@@ -1101,14 +1473,25 @@
                     this.sIO = sIO;
                     this.json = json;
                     this.csvData = [];
+                    this.changeLog = [];
                 }
+                ExportComponent.prototype.ngOnChanges = function (changes) {
+                    for (var propName in changes) {
+                        var chng = changes[propName];
+                        var cur = JSON.stringify(chng.currentValue);
+                        var prev = JSON.stringify(chng.previousValue);
+                        this.changeLog.push(propName + ": currentValue = " + cur + ", previousValue = " + prev);
+                    }
+                    this.sIO.getCSV(this.cid, this.interval['start'], this.interval['end']);
+                };
                 ExportComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this.sIO.getCSV(this.cid, 0, 1);
+                    this.sIO.getCSV(this.cid, this.interval['start'], this.interval['end']);
                     this.ioConnection = this.sIO.onMessage()
                         .subscribe(function (message) {
                         _this.json.toJSON(message).subscribe(function (data) {
                             if (data['getCSV']) {
+                                _this.csvData = [];
                                 data['getCSV'].forEach(function (item) {
                                     var data = new Date(item['datetime']);
                                     _this.csvData.push({
@@ -1149,6 +1532,9 @@
             tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
             ], ExportComponent.prototype, "cid", void 0);
+            tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
+            ], ExportComponent.prototype, "interval", void 0);
             ExportComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
                     selector: 'app-export',
@@ -1188,10 +1574,20 @@
                     this.json = json;
                     this.date = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
                     this.infos = [];
+                    this.changeLog = [];
                 }
+                InfoComponent.prototype.ngOnChanges = function (changes) {
+                    for (var propName in changes) {
+                        var chng = changes[propName];
+                        var cur = JSON.stringify(chng.currentValue);
+                        var prev = JSON.stringify(chng.previousValue);
+                        this.changeLog.push(propName + ": currentValue = " + cur + ", previousValue = " + prev);
+                    }
+                    this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
+                };
                 InfoComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this.sIO.getInfos(this.did);
+                    this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
                     this.ioConnection = this.sIO.onMessage()
                         .subscribe(function (message) {
                         _this.json.toJSON(message).subscribe(function (data) {
@@ -1212,13 +1608,13 @@
                                 if (data['putInfo']) {
                                     _this.result = data['putInfo']['status'];
                                     if (_this.result === 'success') {
-                                        _this.sIO.getInfos(_this.did);
+                                        _this.sIO.getInfos(_this.did, _this.interval['start'], _this.interval['end']);
                                     }
                                 }
                                 if (data['putDevice']) {
                                     _this.result = data['putDevice']['status'];
                                     if (_this.result === 'success') {
-                                        _this.sIO.getInfos(_this.did);
+                                        _this.sIO.getInfos(_this.did, _this.interval['start'], _this.interval['end']);
                                     }
                                 }
                             }
@@ -1259,6 +1655,9 @@
             tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
             ], InfoComponent.prototype, "office", void 0);
+            tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
+            ], InfoComponent.prototype, "interval", void 0);
             tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])()
             ], InfoComponent.prototype, "date", void 0);
@@ -2496,6 +2895,7 @@
             /* harmony import */ var _components_info_info_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../components/info/info.component */ "./src/app/components/info/info.component.ts");
             /* harmony import */ var _components_export_export_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../components/export/export.component */ "./src/app/components/export/export.component.ts");
             /* harmony import */ var _components_device_manage_device_manage_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../components/device-manage/device-manage.component */ "./src/app/components/device-manage/device-manage.component.ts");
+            /* harmony import */ var _components_date_interval_date_interval_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../components/date-interval/date-interval.component */ "./src/app/components/date-interval/date-interval.component.ts");
             var SharedModule = /** @class */ (function () {
                 function SharedModule() {
                 }
@@ -2503,7 +2903,7 @@
             }());
             SharedModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-                    declarations: [_devices_admin_company_company_component__WEBPACK_IMPORTED_MODULE_5__["CompanyComponent"], _devices_admin_client_client_component__WEBPACK_IMPORTED_MODULE_6__["ClientComponent"], _devices_admin_device_device_component__WEBPACK_IMPORTED_MODULE_7__["DeviceComponent"], _devices_admin_manage_manage_component__WEBPACK_IMPORTED_MODULE_8__["ManageComponent"], _devices_admin_admin_component__WEBPACK_IMPORTED_MODULE_9__["AdminComponent"], _auth_login_login_component__WEBPACK_IMPORTED_MODULE_12__["LoginComponent"], _socket_main_main_component__WEBPACK_IMPORTED_MODULE_13__["MainComponent"], _components_companyes_companyes_component__WEBPACK_IMPORTED_MODULE_14__["CompanyesComponent"], _components_offices_offices_component__WEBPACK_IMPORTED_MODULE_15__["OfficesComponent"], _components_devices_devices_component__WEBPACK_IMPORTED_MODULE_16__["DevicesComponent"], _components_info_info_component__WEBPACK_IMPORTED_MODULE_17__["InfoComponent"], _components_export_export_component__WEBPACK_IMPORTED_MODULE_18__["ExportComponent"], _components_device_manage_device_manage_component__WEBPACK_IMPORTED_MODULE_19__["DeviceManageComponent"]],
+                    declarations: [_devices_admin_company_company_component__WEBPACK_IMPORTED_MODULE_5__["CompanyComponent"], _devices_admin_client_client_component__WEBPACK_IMPORTED_MODULE_6__["ClientComponent"], _devices_admin_device_device_component__WEBPACK_IMPORTED_MODULE_7__["DeviceComponent"], _devices_admin_manage_manage_component__WEBPACK_IMPORTED_MODULE_8__["ManageComponent"], _devices_admin_admin_component__WEBPACK_IMPORTED_MODULE_9__["AdminComponent"], _auth_login_login_component__WEBPACK_IMPORTED_MODULE_12__["LoginComponent"], _socket_main_main_component__WEBPACK_IMPORTED_MODULE_13__["MainComponent"], _components_companyes_companyes_component__WEBPACK_IMPORTED_MODULE_14__["CompanyesComponent"], _components_offices_offices_component__WEBPACK_IMPORTED_MODULE_15__["OfficesComponent"], _components_devices_devices_component__WEBPACK_IMPORTED_MODULE_16__["DevicesComponent"], _components_info_info_component__WEBPACK_IMPORTED_MODULE_17__["InfoComponent"], _components_export_export_component__WEBPACK_IMPORTED_MODULE_18__["ExportComponent"], _components_device_manage_device_manage_component__WEBPACK_IMPORTED_MODULE_19__["DeviceManageComponent"], _components_date_interval_date_interval_component__WEBPACK_IMPORTED_MODULE_20__["DateIntervalComponent"]],
                     imports: [
                         _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
                         _material_material_module__WEBPACK_IMPORTED_MODULE_3__["MaterialModule"],
@@ -2721,8 +3121,8 @@
             /* harmony import */ var rxjs_Observable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/Observable */ "../../node_modules/rxjs-compat/_esm2015/Observable.js");
             /* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
             /* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/ __webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_3__);
-            /*const SERVER_URL_GET = 'https://localhost:443/get';
-            const SERVER_URL_PUT = 'https://localhost:443/put';*/
+            /*const SERVER_URL_GET = 'https://localhost:8443/get';
+            const SERVER_URL_PUT = 'https://localhost:8443/put';*/
             var SERVER_URL_GET = 'https://socket.api.part4.info:8443/get';
             var SERVER_URL_PUT = 'https://socket.api.part4.info:8443/put';
             var SocketService = /** @class */ (function () {
@@ -2763,11 +3163,11 @@
                 SocketService.prototype.getDevices = function (cid, oid, did) {
                     this._get.emit('get', '{"getDevices":' + did + ',"cid":' + cid + ',"oid":' + oid + '}');
                 };
-                SocketService.prototype.getInfos = function (did) {
-                    this._get.emit('get', '{"getinfo":' + did + '}');
+                SocketService.prototype.getInfos = function (did, start, end) {
+                    this._get.emit('get', '{"getinfo":' + did + ',"start":"' + start + '","end":"' + end + '"}');
                 };
-                SocketService.prototype.getCSV = function (cid, smonth, emonth) {
-                    this._get.emit('get', '{"getCSV":' + cid + ',"smonth":' + smonth + ',"emonth":' + emonth + '}');
+                SocketService.prototype.getCSV = function (cid, start, end) {
+                    this._get.emit('get', '{"getCSV":' + cid + ',"start":"' + start + '","end":"' + end + '"}');
                 };
                 return SocketService;
             }());

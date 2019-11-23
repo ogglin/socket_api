@@ -10,9 +10,13 @@ var app = express();
 //var http = require('http').createServer(app);
 //var WebSocket  = require('ws');
 
+/*const ssl = {
+    key: fs.readFileSync('cert/localhost-key.pem'),
+    cert: fs.readFileSync('cert/localhost.pem')
+};*/
 const ssl = {
-    key: fs.readFileSync('cert/privkey1.pem'),
-    cert: fs.readFileSync('cert/cert1.pem')
+    cert: fs.readFileSync('cert/rootCA.pem'),
+    key: fs.readFileSync('cert/rootCA-key.pem')
 };
 const serverPort = 8443;
 
@@ -67,7 +71,6 @@ io.set('origins', '*:*');
 const get = io.of('/get');
 get.on('connection', function (socket) {
     socket.on('get', function (data) {
-        console.log(data);
         var isJson = IsJsonString(data);
         if (isJson) {
             var obj = JSON.parse(data);
@@ -92,12 +95,12 @@ get.on('connection', function (socket) {
                 });
             }
             if (obj['getinfo'] || obj['getinfo'] === 0) {
-                db.getInfoO(obj['getinfo']).subscribe(res => {
+                db.getInfoO(obj['getinfo'], obj['start'], obj['end']).subscribe(res => {
                     get.emit('get', '{"infos":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['getCSV'] || obj['getCSV'] === 0) {
-                db.getInfoCSVO(obj['getCSV'], obj['smonth'], obj['emonth']).subscribe(res => {
+                db.getInfoCSVO(obj['getCSV'], obj['start'], obj['end']).subscribe(res => {
                     get.emit('get', '{"getCSV":' + JSON.stringify(res) + '}');
                 });
             }
@@ -109,11 +112,9 @@ get.on('connection', function (socket) {
 const put = io.of('/put');
 put.on('connection', function (socket) {
     socket.on('put', function (data) {
-        console.log(data);
         var isJson = IsJsonString(data);
         if (isJson) {
             var obj = JSON.parse(data);
-            console.log(obj);
             if (obj['server_init'] === 'getDevices') {
                 //put.emit('put', data);
                 put.emit('get', data);

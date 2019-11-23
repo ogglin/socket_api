@@ -5,7 +5,10 @@
       <app-companyes [edit]="isEdit" [uid]="uid" (cid)="setId($event)"></app-companyes>
     </div>
     <div class="float-left py-2">
-      <app-export *ngIf="cid" [cid]="cid"></app-export>
+      <app-export *ngIf="cid" [cid]="cid" [interval]="interval"></app-export>
+    </div>
+    <div class="float-left py-2 mx-2">
+      <app-date-interval (data)="interval = $event"></app-date-interval>
     </div>
 
     <div class="socket-init">
@@ -24,9 +27,10 @@
       </div>
     </mat-sidenav>
     <div class="container">
-      <app-info *ngIf="isEdit === 'false' && did" [did]="did" [office]="office" [cid]="cid" (date)="setId($event)"></app-info>
+      <app-info *ngIf="isEdit === 'false' && did" [did]="did" [office]="office" [cid]="cid" [interval]="interval" (date)="setId($event)"></app-info>
       <app-device-manage *ngIf="isEdit === 'true' && oid" [edit]="isEdit" [cid]="cid" [oid]="oid"></app-device-manage>
     </div>
+
     <div class="console">
       <mat-card>
         <mat-list>

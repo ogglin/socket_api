@@ -24,6 +24,7 @@ export class MainComponent implements OnInit {
   did: number = null;
   office: string;
   isEdit: string = 'false';
+  interval: any;
   constructor(private sIO: SocketService) { }
 
   ngOnInit() {

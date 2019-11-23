@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
 import {SocketService} from "../../shared/socket/socket.service";
 import {ToJsonService} from "../../services/to-json.service";
 
@@ -10,18 +10,31 @@ import {ToJsonService} from "../../services/to-json.service";
 export class ExportComponent implements OnInit {
 
   @Input() cid: number;
+  @Input() interval: object;
   csvData: any[] = [];
   ioConnection: any;
+  changeLog: any[] = [];
 
   constructor(private sIO: SocketService, private json: ToJsonService) {
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    for (let propName in changes) {
+      let chng = changes[propName];
+      let cur  = JSON.stringify(chng.currentValue);
+      let prev = JSON.stringify(chng.previousValue);
+      this.changeLog.push(`${propName}: currentValue = ${cur}, previousValue = ${prev}`)
+    }
+    this.sIO.getCSV(this.cid, this.interval['start'], this.interval['end']);
+  }
+
   ngOnInit() {
-    this.sIO.getCSV(this.cid, 0, 1);
+    this.sIO.getCSV(this.cid, this.interval['start'], this.interval['end']);
     this.ioConnection = this.sIO.onMessage()
       .subscribe(message => {
         this.json.toJSON(message).subscribe(data => {
           if (data['getCSV']) {
+            this.csvData = [];
             data['getCSV'].forEach(item => {
               let data = new Date(item['datetime']);
               this.csvData.push({

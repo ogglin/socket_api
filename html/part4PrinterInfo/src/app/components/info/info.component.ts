@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
 import {SocketService} from "../../shared/socket/socket.service";
 import {ToJsonService} from "../../services/to-json.service";
 
@@ -12,6 +12,7 @@ export class InfoComponent implements OnInit {
   @Input() did: number;
   @Input() cid: number;
   @Input() office: string;
+  @Input() interval: object;
   @Output() date = new EventEmitter<any>();
   infos: any[] = [];
   info: any;
@@ -20,12 +21,21 @@ export class InfoComponent implements OnInit {
   data: any;
   result: any;
   Query: string;
+  changeLog: any[] = [];
 
-  constructor(private sIO: SocketService, private json: ToJsonService) {
+  constructor(private sIO: SocketService, private json: ToJsonService) {  }
+  ngOnChanges(changes: SimpleChanges) {
+    for (let propName in changes) {
+      let chng = changes[propName];
+      let cur  = JSON.stringify(chng.currentValue);
+      let prev = JSON.stringify(chng.previousValue);
+      this.changeLog.push(`${propName}: currentValue = ${cur}, previousValue = ${prev}`)
+    }
+    this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
   }
 
   ngOnInit() {
-    this.sIO.getInfos(this.did);
+    this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
     this.ioConnection = this.sIO.onMessage()
       .subscribe(message => {
         this.json.toJSON(message).subscribe(data => {
@@ -46,13 +56,13 @@ export class InfoComponent implements OnInit {
             if(data['putInfo']) {
               this.result = data['putInfo']['status'];
               if(this.result === 'success') {
-                this.sIO.getInfos(this.did);
+                this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
               }
             }
             if(data['putDevice']) {
               this.result = data['putDevice']['status'];
               if(this.result === 'success') {
-                this.sIO.getInfos(this.did);
+                this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
               }
             }
           }

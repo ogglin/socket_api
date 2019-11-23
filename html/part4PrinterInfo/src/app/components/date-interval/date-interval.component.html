@@ -1,0 +1,11 @@
+Показать:
+<mat-form-field class="mx-2">
+  <input matInput [matDatepicker]="sdp" placeholder="От" [formControl]="start" (dateChange)="setDate()">
+  <mat-datepicker-toggle matSuffix [for]="sdp"></mat-datepicker-toggle>
+  <mat-datepicker #sdp></mat-datepicker>
+</mat-form-field>
+<mat-form-field class="mx-2">
+  <input matInput [matDatepicker]="edp" placeholder="До" [formControl]="end" (dateChange)="setDate()">
+  <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
+  <mat-datepicker #edp></mat-datepicker>
+</mat-form-field>

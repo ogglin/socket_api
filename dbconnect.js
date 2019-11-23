@@ -89,15 +89,13 @@ function getDevices(cuid, cid, on, callback) {
     });
 }
 
-function getInfo(devid, callback) {
-    qgi = "SELECT rdata.info.device_id, rdata.devices.productname, rdata.devices.article, rdata.devices.placement, rdata.devices.sn, " +
-        "rdata.devices.url, rdata.info.printcycles, rdata.info.scancycles, rdata.info.status, rdata.info.kit, " +
-        "rdata.info.cartridge, rdata.info.maintenancekitcount, rdata.info.log, rdata.info.adfcycles, " +
-        "rdata.info.datetime, rdata.info.error " +
-        "FROM rdata.devices " +
-        "INNER JOIN rdata.info ON rdata.info.device_id = rdata.devices.\"id\"";
+function getInfo(devid, start, end, callback) {
+    qgi = "SELECT i.device_id, d.productname, d.article, d.placement, d.sn, d.url, i.printcycles, i.scancycles, " +
+        "i.status, i.kit, i.cartridge, i.maintenancekitcount, i.log, i.adfcycles, i.datetime, i.error " +
+        "FROM rdata.devices d INNER JOIN rdata.info i ON i.device_id = d.id " +
+        "AND i.datetime > '"+start+"' AND i.datetime < '"+end +"'";
     if (devid !== 0) {
-        qgi += " WHERE rdata.info.device_id = " + devid;
+        qgi += " AND i.device_id = " + devid;
     }
     qgi += " ORDER BY datetime DESC";
     (async () => {
@@ -135,14 +133,14 @@ function getErrors(did, callback) {
     });
 }
 
-function getInfoCSV(cid, smonth, emonth, callback) {
+function getInfoCSV(cid, start, end, callback) {
     var qgic = "SELECT * FROM (SELECT RANK () OVER ( PARTITION BY \"productname\" ORDER BY i.datetime DESC ) n, " +
         "date_part( 'month', datetime ) month_num, co.title company, c.name office, d.productname, " +
         "d.article, d.placement, d.sn, d.url, i.printcycles, i.datetime " +
         "FROM rdata.devices d INNER JOIN rdata.info i ON i.device_id = d.id " +
         "INNER JOIN rdata.clients c ON d.client_id = c.id INNER JOIN rdata.company co ON co.id = c.company_id " +
-        "WHERE d.company_id = "+cid+" AND i.printcycles IS NOT NULL AND i.datetime < (now() - '"+smonth+" month' :: INTERVAL ) " +
-        "AND i.datetime > (now() - '"+emonth+" month' :: INTERVAL ) ) sub WHERE n = 1";
+        "WHERE d.company_id = "+cid+" AND i.printcycles IS NOT NULL AND i.datetime > '"+start+"' " +
+        " AND i.datetime < '"+end+"') sub WHERE n = 1";
     (async () => {
         const client = await pool.connect();
         try {
