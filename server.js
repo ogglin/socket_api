@@ -15,8 +15,8 @@ var app = express();
     cert: fs.readFileSync('cert/localhost.pem')
 };*/
 const ssl = {
-    cert: fs.readFileSync('cert/rootCA.pem'),
-    key: fs.readFileSync('cert/rootCA-key.pem')
+    cert: fs.readFileSync('cert/cert1.pem'),
+    key: fs.readFileSync('cert/privkey1.pem')
 };
 const serverPort = 8443;
 
