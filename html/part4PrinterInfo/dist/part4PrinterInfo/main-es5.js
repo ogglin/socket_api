@@ -376,7 +376,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"p-2\" style=\"width: 250px;\">\n  <button mat-raised-button (click)=\"downloadFile(csvData)\" [disabled]=\"!csvData.length\">Экспорт данных (csv)</button>\n</div>\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"p-2\" style=\"width: 250px;\">\n  <!--button mat-raised-button (click)=\"downloadFile(csvData)\" [disabled]=\"!csvData.length\">Экспорт данных (csv)</button-->\n  <button mat-raised-button (click)=\"exportAsXLSX()\" [disabled]=\"!csvData.length\">Экспорт данных</button>\n</div>\n");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/info/info.component.html": 
@@ -475,7 +475,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<app-login (check)=\"LogIn($event)\" *ngIf=\"!isLogin\"></app-login>\n<div class=\"\" *ngIf=\"isLogin\">\n  <header class=\"container\">\n    <div class=\"float-left py-2\">\n      <app-companyes [edit]=\"isEdit\" [uid]=\"uid\" (cid)=\"setId($event)\"></app-companyes>\n    </div>\n    <div class=\"float-left py-2\">\n      <app-export *ngIf=\"cid\" [cid]=\"cid\" [interval]=\"interval\"></app-export>\n    </div>\n    <div class=\"float-left py-2 mx-2\">\n      <app-date-interval (data)=\"interval = $event\"></app-date-interval>\n    </div>\n\n    <div class=\"socket-init\">\n      <!--button mat-raised-button class=\"mx-2\" *ngIf=\"uid === 0 && isEdit==='false'\" (click)=\"go('edit')\">Правка</button-->\n      <button mat-raised-button class=\"mx-2\" *ngIf=\"isEdit==='false'\" (click)=\"go('edit')\">Правка</button>\n      <button mat-raised-button class=\"mx-2\" *ngIf=\"isEdit==='true'\" (click)=\"go('view')\">Просмотр</button>\n      <button mat-raised-button class=\"mx-2\" (click)=\"logOut()\">Выйти</button>\n    </div>\n  </header>\n  <mat-sidenav-container>\n    <mat-sidenav opened mode=\"side\" class=\"p-2 sidenav\">\n      <div class=\"container\" *ngIf=\"cid\">\n        <app-offices [edit]=\"isEdit\" [cid]=\"cid\" (oid)=\"setId($event)\"></app-offices>\n      </div>\n      <div class=\"container\" *ngIf=\"oid\">\n        <app-devices *ngIf=\"isEdit === 'false'\" [cid]=\"cid\" [oid]=\"oid\" (did)=\"setId($event)\"></app-devices>\n      </div>\n    </mat-sidenav>\n    <div class=\"container\">\n      <app-info *ngIf=\"isEdit === 'false' && did\" [did]=\"did\" [office]=\"office\" [cid]=\"cid\" [interval]=\"interval\" (date)=\"setId($event)\"></app-info>\n      <app-device-manage *ngIf=\"isEdit === 'true' && oid\" [edit]=\"isEdit\" [cid]=\"cid\" [oid]=\"oid\"></app-device-manage>\n    </div>\n\n    <div class=\"console\">\n      <mat-card>\n        <mat-list>\n          <mat-list-item *ngFor=\"let message of messages\">\n            <h5 mat-line>{{message}}</h5>\n          </mat-list-item>\n        </mat-list>\n        <div class=\"p-2\">\n          <mat-icon>message</mat-icon>\n          <mat-form-field>\n            <input matInput\n                   #inputMessage\n                   placeholder=\"Введите сообщение\"\n                   [(ngModel)]=\"messageContent\"\n                   (keyup.enter)=\"sendMessage(messageContent)\"\n            >\n          </mat-form-field>\n        </div>\n      </mat-card>\n    </div>\n  </mat-sidenav-container>\n</div>\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("<app-login (check)=\"LogIn($event)\" *ngIf=\"!isLogin\"></app-login>\n<div class=\"\" *ngIf=\"isLogin\">\n  <header class=\"container\">\n    <div class=\"float-left py-2\">\n      <app-companyes [edit]=\"isEdit\" [uid]=\"uid\" (cid)=\"setId($event)\"></app-companyes>\n    </div>\n    <div class=\"float-left py-2\">\n      <app-export *ngIf=\"cid\" [cid]=\"cid\" [title]=\"companyName\" [interval]=\"interval\"></app-export>\n    </div>\n    <div class=\"float-left py-2 mx-2\">\n      <app-date-interval (data)=\"interval = $event\"></app-date-interval>\n    </div>\n\n    <div class=\"socket-init\">\n      <!--button mat-raised-button class=\"mx-2\" *ngIf=\"uid === 0 && isEdit==='false'\" (click)=\"go('edit')\">Правка</button-->\n      <button mat-raised-button class=\"mx-2\" *ngIf=\"isEdit==='false'\" (click)=\"go('edit')\">Правка</button>\n      <button mat-raised-button class=\"mx-2\" *ngIf=\"isEdit==='true'\" (click)=\"go('view')\">Просмотр</button>\n      <button mat-raised-button class=\"mx-2\" (click)=\"logOut()\">Выйти</button>\n    </div>\n  </header>\n  <mat-sidenav-container>\n    <mat-sidenav opened mode=\"side\" class=\"p-2 sidenav\">\n      <div class=\"container\" *ngIf=\"cid\">\n        <app-offices [edit]=\"isEdit\" [cid]=\"cid\" (oid)=\"setId($event)\"></app-offices>\n      </div>\n      <div class=\"container\" *ngIf=\"oid\">\n        <app-devices *ngIf=\"isEdit === 'false' && cid\" [cid]=\"cid\" [oid]=\"oid\" (did)=\"setId($event)\"></app-devices>\n      </div>\n    </mat-sidenav>\n    <div class=\"container\">\n      <app-info *ngIf=\"isEdit === 'false' && did && cid\" [did]=\"did\" [office]=\"office\" [cid]=\"cid\" [interval]=\"interval\" (date)=\"setId($event)\"></app-info>\n      <app-device-manage *ngIf=\"isEdit === 'true' && oid  && cid\" [edit]=\"isEdit\" [cid]=\"cid\" [oid]=\"oid\"></app-device-manage>\n    </div>\n\n    <div class=\"console\">\n      <mat-card>\n        <mat-list>\n          <mat-list-item *ngFor=\"let message of messages\">\n            <h5 mat-line>{{message}}</h5>\n          </mat-list-item>\n        </mat-list>\n        <div class=\"p-2\">\n          <mat-icon>message</mat-icon>\n          <mat-form-field>\n            <input matInput\n                   #inputMessage\n                   placeholder=\"Введите сообщение\"\n                   [(ngModel)]=\"messageContent\"\n                   (keyup.enter)=\"sendMessage(messageContent)\"\n            >\n          </mat-form-field>\n        </div>\n      </mat-card>\n    </div>\n  </mat-sidenav-container>\n</div>\n");
             /***/ 
         }),
         /***/ "./node_modules/tslib/tslib.es6.js": 
@@ -1058,7 +1058,8 @@
                 CompanyesComponent.prototype.toggle = function (id) {
                     var e = {
                         init: 'company',
-                        id: id
+                        id: id,
+                        title: this.companyControl.value
                     };
                     this.cid.emit(e);
                     this.id = id;
@@ -1132,11 +1133,13 @@
             /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
             /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
             /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/ __webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_5__);
+            var nData = new Date();
+            nData.setDate(nData.getDate() - 60);
             var DateIntervalComponent = /** @class */ (function () {
                 function DateIntervalComponent(_adapter) {
                     this._adapter = _adapter;
                     this.data = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
-                    this.start = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](moment__WEBPACK_IMPORTED_MODULE_5__([2019, 0, 1]));
+                    this.start = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](moment__WEBPACK_IMPORTED_MODULE_5__([nData.getFullYear(), nData.getMonth(), nData.getDay()]));
                     this.end = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"]((new Date()).toISOString());
                 }
                 DateIntervalComponent.prototype.ngOnInit = function () {
@@ -1468,10 +1471,12 @@
             /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
             /* harmony import */ var _shared_socket_socket_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../shared/socket/socket.service */ "./src/app/shared/socket/socket.service.ts");
             /* harmony import */ var _services_to_json_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/to-json.service */ "./src/app/services/to-json.service.ts");
+            /* harmony import */ var _services_to_xlsx_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/to-xlsx.service */ "./src/app/services/to-xlsx.service.ts");
             var ExportComponent = /** @class */ (function () {
-                function ExportComponent(sIO, json) {
+                function ExportComponent(sIO, json, excel) {
                     this.sIO = sIO;
                     this.json = json;
+                    this.excel = excel;
                     this.csvData = [];
                     this.changeLog = [];
                 }
@@ -1509,29 +1514,22 @@
                         });
                     });
                 };
-                ExportComponent.prototype.downloadFile = function (data) {
-                    var replacer = function (key, value) { return value === null ? '' : value; }; // specify how you want to handle null values here
-                    var header = Object.keys(data[0]);
-                    var csv = data.map(function (row) { return header.map(function (fieldName) { return JSON.stringify(row[fieldName], replacer); }).join(';'); });
-                    csv.unshift(header.join(';'));
-                    var csvArray = csv.join('\r\n');
-                    var a = document.createElement('a');
-                    var blob = new Blob([csvArray], { type: 'text/csv;charset=utf-8' }), url = window.URL.createObjectURL(blob);
-                    a.href = url;
-                    a.download = "Export.csv";
-                    a.click();
-                    window.URL.revokeObjectURL(url);
-                    a.remove();
+                ExportComponent.prototype.exportAsXLSX = function () {
+                    this.excel.exportAsExcelFile(this.csvData, this.title);
                 };
                 return ExportComponent;
             }());
             ExportComponent.ctorParameters = function () { return [
                 { type: _shared_socket_socket_service__WEBPACK_IMPORTED_MODULE_2__["SocketService"] },
-                { type: _services_to_json_service__WEBPACK_IMPORTED_MODULE_3__["ToJsonService"] }
+                { type: _services_to_json_service__WEBPACK_IMPORTED_MODULE_3__["ToJsonService"] },
+                { type: _services_to_xlsx_service__WEBPACK_IMPORTED_MODULE_4__["ToXlsxService"] }
             ]; };
             tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
             ], ExportComponent.prototype, "cid", void 0);
+            tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
+            ], ExportComponent.prototype, "title", void 0);
             tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
             ], ExportComponent.prototype, "interval", void 0);
@@ -2752,6 +2750,46 @@
             ], ToJsonService);
             /***/ 
         }),
+        /***/ "./src/app/services/to-xlsx.service.ts": 
+        /*!*********************************************!*\
+          !*** ./src/app/services/to-xlsx.service.ts ***!
+          \*********************************************/
+        /*! exports provided: ToXlsxService */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ToXlsxService", function () { return ToXlsxService; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! file-saver */ "./node_modules/file-saver/dist/FileSaver.min.js");
+            /* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/ __webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_2__);
+            /* harmony import */ var xlsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! xlsx */ "./node_modules/xlsx/xlsx.js");
+            /* harmony import */ var xlsx__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/ __webpack_require__.n(xlsx__WEBPACK_IMPORTED_MODULE_3__);
+            var EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+            var EXCEL_EXTENSION = '.xlsx';
+            var ToXlsxService = /** @class */ (function () {
+                function ToXlsxService() {
+                }
+                ToXlsxService.prototype.exportAsExcelFile = function (json, excelFileName) {
+                    var worksheet = xlsx__WEBPACK_IMPORTED_MODULE_3__["utils"].json_to_sheet(json);
+                    var workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+                    var excelBuffer = xlsx__WEBPACK_IMPORTED_MODULE_3__["write"](workbook, { bookType: 'xlsx', type: 'array' });
+                    this.saveAsExcelFile(excelBuffer, excelFileName);
+                };
+                ToXlsxService.prototype.saveAsExcelFile = function (buffer, fileName) {
+                    var data = new Blob([buffer], { type: EXCEL_TYPE });
+                    var m = (parseInt(String(new Date().getMonth() + 1)));
+                    file_saver__WEBPACK_IMPORTED_MODULE_2__["saveAs"](data, fileName + '_export_' + new Date().getDay() + '.' + m + '.' + new Date().getFullYear() + EXCEL_EXTENSION);
+                };
+                return ToXlsxService;
+            }());
+            ToXlsxService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+                    providedIn: 'root'
+                })
+            ], ToXlsxService);
+            /***/ 
+        }),
         /***/ "./src/app/shared/material/material.module.ts": 
         /*!****************************************************!*\
           !*** ./src/app/shared/material/material.module.ts ***!
@@ -2958,6 +2996,7 @@
                     this.oid = null;
                     this.did = null;
                     this.isEdit = 'false';
+                    this.companyName = '';
                 }
                 MainComponent.prototype.ngOnInit = function () {
                     if (localStorage.getItem('login') === 'true' && localStorage.getItem('uid')) {
@@ -3020,10 +3059,14 @@
                     switch (e.init) {
                         case "company":
                             this.cid = null;
+                            this.oid = null;
+                            this.did = null;
+                            this.companyName = e.title;
                             setTimeout(function () { _this.cid = e.id; }, 10);
                             break;
                         case "office":
                             this.oid = null;
+                            this.did = null;
                             setTimeout(function () { _this.oid = e.id; _this.office = e.office; }, 10);
                             break;
                         case "device":
@@ -3242,6 +3285,33 @@
         /*!********************!*\
           !*** ws (ignored) ***!
           \********************/
+        /*! no static exports found */
+        /***/ (function (module, exports) {
+            /* (ignored) */
+            /***/ 
+        }),
+        /***/ 2: 
+        /*!********************!*\
+          !*** fs (ignored) ***!
+          \********************/
+        /*! no static exports found */
+        /***/ (function (module, exports) {
+            /* (ignored) */
+            /***/ 
+        }),
+        /***/ 3: 
+        /*!************************!*\
+          !*** crypto (ignored) ***!
+          \************************/
+        /*! no static exports found */
+        /***/ (function (module, exports) {
+            /* (ignored) */
+            /***/ 
+        }),
+        /***/ 4: 
+        /*!************************!*\
+          !*** stream (ignored) ***!
+          \************************/
         /*! no static exports found */
         /***/ (function (module, exports) {
             /* (ignored) */

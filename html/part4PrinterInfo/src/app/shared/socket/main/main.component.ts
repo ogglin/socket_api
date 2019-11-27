@@ -25,6 +25,7 @@ export class MainComponent implements OnInit {
   office: string;
   isEdit: string = 'false';
   interval: any;
+  companyName: string = '';
   constructor(private sIO: SocketService) { }
 
   ngOnInit() {
@@ -88,8 +89,8 @@ export class MainComponent implements OnInit {
 
   setId(e) {
     switch (e.init) {
-      case "company": this.cid = null; setTimeout(()=>{this.cid = e.id}, 10); break;
-      case "office": this.oid = null; setTimeout(()=>{this.oid = e.id; this.office = e.office}, 10); break;
+      case "company": this.cid = null; this.oid = null; this.did = null; this.companyName = e.title; setTimeout(()=>{this.cid = e.id}, 10); break;
+      case "office": this.oid = null; this.did = null; setTimeout(()=>{this.oid = e.id; this.office = e.office}, 10); break;
       case "device": this.did = null; setTimeout(()=>{this.did = e.id}, 10); break;
     }
   }

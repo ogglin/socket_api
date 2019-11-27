@@ -62,7 +62,8 @@ export class CompanyesComponent implements OnInit {
   toggle(id){
     const e = {
       init: 'company',
-      id: id
+      id: id,
+      title: this.companyControl.value
     };
     this.cid.emit(e);
     this.id = id;

@@ -5,7 +5,7 @@
       <app-companyes [edit]="isEdit" [uid]="uid" (cid)="setId($event)"></app-companyes>
     </div>
     <div class="float-left py-2">
-      <app-export *ngIf="cid" [cid]="cid" [interval]="interval"></app-export>
+      <app-export *ngIf="cid" [cid]="cid" [title]="companyName" [interval]="interval"></app-export>
     </div>
     <div class="float-left py-2 mx-2">
       <app-date-interval (data)="interval = $event"></app-date-interval>
@@ -24,12 +24,12 @@
         <app-offices [edit]="isEdit" [cid]="cid" (oid)="setId($event)"></app-offices>
       </div>
       <div class="container" *ngIf="oid">
-        <app-devices *ngIf="isEdit === 'false'" [cid]="cid" [oid]="oid" (did)="setId($event)"></app-devices>
+        <app-devices *ngIf="isEdit === 'false' && cid" [cid]="cid" [oid]="oid" (did)="setId($event)"></app-devices>
       </div>
     </mat-sidenav>
     <div class="container">
-      <app-info *ngIf="isEdit === 'false' && did" [did]="did" [office]="office" [cid]="cid" [interval]="interval" (date)="setId($event)"></app-info>
-      <app-device-manage *ngIf="isEdit === 'true' && oid" [edit]="isEdit" [cid]="cid" [oid]="oid"></app-device-manage>
+      <app-info *ngIf="isEdit === 'false' && did && cid" [did]="did" [office]="office" [cid]="cid" [interval]="interval" (date)="setId($event)"></app-info>
+      <app-device-manage *ngIf="isEdit === 'true' && oid  && cid" [edit]="isEdit" [cid]="cid" [oid]="oid"></app-device-manage>
     </div>
 
     <div class="console">

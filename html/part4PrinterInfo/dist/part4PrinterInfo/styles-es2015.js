@@ -331,7 +331,7 @@ if (content.locals) {
 
 /***/ }),
 
-/***/ 4:
+/***/ 7:
 /*!*******************************!*\
   !*** multi ./src/styles.scss ***!
   \*******************************/
@@ -343,5 +343,5 @@ module.exports = __webpack_require__(/*! C:\angular8\russ-group\socket_api\html\
 
 /***/ })
 
-},[[4,"runtime"]]]);
+},[[7,"runtime"]]]);
 //# sourceMappingURL=styles-es2015.js.map

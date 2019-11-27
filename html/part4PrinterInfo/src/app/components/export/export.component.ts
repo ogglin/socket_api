@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
 import {SocketService} from "../../shared/socket/socket.service";
 import {ToJsonService} from "../../services/to-json.service";
+import {ToXlsxService} from "../../services/to-xlsx.service";
 
 @Component({
   selector: 'app-export',
@@ -10,12 +11,13 @@ import {ToJsonService} from "../../services/to-json.service";
 export class ExportComponent implements OnInit {
 
   @Input() cid: number;
+  @Input() title: string;
   @Input() interval: object;
   csvData: any[] = [];
   ioConnection: any;
   changeLog: any[] = [];
 
-  constructor(private sIO: SocketService, private json: ToJsonService) {
+  constructor(private sIO: SocketService, private json: ToJsonService, private excel: ToXlsxService) {
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -53,7 +55,11 @@ export class ExportComponent implements OnInit {
       });
   }
 
-  downloadFile(data: any) {
+  exportAsXLSX():void {
+    this.excel.exportAsExcelFile(this.csvData, this.title);
+  }
+
+  /*downloadFile(data: any) {
     const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
     const header = Object.keys(data[0]);
     let csv = data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'));
@@ -69,6 +75,6 @@ export class ExportComponent implements OnInit {
     a.click();
     window.URL.revokeObjectURL(url);
     a.remove();
-  }
+  }*/
 
 }

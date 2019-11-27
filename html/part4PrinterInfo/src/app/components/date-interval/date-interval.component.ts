@@ -7,6 +7,10 @@ import {
 } from '@angular/material-moment-adapter';
 import {FormControl} from "@angular/forms";
 import * as moment from 'moment';
+
+let nData = new Date();
+nData.setDate(nData.getDate() - 60);
+
 @Component({
   selector: 'app-date-interval',
   templateUrl: './date-interval.component.html',
@@ -24,7 +28,7 @@ import * as moment from 'moment';
 export class DateIntervalComponent implements OnInit {
 
   @Output() data = new EventEmitter<any>();
-  start = new FormControl(moment([2019, 0, 1]));
+  start = new FormControl(moment([nData.getFullYear(), nData.getMonth(), nData.getDay()]));
   end = new FormControl((new Date()).toISOString());
   constructor(private _adapter: DateAdapter<any>) { }
 
