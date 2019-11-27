@@ -12,8 +12,9 @@
     </div>
 
     <div class="socket-init">
-      <button mat-raised-button class="mx-2" *ngIf="uid === 0 && isEdit==='false'" (click)="go('edit')">Правка</button>
-      <button mat-raised-button class="mx-2" *ngIf="uid === 0 && isEdit==='true'" (click)="go('view')">Просмотр</button>
+      <!--button mat-raised-button class="mx-2" *ngIf="uid === 0 && isEdit==='false'" (click)="go('edit')">Правка</button-->
+      <button mat-raised-button class="mx-2" *ngIf="isEdit==='false'" (click)="go('edit')">Правка</button>
+      <button mat-raised-button class="mx-2" *ngIf="isEdit==='true'" (click)="go('view')">Просмотр</button>
       <button mat-raised-button class="mx-2" (click)="logOut()">Выйти</button>
     </div>
   </header>

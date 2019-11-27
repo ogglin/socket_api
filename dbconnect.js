@@ -139,7 +139,7 @@ function getInfoCSV(cid, start, end, callback) {
         "d.article, d.placement, d.sn, d.url, i.printcycles, i.datetime " +
         "FROM rdata.devices d INNER JOIN rdata.info i ON i.device_id = d.id " +
         "INNER JOIN rdata.clients c ON d.client_id = c.id INNER JOIN rdata.company co ON co.id = c.company_id " +
-        "WHERE d.company_id = "+cid+" AND i.printcycles IS NOT NULL AND i.datetime > '"+start+"' " +
+        "WHERE d.company_id = "+cid+" AND i.datetime > '"+start+"' " +
         " AND i.datetime < '"+end+"') sub WHERE n = 1";
     (async () => {
         const client = await pool.connect();
