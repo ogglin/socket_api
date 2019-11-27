@@ -11,7 +11,7 @@
 </div>
 
 <div class="py-2">
-  <button mat-raised-button (click)="sendQuery()" color="primary">Получить данные по списку</button>
+  <button *ngIf="initDevices.length > 0" mat-raised-button (click)="sendQuery()" color="primary">Получить данные по списку</button>
 </div>
 <div class="urls-nav" *ngIf="initDevices.length > 0">
   <div *ngFor="let item of initDevices" (click)="toggle(item['id']);"

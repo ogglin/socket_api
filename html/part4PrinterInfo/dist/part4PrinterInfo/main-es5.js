@@ -365,7 +365,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"py-2\">\n  <mat-form-field>\n    <mat-select [(value)]=\"selected\">\n      <mat-option (click)=\"setPlace('')\" [value]=\"'Все'\">Все</mat-option>\n      <mat-option *ngFor=\"let place of places\" (click)=\"setPlace(place)\" [value]=\"place\">\n        {{place}}\n      </mat-option>\n    </mat-select>\n    <mat-hint>Выбрать местоположение</mat-hint>\n  </mat-form-field>\n</div>\n\n<div class=\"py-2\">\n  <button mat-raised-button (click)=\"sendQuery()\" color=\"primary\">Получить данные по списку</button>\n</div>\n<div class=\"urls-nav\" *ngIf=\"initDevices.length > 0\">\n  <div *ngFor=\"let item of initDevices\" (click)=\"toggle(item['id']);\"\n       [ngClass]=\"cdid === item['id']? 'active': ''\">\n    <h4 class=\"cursor-pointer\">{{item['productname']}} <br>\n      <small class=\"text-orange\"> {{item['placement']}} <br>\n        {{item['url']}} <br> {{item['sn']}}\n      </small>\n    </h4>\n  </div>\n</div>\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"py-2\">\n  <mat-form-field>\n    <mat-select [(value)]=\"selected\">\n      <mat-option (click)=\"setPlace('')\" [value]=\"'Все'\">Все</mat-option>\n      <mat-option *ngFor=\"let place of places\" (click)=\"setPlace(place)\" [value]=\"place\">\n        {{place}}\n      </mat-option>\n    </mat-select>\n    <mat-hint>Выбрать местоположение</mat-hint>\n  </mat-form-field>\n</div>\n\n<div class=\"py-2\">\n  <button *ngIf=\"initDevices.length > 0\" mat-raised-button (click)=\"sendQuery()\" color=\"primary\">Получить данные по списку</button>\n</div>\n<div class=\"urls-nav\" *ngIf=\"initDevices.length > 0\">\n  <div *ngFor=\"let item of initDevices\" (click)=\"toggle(item['id']);\"\n       [ngClass]=\"cdid === item['id']? 'active': ''\">\n    <h4 class=\"cursor-pointer\">{{item['productname']}} <br>\n      <small class=\"text-orange\"> {{item['placement']}} <br>\n        {{item['url']}} <br> {{item['sn']}}\n      </small>\n    </h4>\n  </div>\n</div>\n");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/export/export.component.html": 
@@ -1421,7 +1421,10 @@
                         JSON.stringify(this.initDevices) + '}';
                 };
                 DevicesComponent.prototype.sendQuery = function () {
-                    this.sIO.send_put(this.Query);
+                    if (this.Query !== undefined) {
+                        console.log(this.Query);
+                    }
+                    //this.sIO.send_put(this.Query);
                 };
                 return DevicesComponent;
             }());

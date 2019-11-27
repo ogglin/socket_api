@@ -75,7 +75,10 @@ export class DevicesComponent implements OnInit {
   }
 
   sendQuery(){
-    this.sIO.send_put(this.Query);
+    if(this.Query !== undefined) {
+      console.log(this.Query);
+    }
+    //this.sIO.send_put(this.Query);
   }
 
 }
