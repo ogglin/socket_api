@@ -1645,6 +1645,7 @@ let InfoComponent = class InfoComponent {
         this.ioConnection = this.sIO.onMessage()
             .subscribe(message => {
             this.json.toJSON(message).subscribe(data => {
+                console.log(data);
                 if (data['infos']) {
                     this.infos = data['infos']['content'];
                     if (this.infos.length > 0) {
@@ -1659,17 +1660,17 @@ let InfoComponent = class InfoComponent {
                         this.Query = '{"server_init": "getDevices", "company_id":' + this.cid + ',"devices": ' +
                             JSON.stringify(device) + '}';
                     }
-                    if (data['putInfo']) {
-                        this.result = data['putInfo']['status'];
-                        if (this.result === 'success') {
-                            this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
-                        }
+                }
+                if (data['putInfo']) {
+                    this.result = data['putInfo']['status'];
+                    if (this.result === 'success') {
+                        this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
                     }
-                    if (data['putDevice']) {
-                        this.result = data['putDevice']['status'];
-                        if (this.result === 'success') {
-                            this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
-                        }
+                }
+                if (data['putDevice']) {
+                    this.result = data['putDevice']['status']['result'];
+                    if (this.result === 'success') {
+                        this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
                     }
                 }
             });

@@ -1594,6 +1594,7 @@
                     this.ioConnection = this.sIO.onMessage()
                         .subscribe(function (message) {
                         _this.json.toJSON(message).subscribe(function (data) {
+                            console.log(data);
                             if (data['infos']) {
                                 _this.infos = data['infos']['content'];
                                 if (_this.infos.length > 0) {
@@ -1608,17 +1609,17 @@
                                     _this.Query = '{"server_init": "getDevices", "company_id":' + _this.cid + ',"devices": ' +
                                         JSON.stringify(device) + '}';
                                 }
-                                if (data['putInfo']) {
-                                    _this.result = data['putInfo']['status'];
-                                    if (_this.result === 'success') {
-                                        _this.sIO.getInfos(_this.did, _this.interval['start'], _this.interval['end']);
-                                    }
+                            }
+                            if (data['putInfo']) {
+                                _this.result = data['putInfo']['status'];
+                                if (_this.result === 'success') {
+                                    _this.sIO.getInfos(_this.did, _this.interval['start'], _this.interval['end']);
                                 }
-                                if (data['putDevice']) {
-                                    _this.result = data['putDevice']['status'];
-                                    if (_this.result === 'success') {
-                                        _this.sIO.getInfos(_this.did, _this.interval['start'], _this.interval['end']);
-                                    }
+                            }
+                            if (data['putDevice']) {
+                                _this.result = data['putDevice']['status']['result'];
+                                if (_this.result === 'success') {
+                                    _this.sIO.getInfos(_this.did, _this.interval['start'], _this.interval['end']);
                                 }
                             }
                         });

@@ -104,8 +104,6 @@ get.on('connection', function (socket) {
                     get.emit('get', '{"getCSV":' + JSON.stringify(res) + '}');
                 });
             }
-        } else {
-            socket.emit('get', data);
         }
     });
 });
@@ -192,7 +190,7 @@ put.on('connection', function (socket) {
                 });
             }
         } else {
-            get.emit('get', 'Check, request is not JSON: ' + data)
+            get.emit('get', 'Check, request is not JSON: ' + data);
         }
     });
 });

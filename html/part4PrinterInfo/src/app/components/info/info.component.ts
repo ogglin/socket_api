@@ -23,11 +23,13 @@ export class InfoComponent implements OnInit {
   Query: string;
   changeLog: any[] = [];
 
-  constructor(private sIO: SocketService, private json: ToJsonService) {  }
+  constructor(private sIO: SocketService, private json: ToJsonService) {
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     for (let propName in changes) {
       let chng = changes[propName];
-      let cur  = JSON.stringify(chng.currentValue);
+      let cur = JSON.stringify(chng.currentValue);
       let prev = JSON.stringify(chng.previousValue);
       this.changeLog.push(`${propName}: currentValue = ${cur}, previousValue = ${prev}`)
     }
@@ -51,41 +53,44 @@ export class InfoComponent implements OnInit {
                 serialNumber: this.info['sn'],
                 device_id: this.info['device_id']
               }];
-              this.Query = '{"server_init": "getDevices", "company_id":' + this.cid+',"devices": '+
-                JSON.stringify(device) +'}';
+              this.Query = '{"server_init": "getDevices", "company_id":' + this.cid + ',"devices": ' +
+                JSON.stringify(device) + '}';
             }
-            if(data['putInfo']) {
-              this.result = data['putInfo']['status'];
-              if(this.result === 'success') {
-                this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
-              }
+          }
+          if (data['putInfo']) {
+            this.result = data['putInfo']['status'];
+            if (this.result === 'success') {
+              this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
             }
-            if(data['putDevice']) {
-              this.result = data['putDevice']['status'];
-              if(this.result === 'success') {
-                this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
-              }
+          }
+          if (data['putDevice']) {
+            this.result = data['putDevice']['status']['result'];
+            if (this.result === 'success') {
+              this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
             }
           }
         });
       });
   }
-  toggle(id){
+
+  toggle(id) {
     const e = {
       init: 'info',
       id: id
     };
     this.date.emit(e);
   }
-  setDate(d){
+
+  setDate(d) {
     this.data = d;
-    this.infos.forEach(inf=>{
+    this.infos.forEach(inf => {
       if (inf['datetime'] === d) {
         this.info = inf;
       }
     });
   }
-  sendQuery(){
+
+  sendQuery() {
     this.sIO.send_put(this.Query);
   }
 }

@@ -98,10 +98,12 @@ function getInfo(devid, start, end, callback) {
         qgi += " AND i.device_id = " + devid;
     }
     qgi += " ORDER BY datetime DESC";
+    console.log(qgi);
     (async () => {
         const client = await pool.connect();
         try {
             const result = await client.query(qgi);
+            console.log({"content": result.rows});
             callback ({"content": result.rows});
             return result.rows;
         } finally {
