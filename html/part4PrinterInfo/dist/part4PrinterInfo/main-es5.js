@@ -3170,10 +3170,10 @@
             /* harmony import */ var rxjs_Observable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/Observable */ "../../node_modules/rxjs-compat/_esm2015/Observable.js");
             /* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
             /* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/ __webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_3__);
-            /*const SERVER_URL_GET = 'https://localhost:8443/get';
-            const SERVER_URL_PUT = 'https://localhost:8443/put';*/
-            var SERVER_URL_GET = 'https://socket.api.part4.info:8443/get';
-            var SERVER_URL_PUT = 'https://socket.api.part4.info:8443/put';
+            var SERVER_URL_GET = 'https://localhost:8443/get';
+            var SERVER_URL_PUT = 'https://localhost:8443/put';
+            /*const SERVER_URL_GET = 'https://socket.api.part4.info:8443/get';
+            const SERVER_URL_PUT = 'https://socket.api.part4.info:8443/put';*/
             var SocketService = /** @class */ (function () {
                 function SocketService() {
                 }

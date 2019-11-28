@@ -10,14 +10,14 @@ var app = express();
 //var http = require('http').createServer(app);
 //var WebSocket  = require('ws');
 
-/*const ssl = {
+const ssl = {
     key: fs.readFileSync('cert/localhost-key.pem'),
     cert: fs.readFileSync('cert/localhost.pem')
-};*/
-const ssl = {
+};
+/*const ssl = {
     cert: fs.readFileSync('cert/cert1.pem'),
     key: fs.readFileSync('cert/privkey1.pem')
-};
+};*/
 const serverPort = 8443;
 
 app.use(function(req, res, next) {
@@ -71,7 +71,7 @@ io.set('origins', '*:*');
 const get = io.of('/get');
 get.on('connection', function (socket) {
     socket.on('get', function (data) {
-        console.log(data);
+        console.log('get: ' + data);
         var isJson = IsJsonString(data);
         if (isJson) {
             var obj = JSON.parse(data);
@@ -111,14 +111,12 @@ get.on('connection', function (socket) {
 const put = io.of('/put');
 put.on('connection', function (socket) {
     socket.on('put', function (data) {
-        console.log(data);
+        console.log('put: ' + data);
         var isJson = IsJsonString(data);
         if (isJson) {
             var obj = JSON.parse(data);
             if (obj['server_init'] === 'getDevices') {
-                //put.emit('put', data);
-                get.emit('get', data);
-                socket.emit('message', data);
+                put.emit('get', data);
             }
             if (obj['client_init'] === 'putDevices') {
                 db.addInfoO(
@@ -197,85 +195,6 @@ put.on('connection', function (socket) {
     });
 });
 
-io.on('connection', function (socket) {
-    clients[socket.id] = true;
-    console.log(clients);
-    socket.on('message', function (data) {
-        console.log(data);
-        var isJson = IsJsonString(data);
-        if (isJson) {
-            var obj = JSON.parse(data);
-            if (obj['server_init'] === 'getDevices' && !obj['status']) {
-                socket.broadcast.emit('message', '{"status":' + data + '}');
-                get.emit('a message', '{"status":' + data + '}');
-            }
-            //{"client_init": "putDevices", "company_id":26, "device_id":8, "cartridge":[{"black":"99"}],"serialNumber":"VCG7428977","scanCycles":29974,
-            // "url":"http://192.168.1.205","article":"0","printCycles":87268,"productName":"Kyocera ECOSYS M2540dn","status":"Режим ожидания...."}
-            if (obj['client_init'] === 'putDevices') {
-                db.addInfoO(
-                    obj['company_id'],
-                    obj['device_id'],
-                    obj['cartridge'],
-                    obj['serialNumber'],
-                    obj['scanCycles'],
-                    obj['url'],
-                    obj['article'],
-                    obj['printCycles'],
-                    obj['productName'],
-                    obj['status'],
-                    obj['KIT'],
-                    obj['maintenanceKitCount'],
-                    obj['adfCycles'],
-                    obj['log']
-                ).subscribe(res => {
-                    socket.emit('message', JSON.stringify(res));
-                    get.emit('get', '{"putInfo":' + JSON.stringify(res) + '}');
-                });
-            }
-            //{"init_client_error": 1, "device_id": 1, "error": "Нет связи с устройством, по адресу: https://192.168.1.233"}
-            if (obj['client_init_error']) {
-                socket.emit('message', '{"status": ' + obj['error'] + '}');
-                db.addErrorO(
-                    obj['init_client_error'],
-                    obj['device_id'],
-                    obj['error']
-                ).subscribe(res => {
-                    socket.emit('message', JSON.stringify(res));
-                    get.emit('get', '{"putError":' + JSON.stringify(res) + '}');
-                });
-            }
-            if (obj['status']) {
-                console.log(data);
-            }
-            //{"server_init": "getCustomers"}
-            if (obj['server_init'] === 'getCustomers' && !obj['status']) {
-                db.getCompanyO(req.query['uid']).subscribe(res => {
-                    socket.emit('message', JSON.stringify(res));
-                });
-            }
-            //{"server_init": "getClient", "cuid": 1}
-            if (obj['server_init'] === 'getClient' && !obj['status']) {
-                if (obj['cuid'] !== undefined) {
-                    db.addClientO(obj['cuid']).subscribe(res => {
-                        socket.emit('message', JSON.stringify(res));
-                    });
-                }
-            }
-            //{"server_init": "getAddress"}
-            if (obj['server_init'] === 'getAddress' && !obj['status']) {
-                db.getAddressO().subscribe(res => {
-                    socket.emit('message', JSON.stringify(res));
-                });
-            }
-            if (obj['test']) {
-                console.log(obj);
-                socket.emit('message', obj['test']);
-            }
-        } else {
-            socket.emit('message', data);
-        }
-    });
-});
 
 require('./routes')(app);
 
