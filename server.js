@@ -10,14 +10,14 @@ var app = express();
 //var http = require('http').createServer(app);
 //var WebSocket  = require('ws');
 
-const ssl = {
+/*const ssl = {
     key: fs.readFileSync('cert/localhost-key.pem'),
     cert: fs.readFileSync('cert/localhost.pem')
-};
-/*const ssl = {
+};*/
+const ssl = {
     cert: fs.readFileSync('cert/cert1.pem'),
     key: fs.readFileSync('cert/privkey1.pem')
-};*/
+};
 const serverPort = 8443;
 
 app.use(function(req, res, next) {
