@@ -3213,6 +3213,10 @@ let MainComponent = class MainComponent {
             .subscribe(message => {
             this.messages.push(message);
         });
+        this.sIO.onPutMessage().subscribe(message => {
+            console.log(message);
+            this.messages.push(message);
+        });
         this.sIO.onEvent(_model_event__WEBPACK_IMPORTED_MODULE_3__["Event"].CONNECT)
             .subscribe((e) => {
             console.log(e, 'connected');
@@ -3373,10 +3377,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const SERVER_URL_GET = 'https://localhost:8443/get';
-const SERVER_URL_PUT = 'https://localhost:8443/put';
-/*const SERVER_URL_GET = 'https://socket.api.part4.info:8443/get';
-const SERVER_URL_PUT = 'https://socket.api.part4.info:8443/put';*/
+/*const SERVER_URL_GET = 'https://localhost:8443/get';
+const SERVER_URL_PUT = 'https://localhost:8443/put';*/
+const SERVER_URL_GET = 'https://socket.api.part4.info:8443/get';
+const SERVER_URL_PUT = 'https://socket.api.part4.info:8443/put';
 let SocketService = class SocketService {
     constructor() { }
     initSocket() {
@@ -3395,6 +3399,11 @@ let SocketService = class SocketService {
     onMessage() {
         return new rxjs_Observable__WEBPACK_IMPORTED_MODULE_2__["Observable"](observer => {
             this._get.on('get', (data) => observer.next(data));
+        });
+    }
+    onPutMessage() {
+        return new rxjs_Observable__WEBPACK_IMPORTED_MODULE_2__["Observable"](observer => {
+            this._put.on('get', (data) => observer.next(data));
         });
     }
     onEvent(event) {
