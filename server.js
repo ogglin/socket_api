@@ -76,32 +76,32 @@ get.on('connection', function (socket) {
             var obj = JSON.parse(data);
             if (obj['auth']) {
                 db.AuthO(obj['auth']['login'], obj['auth']['pass']).subscribe(res => {
-                    get.emit('get', '{"auth":' + JSON.stringify(res) + '}');
+                    socket.emit('get', '{"auth":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['getCompany'] || obj['getCompany'] === 0) {
                 db.getCompanyO(obj['getCompany']).subscribe(res => {
-                    get.emit('get', '{"companies":' + JSON.stringify(res) + '}');
+                    socket.emit('get', '{"companies":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['getOffice'] || obj['getOffice'] === 0) {
                 db.getClientsO(obj['getOffice']).subscribe(res => {
-                    get.emit('get', '{"offices":' + JSON.stringify(res) + '}');
+                    socket.emit('get', '{"offices":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['getDevices'] || obj['getDevices'] === 0) {
                 db.getDevicesO(obj['cid'], obj['oid'], obj['getDevices']).subscribe(res => {
-                    get.emit('get', '{"devices":' + JSON.stringify(res) + '}');
+                    socket.emit('get', '{"devices":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['getinfo'] || obj['getinfo'] === 0) {
                 db.getInfoO(obj['getinfo'], obj['start'], obj['end']).subscribe(res => {
-                    get.emit('get', '{"infos":' + JSON.stringify(res) + '}');
+                    socket.emit('get', '{"infos":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['getCSV'] || obj['getCSV'] === 0) {
                 db.getInfoCSVO(obj['getCSV'], obj['start'], obj['end']).subscribe(res => {
-                    get.emit('get', '{"getCSV":' + JSON.stringify(res) + '}');
+                    socket.emit('get', '{"getCSV":' + JSON.stringify(res) + '}');
                 });
             }
         }
@@ -115,7 +115,7 @@ put.on('connection', function (socket) {
             var obj = JSON.parse(data);
             if (obj['server_init'] === 'getDevices') {
                 //put.emit('put', data);
-                put.emit('get', data);
+                socket.emit('get', data);
                 socket.emit('message', data);
             }
             if (obj['client_init'] === 'putDevices') {
@@ -137,27 +137,27 @@ put.on('connection', function (socket) {
                 ).subscribe(res => {
                     get.emit('get', JSON.stringify(res));
                     get.emit('get', '{"putDevice":' + JSON.stringify(res) + '}');
-                    put.emit('get', JSON.stringify(res));
+                    socket.emit('get', JSON.stringify(res));
                 });
             }
             if (obj['client_init'] === 'addCompany') {
                 db.addCompanyO(obj['title'], obj['description']).subscribe(res => {
-                    get.emit('get', '{"putCompany":' + JSON.stringify(res) + '}');
+                    socket.emit('get', '{"putCompany":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['client_init'] === 'editCompany') {
                 db.editCompanyO(obj['id'], obj['title']).subscribe(res => {
-                    get.emit('get', '{"putCompany":' + JSON.stringify(res) + '}');
+                    socket.emit('get', '{"putCompany":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['client_init'] === 'addOffice') {
                 db.addClientO(obj['name'], obj['cid']).subscribe(res => {
-                    get.emit('get', '{"putOffice":' + JSON.stringify(res) + '}');
+                    socket.emit('get', '{"putOffice":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['client_init'] === 'editOffice') {
                 db.editClientO(obj['id'], obj['name']).subscribe(res => {
-                    get.emit('get', '{"putOffice":' + JSON.stringify(res) + '}');
+                    socket.emit('get', '{"putOffice":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['client_init'] === 'addDevice') {
@@ -171,7 +171,7 @@ put.on('connection', function (socket) {
                     obj['serialNumber'],
                     obj['enable']
                 ).subscribe(res => {
-                    get.emit('get', '{"putDevice":' + JSON.stringify(res) + '}');
+                    socket.emit('get', '{"putDevice":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['client_init'] === 'editDevice') {
@@ -186,11 +186,11 @@ put.on('connection', function (socket) {
                     obj['serialNumber'],
                     obj['enable']
                 ).subscribe(res => {
-                    get.emit('get', '{"putDevice":' + JSON.stringify(res) + '}');
+                    socket.emit('get', '{"putDevice":' + JSON.stringify(res) + '}');
                 });
             }
         } else {
-            get.emit('get', 'Check, request is not JSON: ' + data);
+            socket.emit('get', 'Check, request is not JSON: ' + data);
         }
     });
 });
