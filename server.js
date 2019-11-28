@@ -191,7 +191,7 @@ put.on('connection', function (socket) {
                 });
             }
         } else {
-            socket.emit('get', '{"status": "success", "result":"' + data + '"}');
+            socket.emit('get', '{"status": {"result":"' + data + '"}}');
         }
     });
 });
