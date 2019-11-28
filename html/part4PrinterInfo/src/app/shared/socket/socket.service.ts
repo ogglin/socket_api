@@ -44,6 +44,12 @@ export class SocketService {
     });
   }
 
+  public onPutMessage(): Observable<any> {
+    return new Observable<any>(observer => {
+      this._put.on('get', (data: any) => observer.next(data));
+    });
+  }
+
   public onEvent(event: Event): Observable<any> {
     return new Observable<any>(observer => {
       this._put.on(event, () => observer.next('_put'));

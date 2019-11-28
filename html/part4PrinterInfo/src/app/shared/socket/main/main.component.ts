@@ -48,6 +48,11 @@ export class MainComponent implements OnInit {
         this.messages.push(message);
       });
 
+    this.sIO.onPutMessage().subscribe(message=>{
+      console.log(message);
+      this.messages.push(message);
+    });
+
     this.sIO.onEvent(Event.CONNECT)
       .subscribe((e) => {
         console.log(e, 'connected');
