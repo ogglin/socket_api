@@ -191,7 +191,7 @@ put.on('connection', function (socket) {
                 });
             }
         } else {
-            socket.emit('get', '{"status": {"result":"' + data + '"}}');
+            socket.emit('get', '{"status": {"result":"' + data + '","message":"Request is not JSON"}}');
         }
     });
 });
