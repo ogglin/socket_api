@@ -191,7 +191,7 @@ put.on('connection', function (socket) {
                 });
             }
         } else {
-            socket.emit('get', 'Check, request is not JSON: ' + data);
+            socket.emit('get', '"status":"Check, request is not JSON", "request: "' + data + '"');
         }
     });
 });
