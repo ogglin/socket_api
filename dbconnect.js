@@ -103,7 +103,6 @@ function getInfo(devid, start, end, callback) {
         const client = await pool.connect();
         try {
             const result = await client.query(qgi);
-            console.log({"content": result.rows});
             callback ({"content": result.rows});
             return result.rows;
         } finally {
