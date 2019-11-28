@@ -28,11 +28,15 @@ nData.setDate(nData.getDate() - 60);
 export class DateIntervalComponent implements OnInit {
 
   @Output() data = new EventEmitter<any>();
-  start = new FormControl(moment([nData.getFullYear(), nData.getMonth(), nData.getDay()]));
-  end = new FormControl((new Date()).toISOString());
+  startDate = new Date();
+  start = new FormControl('');
+  end = new FormControl(new Date());
   constructor(private _adapter: DateAdapter<any>) { }
 
   ngOnInit() {
+    this.startDate.setMonth(this.startDate.getMonth() - 2);
+    this.start.setValue(this.startDate);
+    console.log(this.start.value);
     this.setDate();
   }
   setDate(){
@@ -45,7 +49,7 @@ export class DateIntervalComponent implements OnInit {
     } else {
       body = {
         start: this.start.value.toISOString(),
-        end: (new Date()).toISOString()
+        end: this.end.value.toISOString()
       };
     }
     this.data.emit(body);

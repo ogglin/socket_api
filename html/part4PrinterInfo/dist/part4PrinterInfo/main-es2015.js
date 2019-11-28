@@ -1143,9 +1143,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_material_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/material/core */ "./node_modules/@angular/material/esm2015/core.js");
 /* harmony import */ var _angular_material_moment_adapter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material-moment-adapter */ "./node_modules/@angular/material-moment-adapter/esm2015/material-moment-adapter.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_5__);
-
 
 
 
@@ -1157,10 +1154,14 @@ let DateIntervalComponent = class DateIntervalComponent {
     constructor(_adapter) {
         this._adapter = _adapter;
         this.data = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
-        this.start = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](moment__WEBPACK_IMPORTED_MODULE_5__([nData.getFullYear(), nData.getMonth(), nData.getDay()]));
-        this.end = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"]((new Date()).toISOString());
+        this.startDate = new Date();
+        this.start = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"]('');
+        this.end = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](new Date());
     }
     ngOnInit() {
+        this.startDate.setMonth(this.startDate.getMonth() - 2);
+        this.start.setValue(this.startDate);
+        console.log(this.start.value);
         this.setDate();
     }
     setDate() {
@@ -1174,7 +1175,7 @@ let DateIntervalComponent = class DateIntervalComponent {
         else {
             body = {
                 start: this.start.value.toISOString(),
-                end: (new Date()).toISOString()
+                end: this.end.value.toISOString()
             };
         }
         this.data.emit(body);
