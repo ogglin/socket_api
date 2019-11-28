@@ -39,6 +39,7 @@ export class InfoComponent implements OnInit {
     this.ioConnection = this.sIO.onMessage()
       .subscribe(message => {
         this.json.toJSON(message).subscribe(data => {
+          console.log(data);
           if (data['infos']) {
             this.infos = data['infos']['content'];
             if (this.infos.length > 0) {
