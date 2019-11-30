@@ -61,7 +61,7 @@ export class DeviceManageComponent implements OnInit {
 
   setPlace(e) {
     if(e !== '') {
-      this.initDevices = this.devices.filter(dev=>dev['placement'] === e.toLowerCase());
+      this.initDevices = this.devices.filter(dev=>dev['placement'].toLowerCase() === e.toLowerCase());
     } else {
       this.initDevices = this.devices
     }

@@ -1261,7 +1261,7 @@
                 };
                 DeviceManageComponent.prototype.setPlace = function (e) {
                     if (e !== '') {
-                        this.initDevices = this.devices.filter(function (dev) { return dev['placement'] === e.toLowerCase(); });
+                        this.initDevices = this.devices.filter(function (dev) { return dev['placement'].toLowerCase() === e.toLowerCase(); });
                     }
                     else {
                         this.initDevices = this.devices;
@@ -1417,12 +1417,14 @@
                     this.did.emit(e);
                 };
                 DevicesComponent.prototype.setPlace = function (e) {
+                    console.log(this.devices);
                     if (e !== '') {
-                        this.initDevices = this.devices.filter(function (dev) { return dev['placement'] === e.toLowerCase(); });
+                        this.initDevices = this.devices.filter(function (dev) { return dev['placement'].toLowerCase() === e.toLowerCase(); });
                     }
                     else {
                         this.initDevices = this.devices;
                     }
+                    console.log(this.initDevices);
                     this.Query = '{"server_init": "getDevices", "company_id":' + this.cid + ',"devices": ' +
                         JSON.stringify(this.initDevices) + '}';
                 };

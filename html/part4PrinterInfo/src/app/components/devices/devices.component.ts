@@ -65,11 +65,13 @@ export class DevicesComponent implements OnInit {
   }
 
   setPlace(e) {
+    console.log(this.devices);
     if(e !== '') {
-      this.initDevices = this.devices.filter(dev=>dev['placement'] === e.toLowerCase());
+      this.initDevices = this.devices.filter(dev=>dev['placement'].toLowerCase() === e.toLowerCase());
     } else {
       this.initDevices = this.devices
     }
+    console.log(this.initDevices);
     this.Query = '{"server_init": "getDevices", "company_id":' + this.cid+',"devices": '+
       JSON.stringify(this.initDevices) +'}';
   }
