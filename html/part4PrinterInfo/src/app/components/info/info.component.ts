@@ -33,6 +33,7 @@ export class InfoComponent implements OnInit {
       let prev = JSON.stringify(chng.previousValue);
       this.changeLog.push(`${propName}: currentValue = ${cur}, previousValue = ${prev}`)
     }
+    console.log(this.did);
     this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
   }
 
@@ -40,8 +41,8 @@ export class InfoComponent implements OnInit {
     this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
     this.ioConnection = this.sIO.onMessage()
       .subscribe(message => {
+        console.log(message);
         this.json.toJSON(message).subscribe(data => {
-          console.log(data);
           if (data['infos']) {
             this.infos = data['infos']['content'];
             if (this.infos.length > 0) {
