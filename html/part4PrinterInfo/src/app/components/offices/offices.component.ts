@@ -49,6 +49,7 @@ export class OfficesComponent implements OnInit {
             );
           }
           if(data['putOffice']) {
+            console.log(data['putOffice']);
             this.result = data['putOffice']['status'];
             if(this.result === 'success') {
               this.sIO.getOffice(this.cid);

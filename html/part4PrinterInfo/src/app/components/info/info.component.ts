@@ -21,7 +21,7 @@ export class InfoComponent implements OnInit {
   result: any;
   Query: string;
   changeLog: any[] = [];
-  btn_disable: true;
+  btn_disable: boolean = false;
 
   constructor(private sIO: SocketService, private json: ToJsonService) {
   }
@@ -96,6 +96,8 @@ export class InfoComponent implements OnInit {
   }
 
   sendQuery() {
+    this.btn_disable = true;
     this.sIO.send_put(this.Query);
+    setTimeout(()=>(this.btn_disable = false), 2000);
   }
 }

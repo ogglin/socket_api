@@ -143,22 +143,22 @@ put.on('connection', function (socket) {
             }
             if (obj['client_init'] === 'addCompany') {
                 db.addCompanyO(obj['title'], obj['description']).subscribe(res => {
-                    socket.emit('get', '{"putCompany":' + JSON.stringify(res) + '}');
+                    get.emit('get', '{"putCompany":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['client_init'] === 'editCompany') {
                 db.editCompanyO(obj['id'], obj['title']).subscribe(res => {
-                    socket.emit('get', '{"putCompany":' + JSON.stringify(res) + '}');
+                    get.emit('get', '{"putCompany":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['client_init'] === 'addOffice') {
                 db.addClientO(obj['name'], obj['cid']).subscribe(res => {
-                    socket.emit('get', '{"putOffice":' + JSON.stringify(res) + '}');
+                    get.emit('get', '{"putOffice":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['client_init'] === 'editOffice') {
                 db.editClientO(obj['id'], obj['name']).subscribe(res => {
-                    socket.emit('get', '{"putOffice":' + JSON.stringify(res) + '}');
+                    get.emit('get', '{"putOffice":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['client_init'] === 'addDevice') {
@@ -172,7 +172,7 @@ put.on('connection', function (socket) {
                     obj['serialNumber'],
                     obj['enable']
                 ).subscribe(res => {
-                    socket.emit('get', '{"putDevice":' + JSON.stringify(res) + '}');
+                    get.emit('get', '{"putDevice":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['client_init'] === 'editDevice') {
@@ -187,7 +187,7 @@ put.on('connection', function (socket) {
                     obj['serialNumber'],
                     obj['enable']
                 ).subscribe(res => {
-                    socket.emit('get', '{"putDevice":' + JSON.stringify(res) + '}');
+                    get.emit('get', '{"putDevice":' + JSON.stringify(res) + '}');
                 });
             }
         } else {
