@@ -20,16 +20,20 @@
   </header>
   <mat-sidenav-container>
     <mat-sidenav opened mode="side" class="p-2 sidenav">
-      <div class="container" *ngIf="cid">
-        <app-offices [edit]="isEdit" [cid]="cid" (oid)="setId($event)"></app-offices>
-      </div>
-      <div class="container" *ngIf="oid">
-        <app-devices *ngIf="isEdit === 'false' && cid" [cid]="cid" [oid]="oid" (did)="setId($event)"></app-devices>
-      </div>
+      <ng-scrollbar appearance="standart">
+        <div class="container" *ngIf="cid">
+          <app-offices [edit]="isEdit" [cid]="cid" (oid)="setId($event)"></app-offices>
+        </div>
+        <div class="container" *ngIf="oid">
+          <app-devices *ngIf="isEdit === 'false' && cid" [cid]="cid" [oid]="oid" (did)="setId($event)"></app-devices>
+        </div>
+      </ng-scrollbar>
     </mat-sidenav>
     <div class="container">
-      <app-info *ngIf="isEdit === 'false'" [did]="did" [office]="office" [cid]="cid" [interval]="interval" (date)="setId($event)"></app-info>
-      <app-device-manage *ngIf="isEdit === 'true' && oid  && cid" [edit]="isEdit" [cid]="cid" [oid]="oid"></app-device-manage>
+      <app-info *ngIf="isEdit === 'false'" [did]="did" [office]="office" [cid]="cid" [interval]="interval"
+                (date)="setId($event)"></app-info>
+      <app-device-manage *ngIf="isEdit === 'true' && oid  && cid" [edit]="isEdit" [cid]="cid"
+                         [oid]="oid"></app-device-manage>
     </div>
 
     <div class="console">
