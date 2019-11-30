@@ -17,9 +17,9 @@
   <div *ngFor="let item of initDevices" (click)="toggle(item['id']);"
        [ngClass]="cdid === item['id']? 'active': ''">
     <h4 class="cursor-pointer">{{item['productname']}} <br>
-      <small class="text-orange"> {{item['placement']}} <br>
-        {{item['url']}} <br> {{item['sn']}}
-      </small>
+      <small class="text_dark-blue">{{item['placement']}}</small> <br>
+      <small class="text_light-grey">{{item['url']}}</small><br>
+      <small class="text_white">{{item['sn']}}</small>
     </h4>
   </div>
 </div>

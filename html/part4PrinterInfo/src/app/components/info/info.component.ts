@@ -98,6 +98,6 @@ export class InfoComponent implements OnInit {
   sendQuery() {
     this.btn_disable = true;
     this.sIO.send_put(this.Query);
-    setTimeout(()=>(this.btn_disable = false), 2000);
+    setTimeout(()=>(this.btn_disable = false), 120000);
   }
 }

@@ -3,7 +3,7 @@
   <ng-scrollbar appearance="standart">
     <mat-list-item *ngFor="let info of infos, let i = index" role="listitem"
                    (click)="setDate(info['datetime']);"
-                   [ngClass]="data===info['datetime'] ? 'cursor-pointer border active': 'cursor-pointer border'">
+                   [ngClass]="data===info['datetime'] ? 'cursor-pointer active': 'cursor-pointer'">
       {{info['datetime'] | date:'yyyy-MM-dd HH:mm:ss'}}
     </mat-list-item>
   </ng-scrollbar>
@@ -14,16 +14,15 @@
       <button mat-raised-button color="primary" [disabled]="btn_disable" (click)="sendQuery()">Получить данные
         устройства
       </button>
-      <mat-progress-bar mode="indeterminate" *ngIf="btn_disable === false"></mat-progress-bar>
     </div>
     <h3>Состояние устройства</h3>
     <mat-card class="mb-2">
-      <p><strong>{{office}} - {{info['placement']}} </strong> <small> {{data | date:'yyyy-MM-dd HH:mm:ss'}}</small></p>
-      <h2>{{info['productname']}}
-      </h2>
-      <p>Статус: {{info['status']}} <span *ngIf="info['error']" class="error-text">{{info['error']}}</span></p>
-      <p>Серийный номер: {{info['sn']}}</p>
-      <p>Сетевой адрес: {{info['url']}}</p>
+      <p class="text_dark-blue"><strong>{{office}} - {{info['placement']}} </strong> <small> {{data | date:'yyyy-MM-dd HH:mm:ss'}}</small></p>
+      <h2>{{info['productname']}}</h2>
+      <p><span class="text_light-grey">Статус: </span> <strong><span class="text-orange">{{info['status']}}</span>
+        <span *ngIf="info['error']" class="error-text">{{info['error']}}</span></strong></p>
+      <p><span class="text_light-grey">Серийный номер: </span> <strong>{{info['sn']}}</strong></p>
+      <p><span class="text_light-grey">Сетевой адрес: </span> <strong>{{info['url']}}</strong></p>
     </mat-card>
     <ng-container *ngIf="info['printcycles']">
       <h3>Показания счетчиков</h3>
@@ -34,18 +33,21 @@
                     matTooltipClass="tooltip-info"
           >help_outline
           </mat-icon>
-          Цикл механизма: {{info['printcycles']}}</p>
+          <span class="text_light-grey">Цикл механизма: </span>
+          <strong>{{info['printcycles']}}</strong></p>
         <p *ngIf="info['kit']">
           <mat-icon class="tooltip-info_icon" matTooltip="Счетчик сервисного комплекта"
                     matTooltipPosition="above"
                     matTooltipClass="tooltip-info"
           >help_outline
           </mat-icon>
-          Счетчик технического обслуживания:
+          <span class="text_light-grey">Счетчик технического обслуживания: </span>
           <ng-container *ngIf="info['kit']">
-            <ng-container *ngIf="info['kit'][0]['adfCycles']">{{info['kit'][0]['adfCycles']}}</ng-container>
-            <ng-container
-              *ngIf="info['kit'][0]['maintenanceKitCount']">{{info['kit'][0]['maintenanceKitCount']}}</ng-container>
+            <strong>
+              <ng-container *ngIf="info['kit'][0]['adfCycles']">{{info['kit'][0]['adfCycles']}}</ng-container>
+              <ng-container
+                *ngIf="info['kit'][0]['maintenanceKitCount']">{{info['kit'][0]['maintenanceKitCount']}}</ng-container>
+            </strong>
           </ng-container>
         </p>
         <p *ngIf="info['scancycles']">
@@ -54,7 +56,8 @@
                     matTooltipClass="tooltip-info"
           >help_outline
           </mat-icon>
-          Цикл сканирования: {{info['scancycles']}}</p>
+          <span class="text_light-grey">Цикл сканирования: </span>
+          <strong>{{info['scancycles']}}</strong></p>
       </mat-card>
     </ng-container>
     <ng-container *ngIf="info['cartridge']">

@@ -24,14 +24,14 @@ body {
 }
 
 header {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: #282828;
   height: 100px;
   color: aliceblue;
   overflow: hidden;
 }
 
 mat-sidenav-container {
-  height: calc(100vh - 90px);
+  height: calc(100vh - 100px);
 }
 
 .full-width {
@@ -102,6 +102,9 @@ mat-sidenav-container {
   overflow: hidden;
   padding-right: 5px;
   border-right: 2px solid #4c4c4c;
+  & h4{
+    margin: 8px 0 20px 0;
+  }
 }
 
 .dateList mat-list-item {
@@ -112,18 +115,24 @@ mat-sidenav-container {
 }
 
 .device-info {
-  padding-left: 190px;
+  padding-left: 175px;
   padding-top: 25px;
   max-width: 100%;
   h3 {
     color: #fff;
-    background: #171717;
+    background: #282828;
     padding: 10px;
     margin: 10px 0 0 0;
     border-radius: 8px 8px 0 0;
   }
+  h2 {
+    color: #ffffff;
+    font-weight: bold;
+  }
 }
-
+mat-card {
+  background: #30333f !important;
+}
 .socket-init {
   position: absolute;
   top: 30px;
@@ -137,24 +146,22 @@ mat-sidenav-container {
 .text-orange {
   color: #ffcc00;
 }
-
-mat-list-item.active {
-  background-color: #ff980020;
+mat-list-item {
+  background-color: #30333f;
 }
-
-mat-list-item:hover {
-  background-color: #ff980020;
+.urls-nav > div.active, mat-list-item.active {
+  background-color: #3D2E30;
 }
-
+.urls-nav > div:hover, mat-list-item:hover {
+  background-color: #50363f;
+}
+mat-list-item.active, mat-list-item:hover, .urls-nav > div.active, .urls-nav > div:hover {
+  box-shadow: 0px 1px 0px 1px #333;
+}
 .urls-nav > div {
-  border: 1px solid #cacaca;
-  border-radius: 6px;
   padding: 5px;
   margin-bottom: 6px;
-}
-
-.urls-nav > div.active, .urls-nav > div:hover {
-  background-color: #ff980020;
+  background: #30333f;
 }
 
 .urls-nav > div h4 {
@@ -163,6 +170,10 @@ mat-list-item:hover {
 
 .mat-progress-bar {
   width: 300px !important;
+}
+
+.mat-sidenav-content {
+  background-color: #4c4c4c !important;
 }
 
 .console {
@@ -177,10 +188,10 @@ mat-list-item:hover {
   max-width: 600px;
 }
 .tooltip-info {
-  background: #e27a0b;
+  background: #8dadbe;
   color: #000000;
   &_icon{
-    color: #e27a0b;
+    color: #8dadbe;
     height: 26px !important;
     vertical-align: middle;
   }
@@ -234,11 +245,23 @@ mat-list-item:hover {
 mat-icon {
   cursor: pointer;
 }
-
-.error-text {
-  color: #ff0000;
+.mat-card {
+  border-radius: 0 0 8px 8px !important;
 }
-
+.error-text {
+  color: #cd4a4c;
+}
+.text {
+  &_white{
+    color: #ffffff;
+  }
+  &_dark-blue {
+    color: #8dadbe;
+  }
+  &_light-grey {
+    color: #999da0;
+  }
+}
 .disable-color {
   color: #898989;
 }
