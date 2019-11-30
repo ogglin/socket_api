@@ -97,7 +97,7 @@ get.on('connection', function (socket) {
             }
             if (obj['getinfo'] || obj['getinfo'] === 0) {
                 db.getInfoO(obj['getinfo'], obj['start'], obj['end']).subscribe(res => {
-                    console.log("infos:" + JSON.stringify(res));
+                    console.log("infos:" + res);
                     socket.emit('get', '{"infos":' + JSON.stringify(res) + '}');
                 });
             }
