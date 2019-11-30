@@ -1287,6 +1287,7 @@
                     this.deviceForm.controls['serialNumber'].setValue('');
                 };
                 DeviceManageComponent.prototype.saveDevice = function () {
+                    var _this = this;
                     var body;
                     if (this.id) {
                         body = {
@@ -1315,6 +1316,7 @@
                             enable: 1
                         };
                     }
+                    setTimeout(function () { return _this.clear(); }, 50);
                     console.log(body);
                     this.sIO.send_put(JSON.stringify(body));
                 };

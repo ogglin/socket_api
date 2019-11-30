@@ -1342,6 +1342,7 @@ let DeviceManageComponent = class DeviceManageComponent {
                 enable: 1
             };
         }
+        setTimeout(() => this.clear(), 50);
         console.log(body);
         this.sIO.send_put(JSON.stringify(body));
     }

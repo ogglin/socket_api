@@ -114,7 +114,7 @@ export class DeviceManageComponent implements OnInit {
         enable: 1
       };
     }
-
+    setTimeout(()=>this.clear(),50);
     console.log(body);
     this.sIO.send_put(JSON.stringify(body));
   }
