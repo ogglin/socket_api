@@ -1580,6 +1580,7 @@
                     this.date = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
                     this.infos = [];
                     this.changeLog = [];
+                    this.btn_disable = false;
                 }
                 InfoComponent.prototype.ngOnChanges = function (changes) {
                     for (var propName in changes) {
@@ -1650,7 +1651,10 @@
                     });
                 };
                 InfoComponent.prototype.sendQuery = function () {
+                    var _this = this;
+                    this.btn_disable = true;
                     this.sIO.send_put(this.Query);
+                    setTimeout(function () { return (_this.btn_disable = false); }, 2000);
                 };
                 return InfoComponent;
             }());

@@ -1633,6 +1633,7 @@ let InfoComponent = class InfoComponent {
         this.date = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
         this.infos = [];
         this.changeLog = [];
+        this.btn_disable = false;
     }
     ngOnChanges(changes) {
         for (let propName in changes) {
@@ -1701,7 +1702,9 @@ let InfoComponent = class InfoComponent {
         });
     }
     sendQuery() {
+        this.btn_disable = true;
         this.sIO.send_put(this.Query);
+        setTimeout(() => (this.btn_disable = false), 2000);
     }
 };
 InfoComponent.ctorParameters = () => [
