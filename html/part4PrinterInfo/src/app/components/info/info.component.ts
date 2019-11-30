@@ -17,11 +17,11 @@ export class InfoComponent implements OnInit {
   infos: any[] = [];
   info: any;
   place: string;
-  ioConnection: any;
   data: any;
   result: any;
   Query: string;
   changeLog: any[] = [];
+  btn_disable: true;
 
   constructor(private sIO: SocketService, private json: ToJsonService) {
   }
@@ -33,16 +33,20 @@ export class InfoComponent implements OnInit {
       let prev = JSON.stringify(chng.previousValue);
       this.changeLog.push(`${propName}: currentValue = ${cur}, previousValue = ${prev}`)
     }
-    console.log(this.did);
-    this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
+    if(this.did !== null) {
+      this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
+    } else {
+      this.info = null;
+      this.infos = [];
+    }
   }
 
   ngOnInit() {
-    this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
-    this.ioConnection = this.sIO.onMessage()
+    //this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
+    this.sIO.onMessage()
       .subscribe(message => {
-        console.log(message);
         this.json.toJSON(message).subscribe(data => {
+          console.log(data);
           if (data['infos']) {
             this.infos = data['infos']['content'];
             if (this.infos.length > 0) {

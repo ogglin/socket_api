@@ -36,20 +36,20 @@ export class DateIntervalComponent implements OnInit {
   ngOnInit() {
     this.startDate.setMonth(this.startDate.getMonth() - 2);
     this.start.setValue(this.startDate);
-    console.log(this.start.value);
     this.setDate();
   }
   setDate(){
+    const end = moment(this.end.value).add(1, 'd');
     let body;
     if(this.end.value instanceof Date){
       body = {
         start: this.start.value.toISOString(),
-        end: this.end.value.toISOString()
+        end: end.toISOString()
       };
     } else {
       body = {
         start: this.start.value.toISOString(),
-        end: this.end.value.toISOString()
+        end: end.toISOString()
       };
     }
     this.data.emit(body);

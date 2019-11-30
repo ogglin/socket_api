@@ -28,7 +28,7 @@
       </div>
     </mat-sidenav>
     <div class="container">
-      <app-info *ngIf="isEdit === 'false' && did && cid" [did]="did" [office]="office" [cid]="cid" [interval]="interval" (date)="setId($event)"></app-info>
+      <app-info *ngIf="isEdit === 'false'" [did]="did" [office]="office" [cid]="cid" [interval]="interval" (date)="setId($event)"></app-info>
       <app-device-manage *ngIf="isEdit === 'true' && oid  && cid" [edit]="isEdit" [cid]="cid" [oid]="oid"></app-device-manage>
     </div>
 

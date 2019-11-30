@@ -409,7 +409,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<mat-list role=\"list\" class=\"dateList\">\n  <h4>Даты:</h4>\n  <ng-scrollbar appearance=\"standart\">\n    <mat-list-item *ngFor=\"let info of infos, let i = index\" role=\"listitem\"\n                   (click)=\"setDate(info['datetime']);\"\n                   [ngClass]=\"data===info['datetime'] ? 'cursor-pointer border active': 'cursor-pointer border'\">\n      {{info['datetime'] | date:'yyyy-MM-dd HH:mm:ss'}}\n    </mat-list-item>\n  </ng-scrollbar>\n</mat-list>\n<div class=\"device-info\">&nbsp;\n  <ng-container *ngIf=\"info\">\n    <div class=\"btnGetInfo\">\n      <button mat-raised-button color=\"primary\" (click)=\"sendQuery()\">Получить данные устройства</button>\n    </div>\n    <p><strong>{{office}} - {{info['placement']}} </strong> <small> {{data | date:'yyyy-MM-dd HH:mm:ss'}}</small></p>\n    <h2>{{info['productname']}}\n    </h2>\n    <p>Статус: {{info['status']}} <span *ngIf=\"info['error']\" class=\"error-text\">{{info['error']}}</span></p>\n    <p>Серийный номер: {{info['sn']}}</p>\n    <p>Сетевой адрес: {{info['url']}}</p>\n\n    <ng-container *ngFor=\"let color of info['cartridge']\">\n      <p *ngIf=\"color['black']\">Черный {{color['black'].replace('%', '')}}<br><br>\n        <mat-progress-bar mode=\"determinate\" [value]=\"color['black'].replace('%', '')\"\n                          color=\"warn\"></mat-progress-bar>\n      </p>\n      <p *ngIf=\"color['yellow']\">Желтый {{color['yellow'].replace('%', '')}}<br><br>\n        <mat-progress-bar mode=\"determinate\" [value]=\"color['yellow'].replace('%', '')\"\n                          color=\"warn\"></mat-progress-bar>\n      </p>\n      <p *ngIf=\"color['magenta']\">Пурпурный {{color['magenta'].replace('%', '')}}<br><br>\n        <mat-progress-bar mode=\"determinate\" [value]=\"color['magenta'].replace('%', '')\"\n                          color=\"warn\"></mat-progress-bar>\n      </p>\n      <p *ngIf=\"color['blue']\">Голубой {{color['blue'].replace('%', '')}}<br><br>\n        <mat-progress-bar mode=\"determinate\" [value]=\"color['blue'].replace('%', '')\"\n                          color=\"warn\"></mat-progress-bar>\n      </p>\n    </ng-container>\n    <p *ngIf=\"info['printcycles']\">Цикл механизма: {{info['printcycles']}}</p>\n    <p *ngIf=\"info['kit']\">Счетчик технического обслуживания:\n      <ng-container *ngIf=\"info['kit']\">\n        <ng-container *ngIf=\"info['kit'][0]['adfCycles']\">{{info['kit'][0]['adfCycles']}}</ng-container>\n        <ng-container\n          *ngIf=\"info['kit'][0]['maintenanceKitCount']\">{{info['kit'][0]['maintenanceKitCount']}}</ng-container>\n      </ng-container>\n    </p>\n    <p *ngIf=\"info['scancycles']\">Цикл сканирования: {{info['scancycles']}}</p>\n    <h4 *ngIf=\"info['log']\">Лог:</h4>\n    <table>\n      <tbody>\n      <tr *ngFor=\"let log of info['log']\">\n        <td>{{log['date']}}</td>\n        <td>{{log['message']}}</td>\n      </tr>\n      </tbody>\n    </table>\n  </ng-container>\n</div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<mat-list role=\"list\" class=\"dateList\">\n  <h4>Даты:</h4>\n  <ng-scrollbar appearance=\"standart\">\n    <mat-list-item *ngFor=\"let info of infos, let i = index\" role=\"listitem\"\n                   (click)=\"setDate(info['datetime']);\"\n                   [ngClass]=\"data===info['datetime'] ? 'cursor-pointer border active': 'cursor-pointer border'\">\n      {{info['datetime'] | date:'yyyy-MM-dd HH:mm:ss'}}\n    </mat-list-item>\n  </ng-scrollbar>\n</mat-list>\n<div class=\"device-info\">&nbsp;\n  <ng-container *ngIf=\"info\">\n    <div class=\"btnGetInfo\">\n      <button mat-raised-button color=\"primary\" [disabled]=\"btn_disable\" (click)=\"sendQuery()\">Получить данные устройства</button>\n      <mat-progress-bar mode=\"indeterminate\" *ngIf=\"!btn_disable\"></mat-progress-bar>\n    </div>\n    <p><strong>{{office}} - {{info['placement']}} </strong> <small> {{data | date:'yyyy-MM-dd HH:mm:ss'}}</small></p>\n    <h2>{{info['productname']}}\n    </h2>\n    <p>Статус: {{info['status']}} <span *ngIf=\"info['error']\" class=\"error-text\">{{info['error']}}</span></p>\n    <p>Серийный номер: {{info['sn']}}</p>\n    <p>Сетевой адрес: {{info['url']}}</p>\n\n    <ng-container *ngFor=\"let color of info['cartridge']\">\n      <p *ngIf=\"color['black']\">Черный картридж {{color['black'].replace('%', '')}}<br><br>\n        <mat-progress-bar mode=\"determinate\" [value]=\"color['black'].replace('%', '')\"\n                          color=\"warn\"></mat-progress-bar>\n      </p>\n      <p *ngIf=\"color['yellow']\">Желтый картридж {{color['yellow'].replace('%', '')}}<br><br>\n        <mat-progress-bar mode=\"determinate\" [value]=\"color['yellow'].replace('%', '')\"\n                          color=\"warn\"></mat-progress-bar>\n      </p>\n      <p *ngIf=\"color['magenta']\">Пурпурный картридж {{color['magenta'].replace('%', '')}}<br><br>\n        <mat-progress-bar mode=\"determinate\" [value]=\"color['magenta'].replace('%', '')\"\n                          color=\"warn\"></mat-progress-bar>\n      </p>\n      <p *ngIf=\"color['blue']\">Голубой картридж {{color['blue'].replace('%', '')}}<br><br>\n        <mat-progress-bar mode=\"determinate\" [value]=\"color['blue'].replace('%', '')\"\n                          color=\"warn\"></mat-progress-bar>\n      </p>\n    </ng-container>\n    <p *ngIf=\"info['printcycles']\">\n      <mat-icon class=\"tooltip-info_icon\" matTooltip=\"Напечатано копий\"\n                matTooltipPosition=\"above\"\n                matTooltipClass=\"tooltip-info\"\n      >help_outline</mat-icon>\n      Цикл механизма: {{info['printcycles']}}</p>\n    <p *ngIf=\"info['kit']\">Счетчик технического обслуживания:\n      <ng-container *ngIf=\"info['kit']\">\n        <ng-container *ngIf=\"info['kit'][0]['adfCycles']\">{{info['kit'][0]['adfCycles']}}</ng-container>\n        <ng-container\n          *ngIf=\"info['kit'][0]['maintenanceKitCount']\">{{info['kit'][0]['maintenanceKitCount']}}</ng-container>\n      </ng-container>\n    </p>\n    <p *ngIf=\"info['scancycles']\">Цикл сканирования: {{info['scancycles']}}</p>\n    <h4 *ngIf=\"info['log']\">Лог:</h4>\n    <table>\n      <tbody>\n      <tr *ngFor=\"let log of info['log']\">\n        <td>{{log['date']}}</td>\n        <td>{{log['message']}}</td>\n      </tr>\n      </tbody>\n    </table>\n  </ng-container>\n</div>\n");
 
 /***/ }),
 
@@ -513,7 +513,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<app-login (check)=\"LogIn($event)\" *ngIf=\"!isLogin\"></app-login>\n<div class=\"\" *ngIf=\"isLogin\">\n  <header class=\"container\">\n    <div class=\"float-left py-2\">\n      <app-companyes [edit]=\"isEdit\" [uid]=\"uid\" (cid)=\"setId($event)\"></app-companyes>\n    </div>\n    <div class=\"float-left py-2\">\n      <app-export *ngIf=\"cid\" [cid]=\"cid\" [title]=\"companyName\" [interval]=\"interval\"></app-export>\n    </div>\n    <div class=\"float-left py-2 mx-2\">\n      <app-date-interval (data)=\"interval = $event\"></app-date-interval>\n    </div>\n\n    <div class=\"socket-init\">\n      <!--button mat-raised-button class=\"mx-2\" *ngIf=\"uid === 0 && isEdit==='false'\" (click)=\"go('edit')\">Правка</button-->\n      <button mat-raised-button class=\"mx-2\" *ngIf=\"isEdit==='false'\" (click)=\"go('edit')\">Правка</button>\n      <button mat-raised-button class=\"mx-2\" *ngIf=\"isEdit==='true'\" (click)=\"go('view')\">Просмотр</button>\n      <button mat-raised-button class=\"mx-2\" (click)=\"logOut()\">Выйти</button>\n    </div>\n  </header>\n  <mat-sidenav-container>\n    <mat-sidenav opened mode=\"side\" class=\"p-2 sidenav\">\n      <div class=\"container\" *ngIf=\"cid\">\n        <app-offices [edit]=\"isEdit\" [cid]=\"cid\" (oid)=\"setId($event)\"></app-offices>\n      </div>\n      <div class=\"container\" *ngIf=\"oid\">\n        <app-devices *ngIf=\"isEdit === 'false' && cid\" [cid]=\"cid\" [oid]=\"oid\" (did)=\"setId($event)\"></app-devices>\n      </div>\n    </mat-sidenav>\n    <div class=\"container\">\n      <app-info *ngIf=\"isEdit === 'false' && did && cid\" [did]=\"did\" [office]=\"office\" [cid]=\"cid\" [interval]=\"interval\" (date)=\"setId($event)\"></app-info>\n      <app-device-manage *ngIf=\"isEdit === 'true' && oid  && cid\" [edit]=\"isEdit\" [cid]=\"cid\" [oid]=\"oid\"></app-device-manage>\n    </div>\n\n    <div class=\"console\">\n      <mat-card>\n        <mat-list>\n          <mat-list-item *ngFor=\"let message of messages\">\n            <h5 mat-line>{{message}}</h5>\n          </mat-list-item>\n        </mat-list>\n        <div class=\"p-2\">\n          <mat-icon>message</mat-icon>\n          <mat-form-field>\n            <input matInput\n                   #inputMessage\n                   placeholder=\"Введите сообщение\"\n                   [(ngModel)]=\"messageContent\"\n                   (keyup.enter)=\"sendMessage(messageContent)\"\n            >\n          </mat-form-field>\n        </div>\n      </mat-card>\n    </div>\n  </mat-sidenav-container>\n</div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<app-login (check)=\"LogIn($event)\" *ngIf=\"!isLogin\"></app-login>\n<div class=\"\" *ngIf=\"isLogin\">\n  <header class=\"container\">\n    <div class=\"float-left py-2\">\n      <app-companyes [edit]=\"isEdit\" [uid]=\"uid\" (cid)=\"setId($event)\"></app-companyes>\n    </div>\n    <div class=\"float-left py-2\">\n      <app-export *ngIf=\"cid\" [cid]=\"cid\" [title]=\"companyName\" [interval]=\"interval\"></app-export>\n    </div>\n    <div class=\"float-left py-2 mx-2\">\n      <app-date-interval (data)=\"interval = $event\"></app-date-interval>\n    </div>\n\n    <div class=\"socket-init\">\n      <!--button mat-raised-button class=\"mx-2\" *ngIf=\"uid === 0 && isEdit==='false'\" (click)=\"go('edit')\">Правка</button-->\n      <button mat-raised-button class=\"mx-2\" *ngIf=\"isEdit==='false'\" (click)=\"go('edit')\">Правка</button>\n      <button mat-raised-button class=\"mx-2\" *ngIf=\"isEdit==='true'\" (click)=\"go('view')\">Просмотр</button>\n      <button mat-raised-button class=\"mx-2\" (click)=\"logOut()\">Выйти</button>\n    </div>\n  </header>\n  <mat-sidenav-container>\n    <mat-sidenav opened mode=\"side\" class=\"p-2 sidenav\">\n      <div class=\"container\" *ngIf=\"cid\">\n        <app-offices [edit]=\"isEdit\" [cid]=\"cid\" (oid)=\"setId($event)\"></app-offices>\n      </div>\n      <div class=\"container\" *ngIf=\"oid\">\n        <app-devices *ngIf=\"isEdit === 'false' && cid\" [cid]=\"cid\" [oid]=\"oid\" (did)=\"setId($event)\"></app-devices>\n      </div>\n    </mat-sidenav>\n    <div class=\"container\">\n      <app-info *ngIf=\"isEdit === 'false'\" [did]=\"did\" [office]=\"office\" [cid]=\"cid\" [interval]=\"interval\" (date)=\"setId($event)\"></app-info>\n      <app-device-manage *ngIf=\"isEdit === 'true' && oid  && cid\" [edit]=\"isEdit\" [cid]=\"cid\" [oid]=\"oid\"></app-device-manage>\n    </div>\n\n    <div class=\"console\">\n      <mat-card>\n        <mat-list>\n          <mat-list-item *ngFor=\"let message of messages\">\n            <h5 mat-line>{{message}}</h5>\n          </mat-list-item>\n        </mat-list>\n        <div class=\"p-2\">\n          <mat-icon>message</mat-icon>\n          <mat-form-field>\n            <input matInput\n                   #inputMessage\n                   placeholder=\"Введите сообщение\"\n                   [(ngModel)]=\"messageContent\"\n                   (keyup.enter)=\"sendMessage(messageContent)\"\n            >\n          </mat-form-field>\n        </div>\n      </mat-card>\n    </div>\n  </mat-sidenav-container>\n</div>\n");
 
 /***/ }),
 
@@ -1143,6 +1143,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_material_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/material/core */ "./node_modules/@angular/material/esm2015/core.js");
 /* harmony import */ var _angular_material_moment_adapter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material-moment-adapter */ "./node_modules/@angular/material-moment-adapter/esm2015/material-moment-adapter.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_5__);
+
 
 
 
@@ -1161,21 +1164,21 @@ let DateIntervalComponent = class DateIntervalComponent {
     ngOnInit() {
         this.startDate.setMonth(this.startDate.getMonth() - 2);
         this.start.setValue(this.startDate);
-        console.log(this.start.value);
         this.setDate();
     }
     setDate() {
+        const end = moment__WEBPACK_IMPORTED_MODULE_5__(this.end.value).add(1, 'd');
         let body;
         if (this.end.value instanceof Date) {
             body = {
                 start: this.start.value.toISOString(),
-                end: this.end.value.toISOString()
+                end: end.toISOString()
             };
         }
         else {
             body = {
                 start: this.start.value.toISOString(),
-                end: this.end.value.toISOString()
+                end: end.toISOString()
             };
         }
         this.data.emit(body);
@@ -1638,11 +1641,17 @@ let InfoComponent = class InfoComponent {
             let prev = JSON.stringify(chng.previousValue);
             this.changeLog.push(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
         }
-        this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
+        if (this.did !== null) {
+            this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
+        }
+        else {
+            this.info = null;
+            this.infos = [];
+        }
     }
     ngOnInit() {
-        this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
-        this.ioConnection = this.sIO.onMessage()
+        //this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
+        this.sIO.onMessage()
             .subscribe(message => {
             this.json.toJSON(message).subscribe(data => {
                 console.log(data);
@@ -2842,17 +2851,14 @@ __webpack_require__.r(__webpack_exports__);
 let ToJsonService = class ToJsonService {
     constructor() { }
     toJSON(message) {
-        const jData = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"](observer => {
-            if (/^[\],:{}\s]*$/.test(message.replace(/\\["\\\/bfnrtu]/g, '@').
-                replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
-                replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+        return new rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"](observer => {
+            if (/^[\],:{}\s]*$/.test(message.replace(/\\["\\\/bfnrtu]/g, '@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
                 observer.next(JSON.parse(message));
             }
             else {
                 observer.next(message);
             }
         });
-        return jData;
     }
 };
 ToJsonService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([

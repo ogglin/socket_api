@@ -168,7 +168,15 @@ mat-list-item:hover {
   padding: 10px;
   max-width: 600px;
 }
-
+.tooltip-info {
+  background: #e27a0b;
+  color: #000000;
+  &_icon{
+    color: #e27a0b;
+    height: 26px !important;
+    vertical-align: middle;
+  }
+}
 .admin-panel {
   position: absolute;
   top: 0;

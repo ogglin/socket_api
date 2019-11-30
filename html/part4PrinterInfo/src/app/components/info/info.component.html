@@ -11,7 +11,8 @@
 <div class="device-info">&nbsp;
   <ng-container *ngIf="info">
     <div class="btnGetInfo">
-      <button mat-raised-button color="primary" (click)="sendQuery()">Получить данные устройства</button>
+      <button mat-raised-button color="primary" [disabled]="btn_disable" (click)="sendQuery()">Получить данные устройства</button>
+      <mat-progress-bar mode="indeterminate" *ngIf="!btn_disable"></mat-progress-bar>
     </div>
     <p><strong>{{office}} - {{info['placement']}} </strong> <small> {{data | date:'yyyy-MM-dd HH:mm:ss'}}</small></p>
     <h2>{{info['productname']}}
@@ -21,24 +22,29 @@
     <p>Сетевой адрес: {{info['url']}}</p>
 
     <ng-container *ngFor="let color of info['cartridge']">
-      <p *ngIf="color['black']">Черный {{color['black'].replace('%', '')}}<br><br>
+      <p *ngIf="color['black']">Черный картридж {{color['black'].replace('%', '')}}<br><br>
         <mat-progress-bar mode="determinate" [value]="color['black'].replace('%', '')"
                           color="warn"></mat-progress-bar>
       </p>
-      <p *ngIf="color['yellow']">Желтый {{color['yellow'].replace('%', '')}}<br><br>
+      <p *ngIf="color['yellow']">Желтый картридж {{color['yellow'].replace('%', '')}}<br><br>
         <mat-progress-bar mode="determinate" [value]="color['yellow'].replace('%', '')"
                           color="warn"></mat-progress-bar>
       </p>
-      <p *ngIf="color['magenta']">Пурпурный {{color['magenta'].replace('%', '')}}<br><br>
+      <p *ngIf="color['magenta']">Пурпурный картридж {{color['magenta'].replace('%', '')}}<br><br>
         <mat-progress-bar mode="determinate" [value]="color['magenta'].replace('%', '')"
                           color="warn"></mat-progress-bar>
       </p>
-      <p *ngIf="color['blue']">Голубой {{color['blue'].replace('%', '')}}<br><br>
+      <p *ngIf="color['blue']">Голубой картридж {{color['blue'].replace('%', '')}}<br><br>
         <mat-progress-bar mode="determinate" [value]="color['blue'].replace('%', '')"
                           color="warn"></mat-progress-bar>
       </p>
     </ng-container>
-    <p *ngIf="info['printcycles']">Цикл механизма: {{info['printcycles']}}</p>
+    <p *ngIf="info['printcycles']">
+      <mat-icon class="tooltip-info_icon" matTooltip="Напечатано копий"
+                matTooltipPosition="above"
+                matTooltipClass="tooltip-info"
+      >help_outline</mat-icon>
+      Цикл механизма: {{info['printcycles']}}</p>
     <p *ngIf="info['kit']">Счетчик технического обслуживания:
       <ng-container *ngIf="info['kit']">
         <ng-container *ngIf="info['kit'][0]['adfCycles']">{{info['kit'][0]['adfCycles']}}</ng-container>

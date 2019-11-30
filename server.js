@@ -71,7 +71,6 @@ io.set('origins', '*:*');
 const get = io.of('/get');
 get.on('connection', function (socket) {
     socket.on('get', function (data) {
-        console.log('get: ' + data);
         var isJson = IsJsonString(data);
         if (isJson) {
             var obj = JSON.parse(data);
