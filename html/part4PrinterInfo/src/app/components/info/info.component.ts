@@ -40,8 +40,8 @@ export class InfoComponent implements OnInit {
       this.info = null;
       this.infos = [];
     }
-    this.Query = '{"server_init": "getDevices", "company_id":' + this.cid + ',"devices": ' +
-      JSON.stringify(this.device) + '}';
+    this.Query = '{"server_init": "getDevices", "company_id":' + this.cid + ',"devices": [' +
+      JSON.stringify(this.device) + ']}';
   }
 
   ngOnInit() {
@@ -54,13 +54,13 @@ export class InfoComponent implements OnInit {
               this.info = this.infos[0];
               this.data = this.infos[0]['datetime'];
               const device = [{
-                productName: this.info['productname'],
+                productname: this.info['productname'],
                 url: this.info['url'],
-                serialNumber: this.info['sn'],
+                serialnumber: this.info['sn'],
                 device_id: this.info['device_id']
               }];
-              this.Query = '{"server_init": "getDevices", "company_id":' + this.cid + ',"devices": ' +
-                JSON.stringify(device) + '}';
+              this.Query = '{"server_init": "getDevices", "company_id":' + this.cid + ',"devices": [' +
+                JSON.stringify(device) + ']}';
             }
           }
           if (data['putInfo']) {

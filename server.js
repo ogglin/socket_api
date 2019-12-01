@@ -121,7 +121,7 @@ put.on('connection', function (socket) {
                 socket.emit('message', data);
             }
             if (obj['device_error']) {
-                db.addErrorO(obj['device_id'], obj['device_error']).subscribe(res => {
+                db.addErrorO(obj['device_id'], obj['device_error'],  obj['error']).subscribe(res => {
                     get.emit('get', '{"putDevice":' + JSON.stringify(res) + '}');
                 });
             }

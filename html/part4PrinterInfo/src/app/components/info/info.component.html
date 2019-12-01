@@ -111,6 +111,14 @@
                 </td>
                 <td>{{color['blue'].replace('%', '')}}%</td>
               </tr>
+              <tr *ngIf="color['cyan']" class="cartridge_toner">
+                <td>Голубой картридж</td>
+                <td>
+                  <mat-progress-bar mode="determinate" [value]="color['cyan'].replace('%', '')"
+                                    class="cyan"></mat-progress-bar>
+                </td>
+                <td>{{color['cyan'].replace('%', '')}}%</td>
+              </tr>
             </ng-container>
           </table>
         </mat-card>
