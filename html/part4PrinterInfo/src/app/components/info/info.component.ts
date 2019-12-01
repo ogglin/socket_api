@@ -40,6 +40,8 @@ export class InfoComponent implements OnInit {
       this.info = null;
       this.infos = [];
     }
+    this.Query = '{"server_init": "getDevices", "company_id":' + this.cid + ',"devices": ' +
+      JSON.stringify(this.device) + '}';
   }
 
   ngOnInit() {

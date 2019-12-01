@@ -1610,6 +1610,8 @@
                         this.info = null;
                         this.infos = [];
                     }
+                    this.Query = '{"server_init": "getDevices", "company_id":' + this.cid + ',"devices": ' +
+                        JSON.stringify(this.device) + '}';
                 };
                 InfoComponent.prototype.ngOnInit = function () {
                     var _this = this;
