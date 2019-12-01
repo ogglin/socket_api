@@ -23,6 +23,7 @@ export class MainComponent implements OnInit {
   oid: number = null;
   did: number = null;
   office: string;
+  device: any;
   isEdit: string = 'false';
   interval: any;
   companyName: string = '';
@@ -96,7 +97,7 @@ export class MainComponent implements OnInit {
     switch (e.init) {
       case "company": this.cid = null; this.oid = null; this.did = null; this.companyName = e.title; setTimeout(()=>{this.cid = e.id}, 10); break;
       case "office": this.oid = null; this.did = null; setTimeout(()=>{this.oid = e.id; this.office = e.office}, 10); break;
-      case "device": this.did = null; setTimeout(()=>{this.did = e.id}, 10); break;
+      case "device": this.did = null; setTimeout(()=>{this.did = e.id; this.device = e.device}, 10); break;
     }
   }
   go(url){

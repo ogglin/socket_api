@@ -30,7 +30,7 @@
       </ng-scrollbar>
     </mat-sidenav>
     <div class="container">
-      <app-info *ngIf="isEdit === 'false'" [did]="did" [office]="office" [cid]="cid" [interval]="interval"
+      <app-info *ngIf="isEdit === 'false'" [did]="did" [office]="office" [cid]="cid" [interval]="interval" [device]="device"
                 (date)="setId($event)"></app-info>
       <app-device-manage *ngIf="isEdit === 'true' && oid  && cid" [edit]="isEdit" [cid]="cid"
                          [oid]="oid"></app-device-manage>

@@ -37,7 +37,8 @@ export class DevicesComponent implements OnInit {
               this.cdid = this.devices[0]['id'];
               const e = {
                 init: 'device',
-                id: this.devices[0]['id']
+                id: this.devices[0]['id'],
+                device: this.device
               };
               this.initDevices = this.devices;
               this.devices.forEach(dev=>{
@@ -55,32 +56,40 @@ export class DevicesComponent implements OnInit {
       });
   }
   toggle(id){
-    this.device = this.devices.filter(dev=>dev[id]);
+    this.devices.forEach(dev=>{
+      if(dev['id'] === id) {
+        this.device = dev;
+      }
+    });
     this.cdid = id;
     const e = {
       init: 'device',
-      id: id
+      id: id,
+      device: this.device
     };
     this.did.emit(e);
   }
 
   setPlace(e) {
-    console.log(this.devices);
     if(e !== '') {
       this.initDevices = this.devices.filter(dev=>dev['placement'].toLowerCase() === e.toLowerCase());
     } else {
       this.initDevices = this.devices
     }
-    console.log(this.initDevices);
     this.Query = '{"server_init": "getDevices", "company_id":' + this.cid+',"devices": '+
       JSON.stringify(this.initDevices) +'}';
   }
 
+  sendAll() {
+    const query = '{"server_init": "getDevices", "company_id":' + this.cid+',"devices": '+
+      JSON.stringify(this.devices) +'}';
+    this.sIO.send_put(query);
+  }
   sendQuery(){
     if(this.Query !== undefined) {
       console.log(this.Query);
     }
-    //this.sIO.send_put(this.Query);
+    this.sIO.send_put(this.Query);
   }
 
 }

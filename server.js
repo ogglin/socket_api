@@ -116,6 +116,7 @@ put.on('connection', function (socket) {
         if (isJson) {
             var obj = JSON.parse(data);
             if (obj['server_init'] === 'getDevices') {
+                console.log(data);
                 put.emit('get', data);
                 socket.emit('message', data);
             }

@@ -13,6 +13,7 @@ export class InfoComponent implements OnInit {
   @Input() cid: number;
   @Input() office: string;
   @Input() interval: object;
+  @Input() device: object;
   @Output() date = new EventEmitter<any>();
   infos: any[] = [];
   info: any;
@@ -42,11 +43,9 @@ export class InfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
     this.sIO.onMessage()
       .subscribe(message => {
         this.json.toJSON(message).subscribe(data => {
-          console.log(data);
           if (data['infos']) {
             this.infos = data['infos']['content'];
             if (this.infos.length > 0) {
