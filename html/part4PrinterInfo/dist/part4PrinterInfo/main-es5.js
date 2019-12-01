@@ -1627,10 +1627,10 @@
                                             productname: _this.info['productname'],
                                             url: _this.info['url'],
                                             serialnumber: _this.info['sn'],
-                                            device_id: _this.info['device_id']
+                                            id: _this.info['device_id']
                                         }];
-                                    _this.Query = '{"server_init": "getDevices", "company_id":' + _this.cid + ',"devices": [' +
-                                        JSON.stringify(device) + ']}';
+                                    _this.Query = '{"server_init": "getDevices", "company_id":' + _this.cid + ',"devices": ' +
+                                        JSON.stringify(device) + '}';
                                 }
                             }
                             if (data['putInfo']) {
@@ -1639,6 +1639,7 @@
                                     _this.sIO.getInfos(_this.did, _this.interval['start'], _this.interval['end']);
                                 }
                             }
+                            console.log(data);
                             if (data['putDevice']) {
                                 _this.result = data['putDevice']['status']['result'];
                                 if (_this.result === 'success') {

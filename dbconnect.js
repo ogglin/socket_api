@@ -277,8 +277,8 @@ function addError(device_id, error_code, error, callback) {
         const client = await pool.connect();
         try {
             const result = await client.query(qaa);
-            callback ({status: 'success', result: result.rows});
-            return {status: 'success', result: result.rows};
+            callback ({status:{result: 'success'}});
+            return {status:{result:'success'}};
         } finally {
             client.release()
         }

@@ -57,10 +57,10 @@ export class InfoComponent implements OnInit {
                 productname: this.info['productname'],
                 url: this.info['url'],
                 serialnumber: this.info['sn'],
-                device_id: this.info['device_id']
+                id: this.info['device_id']
               }];
-              this.Query = '{"server_init": "getDevices", "company_id":' + this.cid + ',"devices": [' +
-                JSON.stringify(device) + ']}';
+              this.Query = '{"server_init": "getDevices", "company_id":' + this.cid + ',"devices": ' +
+                JSON.stringify(device) + '}';
             }
           }
           if (data['putInfo']) {
@@ -69,6 +69,7 @@ export class InfoComponent implements OnInit {
               this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
             }
           }
+          console.log(data);
           if (data['putDevice']) {
             this.result = data['putDevice']['status']['result'];
             if (this.result === 'success') {
