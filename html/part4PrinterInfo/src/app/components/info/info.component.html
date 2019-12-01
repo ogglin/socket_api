@@ -4,7 +4,7 @@
     <mat-list-item *ngFor="let info of infos, let i = index" role="listitem"
                    (click)="setDate(info['datetime']);"
                    [ngClass]="data===info['datetime'] ? 'cursor-pointer active': 'cursor-pointer'">
-      {{info['datetime'] | date:'yyyy-MM-dd HH:mm:ss'}}
+      {{info['datetime'] | date:'dd.MM.yyyy HH:mm'}}
     </mat-list-item>
   </ng-scrollbar>
 </mat-list>
@@ -15,10 +15,13 @@
         устройства
       </button>
     </div>
-    <h3>Состояние устройства</h3>
+    <h3>Информация <small class="float-right"> {{data | date:'dd.MM.yyyy HH:mm'}}</small></h3>
     <mat-card class="mb-2">
-      <p class="text_dark-blue">{{office}} - {{info['placement']}} <small> {{data | date:'yyyy-MM-dd HH:mm:ss'}}</small></p>
       <h2>{{info['productname']}}</h2>
+      <div class="text_dark-blue mb-1">
+        <p class="mb-1"><span class="text_light-grey">Адрес: </span>{{office}}</p>
+        <p *ngIf="info['placement'] !== ' '" class="mt-1"><span class="text_light-grey">Расположение: </span>{{info['placement']}}</p>
+      </div>
       <p><span class="text_light-grey">Статус: </span> <span class="text-orange">{{info['status']}}</span>
         <span *ngIf="info['error']" class="error-text">{{info['error']}}</span></p>
       <p><span class="text_light-grey">Серийный номер: </span> {{info['sn']}}</p>
@@ -43,9 +46,9 @@
           </mat-icon>
           <span class="text_light-grey">Счетчик технического обслуживания: </span>
           <ng-container *ngIf="info['kit']">
-              <ng-container *ngIf="info['kit'][0]['adfCycles']">{{info['kit'][0]['adfCycles']}}</ng-container>
-              <ng-container
-                *ngIf="info['kit'][0]['maintenanceKitCount']">{{info['kit'][0]['maintenanceKitCount']}}</ng-container>
+            <ng-container *ngIf="info['kit'][0]['adfCycles']">{{info['kit'][0]['adfCycles']}}</ng-container>
+            <ng-container
+              *ngIf="info['kit'][0]['maintenanceKitCount']">{{info['kit'][0]['maintenanceKitCount']}}</ng-container>
           </ng-container>
         </p>
         <p *ngIf="info['scancycles']">
@@ -61,24 +64,30 @@
     <ng-container *ngIf="info['cartridge']">
       <h3>Тонер</h3>
       <mat-card class="mb-2">
-        <ng-container *ngFor="let color of info['cartridge']">
-          <p *ngIf="color['black']">Черный картридж {{color['black'].replace('%', '')}}%<br><br>
-            <mat-progress-bar mode="determinate" [value]="color['black'].replace('%', '')"
-                              color="warn"></mat-progress-bar>
-          </p>
-          <p *ngIf="color['yellow']">Желтый картридж {{color['yellow'].replace('%', '')}}<br><br>
-            <mat-progress-bar mode="determinate" [value]="color['yellow'].replace('%', '')"
-                              color="warn"></mat-progress-bar>
-          </p>
-          <p *ngIf="color['magenta']">Пурпурный картридж {{color['magenta'].replace('%', '')}}<br><br>
-            <mat-progress-bar mode="determinate" [value]="color['magenta'].replace('%', '')"
-                              color="warn"></mat-progress-bar>
-          </p>
-          <p *ngIf="color['blue']">Голубой картридж {{color['blue'].replace('%', '')}}<br><br>
-            <mat-progress-bar mode="determinate" [value]="color['blue'].replace('%', '')"
-                              color="warn"></mat-progress-bar>
-          </p>
-        </ng-container>
+        <table>
+          <ng-container *ngFor="let color of info['cartridge']">
+            <tr *ngIf="color['black']" class="cartridge_toner">
+              <td>Черный картридж</td>
+              <td><mat-progress-bar mode="determinate" [value]="color['black'].replace('%', '')" class="black"></mat-progress-bar></td>
+              <td>{{color['black'].replace('%', '')}}%</td>
+            </tr>
+            <tr *ngIf="color['yellow']" class="cartridge_toner">
+              <td>Желтый картридж</td>
+              <td><mat-progress-bar mode="determinate" [value]="color['yellow'].replace('%', '')" class="yellow"></mat-progress-bar></td>
+              <td>{{color['yellow'].replace('%', '')}}%</td>
+            </tr>
+            <tr *ngIf="color['magenta']" class="cartridge_toner">
+              <td>Пурпурный картридж</td>
+              <td><mat-progress-bar mode="determinate" [value]="color['magenta'].replace('%', '')" class="magenta"></mat-progress-bar></td>
+              <td>{{color['magenta'].replace('%', '')}}%</td>
+            </tr>
+            <tr *ngIf="color['blue']" class="cartridge_toner">
+              <td>Голубой картридж</td>
+              <td><mat-progress-bar mode="determinate" [value]="color['blue'].replace('%', '')" class="blue"></mat-progress-bar></td>
+              <td>{{color['blue'].replace('%', '')}}%</td>
+            </tr>
+          </ng-container>
+        </table>
       </mat-card>
     </ng-container>
     <ng-container *ngIf="info['log']">

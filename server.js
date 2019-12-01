@@ -119,6 +119,11 @@ put.on('connection', function (socket) {
                 put.emit('get', data);
                 socket.emit('message', data);
             }
+            if (obj['device_error']) {
+                db.addErrorO(obj['device_id'], obj['device_error']).subscribe(res => {
+                    get.emit('get', '{"putDevice":' + JSON.stringify(res) + '}');
+                });
+            }
             if (obj['client_init'] === 'putDevices') {
                 db.addInfoO(
                     obj['company_id'],

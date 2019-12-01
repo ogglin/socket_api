@@ -11,15 +11,24 @@
 </div>
 
 <div class="py-2">
-  <button *ngIf="initDevices.length > 0" mat-raised-button (click)="sendQuery()" color="primary">Получить данные по списку</button>
+  <button *ngIf="initDevices.length > 0" mat-raised-button (click)="sendQuery()" color="primary">Получить данные по
+    списку
+  </button>
 </div>
 <div class="urls-nav" *ngIf="initDevices.length > 0">
-  <div *ngFor="let item of initDevices" (click)="toggle(item['id']);"
+  <div *ngFor="let item of initDevices" (click)="toggle(item['id']);" class="cursor-pointer"
        [ngClass]="cdid === item['id']? 'active': ''">
-    <h4 class="cursor-pointer">{{item['productname']}} <br>
-      <small class="text_dark-blue">{{item['placement']}}</small> <br>
-      <small class="text_light-grey">{{item['url']}}</small><br>
-      <small class="text_white">{{item['sn']}}</small>
-    </h4>
-  </div>
+    <h4>{{item['productname']}}</h4>
+    <small class="text_dark-blue pl">{{item['placement']}}</small><br>
+    <table>
+      <tr>
+        <td><small class="text_light-grey">Сетевой адрес:</small></td>
+        <td><small class="text_light-brown">{{item['url']}}</small></td>
+      </tr>
+      <tr>
+        <td><small class="text_light-grey">Серийный номер:</small></td>
+        <td><small class="text_light-brown">{{item['sn']}}</small></td>
+      </tr>
+    </table>
+   </div>
 </div>
