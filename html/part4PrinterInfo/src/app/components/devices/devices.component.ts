@@ -31,7 +31,7 @@ export class DevicesComponent implements OnInit {
       .subscribe(message => {
         this.json.toJSON(message).subscribe(data => {
           if (data['devices']) {
-            this.devices = data['devices'];
+            this.devices = data['devices'].filter(dev=>dev['enabled']===1);
             if (this.devices.length > 0) {
               this.device = this.devices[0];
               this.cdid = this.devices[0]['id'];
