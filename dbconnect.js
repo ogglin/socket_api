@@ -250,6 +250,21 @@ function addInfo(company_id, device_id, cartridge, serialNumber, scanCycles, url
     if (maintenanceKitCount) {qai += ", " + maintenanceKitCount;} else {qai += ", NULL"}
     if (adfCycles) {qai += ", " + adfCycles;} else {qai += ", NULL"}
     qai += ", '"+n+"', "+device_id+");" ;
+
+    var qed = "UPDATE rdata.devices SET (";
+    if(productName) {qed += "productname"}
+    if(url) {qed += ",url"}
+    if(company_id) {qed += ",company_id"}
+    if(article) {qed += ",article"}
+    if(serialNumber) {qed += ",sn"}
+    qed += ") = (";
+    if(productName) {qed += "'"+productName+"'"}
+    if(url) {qed += ",'"+url+"'"}
+    if(company_id) {qed += ","+company_id}
+    if(article) {qed += ",'"+article+"'"}
+    if(serialNumber) {qed += ",'"+serialNumber+"'"}
+    qed += ") WHERE devices.id = "+id+";";
+    qai = qai + '\n\r' + qed;
     console.log(qai);
     (async () => {
         const client = await pool.connect();
@@ -279,6 +294,42 @@ function addError(device_id, error_code, error, callback) {
             const result = await client.query(qaa);
             callback ({status:{result: 'success'}});
             return {status:{result:'success'}};
+        } finally {
+            client.release()
+        }
+    })().catch(e => {
+        console.log(e.stack);
+        return {error: e.detail};
+    });
+}
+
+function addLog(log, callback) {
+    var d = new Date();
+    var n = d.toJSON();
+    qal = "INSERT INTO rdata.logs (log, datetime) VALUES ('"+JSON.stringify(log)+"', '"+n+"');";
+    (async () => {
+        const client = await pool.connect();
+        try {
+            const result = await client.query(qal);
+            callback ({status:{result: 'success'}});
+            return {status:{result:'success'}};
+        } finally {
+            client.release()
+        }
+    })().catch(e => {
+        console.log(e.stack);
+        return {error: e.detail};
+    });
+}
+
+function getLog() {
+    qgl = "SELECT * FROM rdata.logs ORDER BY datetime;";
+    (async () => {
+        const client = await pool.connect();
+        try {
+            const result = await client.query(qgl);
+            callback (result.rows);
+            return result.rows;
         } finally {
             client.release()
         }
@@ -390,6 +441,8 @@ module.exports = {
     addDeviceO: Rx.Observable.bindCallback(addDevice),
     addInfoO: Rx.Observable.bindCallback(addInfo),
     addErrorO: Rx.Observable.bindCallback(addError),
+    addLogO: Rx.Observable.bindCallback(addLog),
+    getLogO: Rx.Observable.bindCallback(getLog),
     getCompanyO: Rx.Observable.bindCallback(getCompany),
     getClientsO: Rx.Observable.bindCallback(getClient),
     getAddressO: Rx.Observable.bindCallback(getAddress),

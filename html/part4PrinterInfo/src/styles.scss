@@ -186,13 +186,25 @@ mat-list-item.active, mat-list-item:hover, .urls-nav > div.active, .urls-nav > d
 .console {
   display: none;
   position: fixed;
-  bottom: 10px;
+  bottom: 40px;
   right: 15px;
-  max-height: 300px;
-  overflow-y: scroll;
+  height: 280px;
+  overflow: hidden;
   border: 1px solid #e27a0b50;
-  padding: 10px;
-  max-width: 600px;
+  width: 360px;
+  & ng-scrollbar {
+    height: 200px;
+  }
+  &.active {
+    display: block;
+    z-index: 998;
+  }
+  &_btn {
+    position: absolute !important;
+    right: 5px;
+    bottom: 5px;
+    z-index: 999;
+  }
 }
 .tooltip-info {
   background: #8dadbe;

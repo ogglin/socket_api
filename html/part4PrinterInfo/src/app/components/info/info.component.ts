@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
 import {SocketService} from "../../shared/socket/socket.service";
 import {ToJsonService} from "../../services/to-json.service";
+import {TimeoutsService} from "../../services/timeouts.service";
 
 @Component({
   selector: 'app-info',
@@ -23,11 +24,25 @@ export class InfoComponent implements OnInit {
   Query: string;
   changeLog: any[] = [];
   btn_disable: boolean = false;
+  ioConnection: any;
+  init: boolean = false;
 
-  constructor(private sIO: SocketService, private json: ToJsonService) {
+  constructor(private sIO: SocketService, private json: ToJsonService, private tmout: TimeoutsService) {
+  }
+
+  ngOnInit() {
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    if(this.did !== null){
+      this.tmout.timeout([this.did]).subscribe(tmo=>{
+        console.log(tmo);
+      });
+    }
+    if(!this.init) {
+      this.initIoConnection();
+    }
     for (let propName in changes) {
       let chng = changes[propName];
       let cur = JSON.stringify(chng.currentValue);
@@ -36,6 +51,7 @@ export class InfoComponent implements OnInit {
     }
     if(this.did !== null) {
       this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
+      setTimeout(()=>{this.init = true;}, 300);
     } else {
       this.info = null;
       this.infos = [];
@@ -44,8 +60,8 @@ export class InfoComponent implements OnInit {
       JSON.stringify(this.device) + ']}';
   }
 
-  ngOnInit() {
-    this.sIO.onMessage()
+  private initIoConnection(): void {
+    this.ioConnection = this.sIO.onMessage()
       .subscribe(message => {
         this.json.toJSON(message).subscribe(data => {
           if (data['infos']) {
@@ -69,7 +85,6 @@ export class InfoComponent implements OnInit {
               this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
             }
           }
-          console.log(data);
           if (data['putDevice']) {
             this.result = data['putDevice']['status']['result'];
             if (this.result === 'success') {
@@ -100,6 +115,6 @@ export class InfoComponent implements OnInit {
   sendQuery() {
     this.btn_disable = true;
     this.sIO.send_put(this.Query);
-    setTimeout(()=>(this.btn_disable = false), 120000);
+    setTimeout(()=>(this.btn_disable = false), 20000);
   }
 }

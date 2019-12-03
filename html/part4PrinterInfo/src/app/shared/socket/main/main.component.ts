@@ -14,8 +14,6 @@ export class MainComponent implements OnInit {
 
   action = Action;
   user: User;
-  messageContent: string;
-  messages: any[] = [];
   ioConnection: any;
   isLogin: boolean = false;
   uid:number = null;
@@ -41,19 +39,9 @@ export class MainComponent implements OnInit {
     }
     this.initIoConnection();
   }
+
   private initIoConnection(): void {
     this.sIO.initSocket();
-
-    this.ioConnection = this.sIO.onMessage()
-      .subscribe(message=>{
-        this.messages.push(message);
-      });
-
-    this.sIO.onPutMessage().subscribe(message=>{
-      console.log(message);
-      this.messages.push(message);
-    });
-
     this.sIO.onEvent(Event.CONNECT)
       .subscribe((e) => {
         console.log(e, 'connected');
@@ -62,14 +50,6 @@ export class MainComponent implements OnInit {
       .subscribe(() => {
         console.log('disconnected');
       });
-  }
-
-  public sendMessage(message: string): void {
-    if(!message) {
-      return;
-    }
-    this.sIO.send( message );
-    this.messageContent = null;
   }
 
   public sendNotification(params: any, action: Action){

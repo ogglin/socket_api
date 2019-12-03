@@ -1,23 +1,21 @@
 "use strict";
 var fs = require('fs');
 var db = require('./dbconnect');
+var tout = require('./timeouts');
 var bodyParser = require('body-parser');
 var https = require('https');
 var cors = require('cors');
 var express = require('express');
 var app = express();
 
-//var http = require('http').createServer(app);
-//var WebSocket  = require('ws');
-
-/*const ssl = {
+const ssl = {
     key: fs.readFileSync('cert/localhost-key.pem'),
     cert: fs.readFileSync('cert/localhost.pem')
-};*/
-const ssl = {
+};
+/*const ssl = {
     cert: fs.readFileSync('cert/cert1.pem'),
     key: fs.readFileSync('cert/privkey1.pem')
-};
+};*/
 const serverPort = 8443;
 
 app.use(function(req, res, next) {
@@ -41,15 +39,8 @@ const corsOptions = {
     methods: "POST, PUT, OPTIONS, DELETE, GET, *",
     optionsSuccessStatus: 200,
     origin: "*"
-    /*origin: (origin, callback) => {
-        if (whitelist.includes(origin))
-            return callback(null, true);
-        callback(new Error('Not allowed by CORS'));
-    }*/
 };
 app.use(cors(corsOptions));
-/*app.use(cors());
-app.options('*', cors());*/
 
 const server = https.createServer(ssl, app);
 
@@ -79,6 +70,16 @@ get.on('connection', function (socket) {
                     socket.emit('get', '{"auth":' + JSON.stringify(res) + '}');
                 });
             }
+            if (obj['deviceIds']) {
+                tout.checkDeviceO(obj['deviceIds']).subscribe(res => {
+                    get.emit('get', '{"deviceTimeout":' + JSON.stringify(res) + '}');
+                });
+            }
+            if (obj['logs']) {
+                db.getLogO().subscribe(res => {
+                    socket.emit('get', '{"logs":' + JSON.stringify(res) + '}');
+                });
+            }
             if (obj['getCompany'] || obj['getCompany'] === 0) {
                 db.getCompanyO(obj['getCompany']).subscribe(res => {
                     socket.emit('get', '{"companies":' + JSON.stringify(res) + '}');
@@ -96,7 +97,6 @@ get.on('connection', function (socket) {
             }
             if (obj['getinfo'] || obj['getinfo'] === 0) {
                 db.getInfoO(obj['getinfo'], obj['start'], obj['end']).subscribe(res => {
-                    console.log("infos:" + res);
                     socket.emit('get', '{"infos":' + JSON.stringify(res) + '}');
                 });
             }
@@ -111,18 +111,27 @@ get.on('connection', function (socket) {
 const put = io.of('/put');
 put.on('connection', function (socket) {
     socket.on('put', function (data) {
-        console.log('put: ' + data);
         var isJson = IsJsonString(data);
         if (isJson) {
             var obj = JSON.parse(data);
+            db.addLogO(obj).subscribe(res => {
+                get.emit('get', '{"putLog":' + JSON.stringify(res) + '}');
+            });
             if (obj['server_init'] === 'getDevices') {
-                console.log(data);
+                tout.addTimeoutO(obj['devices']).subscribe(res => {
+                    get.emit('get', '{"deviceTimeout":' + JSON.stringify(res) + '}');
+                });
                 put.emit('get', data);
                 socket.emit('message', data);
             }
             if (obj['device_error']) {
                 db.addErrorO(obj['device_id'], obj['device_error'],  obj['error']).subscribe(res => {
                     get.emit('get', '{"putDevice":' + JSON.stringify(res) + '}');
+                });
+            }
+            if (obj['log']) {
+                db.addLogO(obj['log']).subscribe(res => {
+                    get.emit('get', '{"putLog":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['client_init'] === 'putDevices') {
@@ -214,6 +223,3 @@ app.listen(5000, function (err) {
 server.listen(serverPort, function () {
     console.log('server up and running at %s port', serverPort);
 });
-/*http.listen(3000, function(){
-    console.log('listening on *:3000');
-});*/

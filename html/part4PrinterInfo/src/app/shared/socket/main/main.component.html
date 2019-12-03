@@ -35,26 +35,6 @@
       <app-device-manage *ngIf="isEdit === 'true' && oid  && cid" [edit]="isEdit" [cid]="cid"
                          [oid]="oid"></app-device-manage>
     </div>
-
-    <div class="console">
-      <mat-card>
-        <mat-list>
-          <mat-list-item *ngFor="let message of messages">
-            <h5 mat-line>{{message}}</h5>
-          </mat-list-item>
-        </mat-list>
-        <div class="p-2">
-          <mat-icon>message</mat-icon>
-          <mat-form-field>
-            <input matInput
-                   #inputMessage
-                   placeholder="Введите сообщение"
-                   [(ngModel)]="messageContent"
-                   (keyup.enter)="sendMessage(messageContent)"
-            >
-          </mat-form-field>
-        </div>
-      </mat-card>
-    </div>
   </mat-sidenav-container>
 </div>
+<app-console *ngIf="uid === 0"></app-console>

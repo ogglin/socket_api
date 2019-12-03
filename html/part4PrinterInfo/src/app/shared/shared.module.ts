@@ -18,10 +18,11 @@ import { InfoComponent } from '../components/info/info.component';
 import { ExportComponent } from '../components/export/export.component';
 import { DeviceManageComponent } from '../components/device-manage/device-manage.component';
 import { DateIntervalComponent } from '../components/date-interval/date-interval.component';
+import { ConsoleComponent } from '../components/console/console.component';
 
 
 @NgModule({
-  declarations: [CompanyComponent, ClientComponent, DeviceComponent, ManageComponent, AdminComponent, LoginComponent, MainComponent, CompanyesComponent, OfficesComponent, DevicesComponent, InfoComponent, ExportComponent, DeviceManageComponent, DateIntervalComponent],
+  declarations: [CompanyComponent, ClientComponent, DeviceComponent, ManageComponent, AdminComponent, LoginComponent, MainComponent, CompanyesComponent, OfficesComponent, DevicesComponent, InfoComponent, ExportComponent, DeviceManageComponent, DateIntervalComponent, ConsoleComponent],
   imports: [
     CommonModule,
     MaterialModule,
