@@ -26,7 +26,7 @@ export class TimeoutsService {
     dids.forEach(did=>{
       body.push({id: did})
     });
-    this.sIO.getTimeOut(JSON.stringify(body));
+    this.sIO.getTimeOut();
     this.asyncSubject.next(this.res);
     if(this.res.length > 0) {
       this.asyncSubject.complete();

@@ -1,5 +1,5 @@
 <div class="py-2">
-  <button *ngIf="devices.length > 0" mat-raised-button (click)="sendAll()" color="primary">Получить данные всех устройст
+  <button *ngIf="devices.length > 0" mat-raised-button (click)="sendQuery('all')" color="primary">Получить данные всех устройст
   </button>
 </div>
 <div class="py-2">
@@ -14,7 +14,7 @@
   </mat-form-field>
 </div>
 <div class="py-2">
-  <button *ngIf="initDevices.length > 0" mat-raised-button (click)="sendQuery()" color="primary">Получить данные по
+  <button *ngIf="initDevices.length > 0" mat-raised-button (click)="sendQuery('list')" color="primary">Получить данные по
     списку
   </button>
 </div>

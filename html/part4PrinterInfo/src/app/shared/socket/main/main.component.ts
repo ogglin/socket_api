@@ -25,6 +25,7 @@ export class MainComponent implements OnInit {
   isEdit: string = 'false';
   interval: any;
   companyName: string = '';
+  timeouts: any[] = [];
   constructor(private sIO: SocketService) { }
 
   ngOnInit() {
@@ -99,5 +100,8 @@ export class MainComponent implements OnInit {
     localStorage.removeItem('login');
     localStorage.removeItem('uid');
     this.isLogin = false;
+  }
+  setTimeout(e) {
+    this.timeouts = e;
   }
 }

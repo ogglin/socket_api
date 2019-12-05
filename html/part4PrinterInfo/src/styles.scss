@@ -322,3 +322,13 @@ mat-icon {
     background-color: #0199fc;
   }
 }
+.spin {
+  &_inner{
+    float: right;
+    padding: 8px 0 0 4px;
+    line-height: 1em;
+    & .loader div{
+      background-color: #8dadbe !important;
+    }
+  }
+}

@@ -1,3 +1,4 @@
+<app-timeouts (timeouts)="setTimeout($event)"></app-timeouts>
 <app-login (check)="LogIn($event)" *ngIf="!isLogin"></app-login>
 <div class="" *ngIf="isLogin">
   <header class="container">
@@ -25,13 +26,13 @@
           <app-offices [edit]="isEdit" [cid]="cid" (oid)="setId($event)"></app-offices>
         </div>
         <div class="container" *ngIf="oid">
-          <app-devices *ngIf="isEdit === 'false' && cid" [cid]="cid" [oid]="oid" (did)="setId($event)"></app-devices>
+          <app-devices *ngIf="isEdit === 'false' && cid" [cid]="cid" [oid]="oid" [timeouts]="timeouts" (did)="setId($event)"></app-devices>
         </div>
       </ng-scrollbar>
     </mat-sidenav>
     <div class="container">
-      <app-info *ngIf="isEdit === 'false'" [did]="did" [office]="office" [cid]="cid" [interval]="interval" [device]="device"
-                (date)="setId($event)"></app-info>
+      <app-info *ngIf="isEdit === 'false'" [did]="did" [office]="office" [cid]="cid" [interval]="interval"
+                [device]="device" [timeouts]="timeouts" (date)="setId($event)"></app-info>
       <app-device-manage *ngIf="isEdit === 'true' && oid  && cid" [edit]="isEdit" [cid]="cid"
                          [oid]="oid"></app-device-manage>
     </div>

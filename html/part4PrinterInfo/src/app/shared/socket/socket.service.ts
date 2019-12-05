@@ -72,8 +72,8 @@ export class SocketService {
   public getCSV(cid: number, start, end): void {
     this._get.emit('get', '{"getCSV":'+cid+',"start":"'+start+'","end":"'+end+'"}');
   }
-  public getTimeOut(dids: any): void {
-    this._get.emit('get', '{"deviceIds":'+dids+'}');
+  public getTimeOut(): void {
+    this._get.emit('get', '{"deviceIds":"1"}');
   }
   constructor() { }
 }

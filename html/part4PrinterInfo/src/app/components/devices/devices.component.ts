@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
 import {SocketService} from "../../shared/socket/socket.service";
 import {ToJsonService} from "../../services/to-json.service";
 import {map, startWith} from "rxjs/operators";
@@ -12,6 +12,7 @@ export class DevicesComponent implements OnInit {
 
   @Input() cid: number;
   @Input() oid: number;
+  @Input() timeouts: any[];
   @Output() did = new EventEmitter<any>();
   devices: any[] = [];
   device: any;
@@ -23,6 +24,12 @@ export class DevicesComponent implements OnInit {
   ioConnection: any;
 
   constructor(private sIO: SocketService, private json: ToJsonService) {
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if(this.timeouts){
+      console.log(this.timeouts);
+    }
   }
 
   ngOnInit() {
@@ -42,13 +49,13 @@ export class DevicesComponent implements OnInit {
               };
               this.initDevices = this.devices;
               this.devices.forEach(dev=>{
-                if(this.places.indexOf(dev['placement']) < 0 && dev['placement'] !== ' ') {
-                  this.places.push(dev['placement']);
+                if(dev['placement']) {
+                  dev['placement'].replace(/\s+/g, ' ').trim();
+                  if(this.places.indexOf(dev['placement']) < 0 && dev['placement'] !== ' ') {
+                    this.places.push(dev['placement']);
+                  }
                 }
-
               });
-              this.Query = '{"server_init": "getDevices", "company_id":' + this.cid+',"devices": '+
-                JSON.stringify(this.initDevices) +'}';
               this.did.emit(e);
             }
           }
@@ -56,6 +63,7 @@ export class DevicesComponent implements OnInit {
       });
   }
   toggle(id){
+    this.sIO.getTimeOut();
     this.devices.forEach(dev=>{
       if(dev['id'] === id) {
         this.device = dev;
@@ -70,25 +78,37 @@ export class DevicesComponent implements OnInit {
     this.did.emit(e);
   }
 
+  setQueryDevices(e){
+    console.log(this.timeouts);
+    let body: any[] = [];
+    if(e === 'all') {
+      this.devices.forEach(dev=>{
+        const pos = this.timeouts.map(function(e) { return e.id; }).indexOf(dev.id);
+        if(pos < 0) {
+          body.push(dev);
+        }
+      });
+    } else if(e==='list') {
+      this.initDevices.forEach(dev=>{
+        const pos = this.timeouts.map(function(e) { return e.id; }).indexOf(dev.id);
+        if(pos < 0) {
+          body.push(dev);
+        }
+      });
+    }
+    this.Query = '{"server_init": "getDevices", "company_id":' + this.cid+',"devices": '+
+      JSON.stringify(body) +'}';
+  }
   setPlace(e) {
     if(e !== '') {
       this.initDevices = this.devices.filter(dev=>dev['placement'].toLowerCase() === e.toLowerCase());
     } else {
       this.initDevices = this.devices
     }
-    this.Query = '{"server_init": "getDevices", "company_id":' + this.cid+',"devices": '+
-      JSON.stringify(this.initDevices) +'}';
   }
 
-  sendAll() {
-    const query = '{"server_init": "getDevices", "company_id":' + this.cid+',"devices": '+
-      JSON.stringify(this.devices) +'}';
-    this.sIO.send_put(query);
-  }
-  sendQuery(){
-    if(this.Query !== undefined) {
-      console.log(this.Query);
-    }
+  sendQuery(e){
+    this.setQueryDevices(e);
     this.sIO.send_put(this.Query);
   }
 

@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
 import {SocketService} from "../../shared/socket/socket.service";
 import {ToJsonService} from "../../services/to-json.service";
-import {TimeoutsService} from "../../services/timeouts.service";
 
 @Component({
   selector: 'app-info',
@@ -15,6 +14,7 @@ export class InfoComponent implements OnInit {
   @Input() office: string;
   @Input() interval: object;
   @Input() device: object;
+  @Input() timeouts: any[];
   @Output() date = new EventEmitter<any>();
   infos: any[] = [];
   info: any;
@@ -27,7 +27,7 @@ export class InfoComponent implements OnInit {
   ioConnection: any;
   init: boolean = false;
 
-  constructor(private sIO: SocketService, private json: ToJsonService, private tmout: TimeoutsService) {
+  constructor(private sIO: SocketService, private json: ToJsonService) {
   }
 
   ngOnInit() {
@@ -35,11 +35,6 @@ export class InfoComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if(this.did !== null){
-      this.tmout.timeout([this.did]).subscribe(tmo=>{
-        console.log(tmo);
-      });
-    }
     if(!this.init) {
       this.initIoConnection();
     }
@@ -50,6 +45,15 @@ export class InfoComponent implements OnInit {
       this.changeLog.push(`${propName}: currentValue = ${cur}, previousValue = ${prev}`)
     }
     if(this.did !== null) {
+      const pos = this.timeouts.map(function(e) { return e.id; }).indexOf(this.did);
+      this.timeouts.forEach(dev=>{
+        if(dev.id === this.did){
+          this.timeOut(dev.time);
+        }
+      });
+      if(pos < 0) {
+        this.timeOut(120000);
+      }
       this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
       setTimeout(()=>{this.init = true;}, 300);
     } else {
@@ -115,6 +119,10 @@ export class InfoComponent implements OnInit {
   sendQuery() {
     this.btn_disable = true;
     this.sIO.send_put(this.Query);
-    setTimeout(()=>(this.btn_disable = false), 20000);
+
+  }
+  timeOut(t){
+    this.btn_disable = true;
+    setTimeout(()=>(this.btn_disable = false), 120000-t);
   }
 }

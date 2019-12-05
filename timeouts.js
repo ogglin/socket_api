@@ -18,25 +18,22 @@ function addTimeout(devs, callback) {
             if(tm > 60000) {
                 devices[pos].time = dt;
             }
-            devices = devices.filter(dev=>{(dt - dev.time) < 60000});
+            devices = devices.filter(dev=>(dt - dev.time) < 120000);
         }
     });
     console.log('devices:' + JSON.stringify(devices));
     callback(devices);
 }
-function checkDevice(devs, callback) {
+function checkDevice(callback) {
     var dt = new Date();
     var devicesF = [];
     if(devices.length > 0) {
         devices.forEach(d=>{
-            if((dt - d.time) < 60000){
-                console.log(d);
+            if((dt - d.time) < 120000){
                 devicesF.push(d);
             }
         });
     }
-    console.log('devices:' + JSON.stringify(devices));
-    console.log(devicesF);
     callback(devicesF);
 }
 

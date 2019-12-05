@@ -134,13 +134,15 @@ function getErrors(did, callback) {
 }
 
 function getInfoCSV(cid, start, end, callback) {
-    var qgic = "SELECT * FROM (SELECT RANK () OVER ( PARTITION BY \"productname\" ORDER BY i.datetime DESC ) n, " +
+    var qgic = "SELECT * FROM (SELECT RANK () OVER ( PARTITION BY \"sn\" ORDER BY i.datetime DESC ) n, " +
         "date_part( 'month', datetime ) month_num, co.title company, c.name office, d.productname, " +
-        "d.article, d.placement, d.sn, d.url, i.printcycles, i.datetime " +
+        "d.article, d.placement, d.sn, d.url, i.printcycles, i.datetime, d.id as did " +
         "FROM rdata.devices d INNER JOIN rdata.info i ON i.device_id = d.id " +
         "INNER JOIN rdata.clients c ON d.client_id = c.id INNER JOIN rdata.company co ON co.id = c.company_id " +
         "WHERE d.company_id = "+cid+" AND i.datetime > '"+start+"' " +
-        " AND i.datetime < '"+end+"') sub WHERE n = 1";
+        " AND i.datetime < '"+end+"') sub WHERE n = 1" +
+        "GROUP BY sub.n, sub.month_num, sub.company, sub.office, sub.productname, sub.article, sub.placement, sub.sn, " +
+        "sub.url, sub.printcycles, sub.datetime, sub.did  ORDER BY sub.did";
     (async () => {
         const client = await pool.connect();
         try {
@@ -215,7 +217,7 @@ function addDevice(productName, url, init_client, company_id, article, placement
     qda = "INSERT INTO rdata.devices (productname, url, client_id, company_id, article, placement, sn, enabled) " +
         "VALUES ('"+productName+"', '"+url+"', "+init_client+", "+company_id;
     if (article) {qda += ", '" + article + "'";} else {qda += ", NULL";}
-    if (placement) {qda += ", '" + placement + "'";} else {qda += ", NULL";}
+    if (placement) {qda += ", '" + placement + "'";} else {qda += ", ' '";}
     if (serialNumber) {qda += ", '" + serialNumber + "'";} else {qda += ", NULL";}
     if (enable) {qda += ", " + enable;} else {qda += ", NULL";}
     qda += ");";
@@ -384,18 +386,18 @@ function editDevice(id, productName, url, init_client, company_id, article, plac
     if(init_client) {qed += ",client_id"}
     if(company_id) {qed += ",company_id"}
     if(article) {qed += ",article"}
-    if(placement) {qed += ",placement"}
     if(serialNumber) {qed += ",sn"}
     if(enable !== undefined) {qed += ",enabled"}
+    qed += ",placement";
     qed += ") = (";
     if(productName) {qed += "'"+productName+"'"}
     if(url) {qed += ",'"+url+"'"}
     if(init_client) {qed += ","+init_client}
     if(company_id) {qed += ","+company_id}
     if(article) {qed += ",'"+article+"'"}
-    if(placement) {qed += ",'"+placement+"'"}
     if(serialNumber) {qed += ",'"+serialNumber+"'"}
     if(enable !== undefined) {qed += ","+enable}
+    if(placement) {qed += ",'"+placement+"'"} else {qed += ",' '"}
     qed += ") WHERE devices.id = "+id+";";
     console.log(qed);
     (async () => {
