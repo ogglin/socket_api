@@ -736,6 +736,9 @@ SOFTWARE.
 
 ngx-scrollbar
 
+ngx-spinners
+MIT
+
 parseqs
 MIT
 The MIT License (MIT)
