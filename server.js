@@ -68,9 +68,14 @@ var clients = {};
 io.set('origins', '*:*');
 
 io.on('connection', function (socket) {
-    socket.on('get', function () {
-        console.log()
-    })
+    clients[socket.id] = true;
+    console.log(clients);
+    socket.on('get', function (data) {
+        console.log(data);
+    });
+    socket.on('put', function (data) {
+        console.log(data);
+    });
 });
 
 const get = io.of('/get');
