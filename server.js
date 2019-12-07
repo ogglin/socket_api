@@ -66,6 +66,13 @@ function IsJsonString(str) {
 var clients = {};
 
 io.set('origins', '*:*');
+
+io.on('connection', function (socket) {
+    socket.on('get', function () {
+        console.log()
+    })
+});
+
 const get = io.of('/get');
 get.on('connection', function (socket) {
     socket.on('get', function (data) {
