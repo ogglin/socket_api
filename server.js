@@ -125,6 +125,7 @@ put.on('connection', function (socket) {
                 get.emit('get', '{"putLog":' + JSON.stringify(res) + '}');
             });
             if (obj['server_init'] === 'getDevices') {
+                console.log(obj);
                 tout.addTimeoutO(obj['devices']).subscribe(res => {
                     get.emit('get', '{"deviceTimeout":' + JSON.stringify(res) + '}');
                 });

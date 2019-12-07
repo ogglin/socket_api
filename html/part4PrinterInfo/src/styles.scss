@@ -323,6 +323,16 @@ mat-icon {
   }
 }
 .spin {
+  &_size-3 {
+    width: 30px;
+    height: 30px;
+  }
+  &_circle {
+    border-top: 3px solid rgba(255, 152, 1, .5);
+    border-right: 3px solid transparent;
+    border-radius: 50%;
+    animation: rotation .9s linear infinite;
+  }
   &_inner{
     float: right;
     padding: 8px 0 0 4px;
@@ -330,5 +340,14 @@ mat-icon {
     & .loader div{
       background-color: #8dadbe !important;
     }
+  }
+}
+// ANIMATIONS
+@keyframes rotation{
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(360deg);
   }
 }

@@ -2,6 +2,8 @@ import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@an
 import {SocketService} from "../../shared/socket/socket.service";
 import {ToJsonService} from "../../services/to-json.service";
 import {map, startWith} from "rxjs/operators";
+import {Observable} from "rxjs";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-devices',
@@ -14,6 +16,8 @@ export class DevicesComponent implements OnInit {
   @Input() oid: number;
   @Input() timeouts: any[];
   @Output() did = new EventEmitter<any>();
+  filtered: Observable<string[]>;
+  placeControl = new FormControl('');
   devices: any[] = [];
   device: any;
   cdid: number;
@@ -28,7 +32,7 @@ export class DevicesComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges) {
     if(this.timeouts){
-      console.log(this.timeouts);
+
     }
   }
 
@@ -54,6 +58,10 @@ export class DevicesComponent implements OnInit {
                   if(this.places.indexOf(dev['placement']) < 0 && dev['placement'] !== ' ') {
                     this.places.push(dev['placement']);
                   }
+                  this.filtered = this.placeControl.valueChanges.pipe(
+                    startWith(''),
+                    map(value => this._filter(value))
+                  );
                 }
               });
               this.did.emit(e);
@@ -61,6 +69,10 @@ export class DevicesComponent implements OnInit {
           }
         });
       });
+  }
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.places.filter(option => option.toLowerCase().includes(filterValue));
   }
   toggle(id){
     this.sIO.getTimeOut();
@@ -96,6 +108,7 @@ export class DevicesComponent implements OnInit {
         }
       });
     }
+    console.log(body);
     this.Query = '{"server_init": "getDevices", "company_id":' + this.cid+',"devices": '+
       JSON.stringify(body) +'}';
   }
@@ -109,6 +122,7 @@ export class DevicesComponent implements OnInit {
 
   sendQuery(e){
     this.setQueryDevices(e);
+    console.log(this.Query);
     this.sIO.send_put(this.Query);
   }
 
