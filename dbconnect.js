@@ -240,8 +240,6 @@ function addDevice(productName, url, init_client, company_id, article, placement
 
 function addInfo(company_id, device_id, cartridge, serialNumber, scanCycles, url, article, printCycles, productName,
                  status, KIT, maintenanceKitCount, adfCycles, log, callback) {
-    var d = new Date();
-    var n = d.toJSON();
     qai = "INSERT INTO rdata.info (printcycles, scancycles, status, kit, cartridge, log, maintenancekitcount, adfcycles, datetime, device_id) VALUES (";
     if (printCycles) {qai += printCycles;} else {qai += "NULL"}
     if (scanCycles) {qai += ", "+scanCycles;} else {qai += ", NULL"}
@@ -251,7 +249,7 @@ function addInfo(company_id, device_id, cartridge, serialNumber, scanCycles, url
     if (log) {qai += ", '" + JSON.stringify(log) + "'";} else {qai += ", NULL"}
     if (maintenanceKitCount) {qai += ", " + maintenanceKitCount;} else {qai += ", NULL"}
     if (adfCycles) {qai += ", " + adfCycles;} else {qai += ", NULL"}
-    qai += ", '"+n+"', "+device_id+");" ;
+    qai += ", CURRENT_TIMESTAMP, "+device_id+");" ;
 
     var qed = "UPDATE rdata.devices SET (";
     if(productName) {qed += "productname"}
@@ -271,15 +269,19 @@ function addInfo(company_id, device_id, cartridge, serialNumber, scanCycles, url
     (async () => {
         const client = await pool.connect();
         try {
-            const result = await client.query(qai);
-            callback ({status:{result: 'success'}});
-            return {status:{result:'success'}};
+            await client.query('BEGIN');
+            await client.query(qai);
+            await client.query('COMMIT');
+            callback ({"status":{"result": "success"}});
+        } catch (e) {
+            await client.query('ROLLBACK');
+            throw e
         } finally {
             client.release()
         }
     })().catch(e => {
         console.log(e.stack);
-        callback ({status:{result:'error'}});
+        callback ({"status":{"result":"error"}});
         return {error: e.detail};
     });
 }
@@ -291,11 +293,9 @@ function addError(device_id, error_code, error, callback) {
         try {
             await client.query('BEGIN');
             const qaa = "INSERT INTO rdata.info (error, error_code, datetime, device_id) VALUES ('"+error+"', '"+error_code+"', CURRENT_TIMESTAMP, "+ device_id+");";
-            console.log(qaa);
-            const result = await client.query(qaa);
+            await client.query(qaa);
             await client.query('COMMIT');
-            console.log(result);
-            callback ({status:{result: 'success'}});
+            callback ({"status":{"result": "success"}});
         } catch (e) {
             await client.query('ROLLBACK');
             throw e
