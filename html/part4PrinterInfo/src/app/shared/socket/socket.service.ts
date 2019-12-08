@@ -60,8 +60,8 @@ export class SocketService {
   public getOffice(cid: number): void {
     this._get.emit('get', '{"getOffice":'+cid+'}');
   }
-  public getDevices(cid: number, oid: number, did: number): void {
-    this._get.emit('get', '{"getDevices":'+did+',"cid":'+cid+',"oid":'+oid+'}');
+  public getDevices(cid: number, oid: number, did: number, on: number): void {
+    this._get.emit('get', '{"getDevices":'+did+',"cid":'+cid+',"oid":'+oid+',"on":'+on+'}');
   }
   public getInfos(did, start, end): void {
     this._get.emit('get', '{"getinfo":'+did+',"start":"'+start+'","end":"'+end+'"}');

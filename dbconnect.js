@@ -73,7 +73,7 @@ function getAddress(callback) {
 
 function getDevices(cuid, cid, on, callback) {
     qda = "SELECT * FROM rdata.devices WHERE company_id = "+cuid+" AND client_id= "+ cid + " ORDER BY rdata.devices.enabled desc";
-     //if(on){qda += " AND enabled ="+on+";";}
+     if(on){qda += " AND enabled ="+on+";";}
     (async () => {
         const client = await pool.connect();
         try {
@@ -263,7 +263,7 @@ function addInfo(company_id, device_id, cartridge, serialNumber, scanCycles, url
     if(company_id) {qed += ","+company_id}
     if(article) {qed += ",'"+article+"'"}
     if(serialNumber) {qed += ",'"+serialNumber+"'"}
-    qed += ") WHERE devices.id = "+id+";";
+    qed += ") WHERE devices.id = "+device_id+";";
     qai = qai + '\n\r' + qed;
     console.log(qai);
     (async () => {

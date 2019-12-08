@@ -26,19 +26,21 @@ export class DeviceManageComponent implements OnInit {
     url: new FormControl('', Validators.required),
     article: new FormControl(''),
     placement: new FormControl(''),
-    serialNumber: new FormControl('')
+    serialNumber: new FormControl(''),
+    enabled: new FormControl(false)
   });
 
   constructor(private sIO: SocketService, private json: ToJsonService) {
   }
 
   ngOnInit() {
-    this.sIO.getDevices(this.cid, this.oid, 1);
+    this.sIO.getDevices(this.cid, this.oid, 1, 1);
     this.ioConnection = this.sIO.onMessage()
       .subscribe(message => {
         this.json.toJSON(message).subscribe(data => {
           if (data['devices']) {
             this.devices = data['devices'];
+            console.log(this.devices);
             if (this.devices.length > 0) {
               this.device = this.devices[0];
               this.initDevices = this.devices;
@@ -52,7 +54,7 @@ export class DeviceManageComponent implements OnInit {
           if(data['putDevice']) {
             this.result = data['putDevice']['status'];
             if(this.result === 'success') {
-              this.sIO.getDevices(this.cid, this.oid, 1);
+              this.sIO.getDevices(this.cid, this.oid, 1, 1);
             }
           }
         });
@@ -75,6 +77,12 @@ export class DeviceManageComponent implements OnInit {
     this.deviceForm.controls['article'].setValue(dev['article']);
     this.deviceForm.controls['placement'].setValue(dev['placement']);
     this.deviceForm.controls['serialNumber'].setValue(dev['sn']);
+    this.deviceForm.controls['enabled'].setValue(dev['enabled']);
+    if(dev['enabled'] === 1) {
+      this.deviceForm.controls['enabled'].setValue(true);
+    } else {
+      this.deviceForm.controls['enabled'].setValue(false);
+    }
   }
   clear(){
     this.result = null;
@@ -88,6 +96,12 @@ export class DeviceManageComponent implements OnInit {
 
   saveDevice() {
     let body;
+    let en;
+    if(this.deviceForm.controls['enabled'].value) {
+      en = 1;
+    } else {
+      en = 0
+    }
     if (this.id) {
       body = {
         id: this.id,
@@ -99,7 +113,7 @@ export class DeviceManageComponent implements OnInit {
         article: this.deviceForm.controls['article'].value,
         placement: this.deviceForm.controls['placement'].value,
         serialNumber: this.deviceForm.controls['serialNumber'].value,
-        enable: 1
+        enable: en
       };
     } else {
       body = {
@@ -111,11 +125,11 @@ export class DeviceManageComponent implements OnInit {
         article: this.deviceForm.controls['article'].value,
         placement: this.deviceForm.controls['placement'].value,
         serialNumber: this.deviceForm.controls['serialNumber'].value,
-        enable: 1
+        enable: en
       };
     }
-    setTimeout(()=>this.clear(),50);
     console.log(body);
+    setTimeout(()=>this.clear(),50);
     this.sIO.send_put(JSON.stringify(body));
   }
 }

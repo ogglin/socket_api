@@ -110,7 +110,7 @@ get.on('connection', function (socket) {
                 });
             }
             if (obj['getDevices'] || obj['getDevices'] === 0) {
-                db.getDevicesO(obj['cid'], obj['oid'], obj['getDevices']).subscribe(res => {
+                db.getDevicesO(obj['cid'], obj['oid'], obj['on']).subscribe(res => {
                     socket.emit('get', '{"devices":' + JSON.stringify(res) + '}');
                 });
             }

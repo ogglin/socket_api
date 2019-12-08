@@ -22,6 +22,7 @@
       <input matInput placeholder="S/N" formControlName="serialNumber">
       <mat-hint>серийный номер устройства</mat-hint>
     </mat-form-field>
+    <mat-checkbox class="pr-2" formControlName="enabled">Активное</mat-checkbox>
     <button mat-raised-button color="primary" type="submit" *ngIf="!id" [disabled]="deviceForm.status === 'INVALID'">
       Добавить
     </button>
@@ -50,6 +51,7 @@
       <th>URL</th>
       <th>Серийный номер</th>
       <th>Артикул</th>
+      <th>Активно</th>
       <th>
         <mat-icon *ngIf="!result" class="color-muted">done</mat-icon>
         <mat-icon *ngIf="result" class="color-green" (click)="result = null">done</mat-icon></th>
@@ -63,6 +65,10 @@
       <td>{{item['url']}}</td>
       <td>{{item['sn']}}</td>
       <td>{{item['article']}}</td>
+      <td>
+        <mat-icon *ngIf="item['enabled'] === 1" class="color-green">done</mat-icon>
+        <mat-icon *ngIf="item['enabled'] === 0" class="color-red">close</mat-icon>
+      </td>
       <td>
         <button mat-button mat-icon-button color="primary" (click)="init(item['id'], $event)">
           <mat-icon>edit</mat-icon>
