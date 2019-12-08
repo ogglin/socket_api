@@ -123,6 +123,10 @@ export class InfoComponent implements OnInit {
   }
   timeOut(t){
     this.btn_disable = true;
-    setTimeout(()=>(this.btn_disable = false), 120000-t);
+    if (t !== 120000) {
+      setTimeout(()=>{this.btn_disable = false; this.sIO.getTimeOut()}, 120000-t);
+    } else {
+      this.btn_disable = false;
+    }
   }
 }

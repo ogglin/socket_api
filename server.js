@@ -89,7 +89,7 @@ get.on('connection', function (socket) {
                     socket.emit('get', '{"auth":' + JSON.stringify(res) + '}');
                 });
             }
-            if (obj['deviceIds']) {
+            if (obj['getTimeouts']) {
                 tout.checkDeviceO().subscribe(res => {
                     get.emit('get', '{"deviceTimeout":' + JSON.stringify(res) + '}');
                 });

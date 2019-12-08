@@ -224,7 +224,6 @@ function addDevice(productName, url, init_client, company_id, article, placement
     if (serialNumber) {qda += ", '" + serialNumber + "'";} else {qda += ", NULL";}
     if (enable) {qda += ", " + enable;} else {qda += ", NULL";}
     qda += ");";
-    console.log(qda);
     (async () => {
         const client = await pool.connect();
         try {

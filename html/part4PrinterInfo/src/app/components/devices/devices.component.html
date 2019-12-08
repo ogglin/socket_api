@@ -28,7 +28,9 @@
   <div *ngFor="let item of initDevices" (click)="toggle(item['id']);" class="cursor-pointer"
        [ngClass]="cdid === item['id']? 'active': ''">
     <ng-container *ngFor="let time of timeouts">
-      <div class="spin_circle spin_size-3 float-right" *ngIf="time.id === item.id"></div>
+      <div class="float-right" *ngIf="time.id === item.id">
+        <div class="spin_circle spin_size-3"></div>
+      </div>
     </ng-container>
     <h4>{{item['productname']}}</h4>
     <small class="text_dark-blue pl">{{item['placement']}}</small><br>

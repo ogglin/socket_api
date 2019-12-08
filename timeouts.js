@@ -12,15 +12,9 @@ function addTimeout(devs, callback) {
                 id: d.id,
                 time: dt
             })
-        } else if(d.id !== null) {
-            dat = new Date(devices[pos].time);
-            var tm = dt - dat;
-            if(tm > 60000) {
-                devices[pos].time = dt;
-            }
-            devices = devices.filter(dev=>(dt - dev.time) < 120000);
-        }
+        } 
     });
+    devices = devices.filter(dev=>(dt - dev.time) < 120000);
     console.log('devices:' + JSON.stringify(devices));
     callback(devices);
 }
@@ -34,6 +28,7 @@ function checkDevice(callback) {
             }
         });
     }
+    console.log('GETdevices:' + JSON.stringify(devicesF));
     callback(devicesF);
 }
 

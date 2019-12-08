@@ -70,7 +70,7 @@ export class SocketService {
     this._get.emit('get', '{"getCSV":'+cid+',"start":"'+start+'","end":"'+end+'"}');
   }
   public getTimeOut(): void {
-    this._get.emit('get', '{"deviceIds":"1"}');
+    this._get.emit('get', '{"getTimeouts":"1"}');
   }
   constructor() { }
 }

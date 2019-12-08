@@ -31,7 +31,7 @@ export class DevicesComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(this.oid);
+    console.log(this.timeouts);
     this.timeouts = changes['timeouts'].currentValue;
   }
 
@@ -90,7 +90,6 @@ export class DevicesComponent implements OnInit {
   }
 
   setQueryDevices(e){
-    console.log(this.timeouts);
     let body: any[] = [];
     if(e === 'all') {
       this.devices.forEach(dev=>{
