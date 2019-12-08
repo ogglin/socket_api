@@ -49,7 +49,6 @@ export class MainComponent implements OnInit {
     this.sIO.initSocket();
     this.sIO.onMessage().subscribe(message=>{
       this.json.toJSON(message).subscribe(data => {
-        console.log(data);
         if(data['deviceTimeout']) {
           this.deviceTimeout = data['deviceTimeout'];
         }

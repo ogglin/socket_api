@@ -21,26 +21,27 @@ export class OfficesComponent implements OnInit {
   officeControl = new FormControl('');
   id: number;
   office: string;
-  ioConnection: any;
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.offices = changes['offices'].currentValue;
-    if(this.offices.length === 1) {
-      this.officeControl.setValue(this.offices[0]['name']);
-      const e = {
-        init: 'office',
-        id: this.offices[0]['id'],
-        office: this.offices[0]['name']
-      };
-      this.office = this.offices[0]['name'];
-      this.id = this.offices[0]['id'];
-      this.oid.emit(e);
+    if(changes['offices']) {
+      this.offices = changes['offices'].currentValue;
+      if(this.offices.length === 1) {
+        this.officeControl.setValue(this.offices[0]['name']);
+        const e = {
+          init: 'office',
+          id: this.offices[0]['id'],
+          office: this.offices[0]['name']
+        };
+        this.office = this.offices[0]['name'];
+        this.id = this.offices[0]['id'];
+        this.oid.emit(e);
+      }
+      this.filtered = this.officeControl.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
     }
-    this.filtered = this.officeControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value))
-    );
   }
   ngOnInit() {
   }

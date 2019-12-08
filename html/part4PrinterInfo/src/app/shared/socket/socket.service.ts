@@ -20,7 +20,7 @@ export class SocketService {
 
   public initSocket(): void {
     this._put = io(SERVER_URL_PUT);
-    console.log(this._put);
+    //console.log(this._put);
     this._get = io(SERVER_URL_GET);
     console.log(this._get);
   }

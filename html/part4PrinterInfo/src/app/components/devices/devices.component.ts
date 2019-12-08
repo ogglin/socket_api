@@ -26,7 +26,6 @@ export class DevicesComponent implements OnInit {
   Query: string;
   places: any[] = [];
   selected = 'Все';
-  ioConnection: any;
 
   constructor(private json: ToJsonService) {
   }

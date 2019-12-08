@@ -20,17 +20,18 @@ export class CompanyesComponent implements OnInit {
   @Output() cid = new EventEmitter<any>();
   filtered: Observable<string[]>;
   companyControl = new FormControl('');
-  ioConnection: any;
   result: any;
   changeLog: any[] = [];
   id: number = null;
   constructor() { }
   ngOnChanges(changes: SimpleChanges) {
-    this.companies = changes['companies'].currentValue;
-    this.filtered = this.companyControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterCompany(value))
-    );
+    if (changes['companies']) {
+      this.companies = changes['companies'].currentValue;
+      this.filtered = this.companyControl.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filterCompany(value))
+      );
+    }
   }
   ngOnInit() {
     this.sIO.getCompany(this.uid);

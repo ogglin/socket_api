@@ -41,7 +41,6 @@ export class DeviceManageComponent implements OnInit {
         this.json.toJSON(message).subscribe(data => {
           if (data['devices']) {
             this.devices = data['devices'];
-            console.log(this.devices);
             if (this.devices.length > 0) {
               this.device = this.devices[0];
               this.initDevices = this.devices;

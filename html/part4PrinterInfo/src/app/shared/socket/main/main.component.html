@@ -25,7 +25,7 @@
           <app-offices [edit]="isEdit" [cid]="cid" [offices]="offices" (oid)="setId($event)"></app-offices>
         </div>
         <div class="container" *ngIf="oid">
-          <app-devices [sIO]="sIO" *ngIf="isEdit === 'false' && cid" [cid]="cid" [oid]="oid" [timeouts]="timeouts" (did)="setId($event)"></app-devices>
+          <app-devices *ngIf="isEdit === 'false' && cid" [sIO]="sIO" [cid]="cid" [oid]="oid" [timeouts]="timeouts" (did)="setId($event)"></app-devices>
         </div>
       </ng-scrollbar>
     </mat-sidenav>
