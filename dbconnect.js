@@ -71,8 +71,11 @@ function getAddress(callback) {
     });
 }
 
-function getDevices(cuid, cid, on, callback) {
-    qda = "SELECT * FROM rdata.devices WHERE company_id = "+cuid+" AND client_id= "+ cid + " AND enabled ="+on+" ORDER BY rdata.devices.enabled desc;";
+function getDevices(cuid, oid, on, callback) {
+    qda = "SELECT * FROM rdata.devices WHERE company_id = "+cuid;
+    if(oid) {qda += " AND client_id= "+ oid;}
+    if(on === 1) {qda+=" AND enabled ="+on;}
+    qda += " ORDER BY rdata.devices.enabled desc;";
      console.log(qda);
     (async () => {
         const client = await pool.connect();

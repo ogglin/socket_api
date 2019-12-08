@@ -31,11 +31,12 @@ export class DevicesComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    console.log(this.oid);
     this.timeouts = changes['timeouts'].currentValue;
   }
 
   ngOnInit() {
-    this.sIO.getDevices(this.cid, this.oid, 1, 1);
+    this.sIO.getDevices(this.cid, null, 1, 1);
     this.ioConnection = this.sIO.onMessage()
       .subscribe(message => {
         this.json.toJSON(message).subscribe(data => {
