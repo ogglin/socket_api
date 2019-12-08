@@ -8,20 +8,20 @@ var cors = require('cors');
 var express = require('express');
 var app = express();
 
-const ssl = {
+/*const ssl = {
     key: fs.readFileSync('cert/localhost-key.pem'),
     cert: fs.readFileSync('cert/localhost.pem')
-};
+};*/
 /*const ssl = {
     cert: fs.readFileSync('cert/cert1.pem'),
     key: fs.readFileSync('cert/privkey1.pem')
 };*/
 
 /*Dev*/
-/*const ssl = {
+const ssl = {
     cert: fs.readFileSync('cert/dev_cert1.pem'),
     key: fs.readFileSync('cert/dev_privkey1.pem')
-};*/
+};
 
 const serverPort = 8443;
 
