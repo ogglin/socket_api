@@ -67,26 +67,20 @@ var clients = {};
 
 io.set('origins', '*:*');
 
-io.on('connection', function (socket) {
-    clients[socket.id] = true;
+io.on('connection', function (allsoc) {
+    clients[allsoc.id] = true;
     console.log(clients);
-    socket.on('get', function (data) {
-        //console.log(data);
-    });
-    socket.on('put', function (data) {
-        //console.log(data);
-    });
 });
 
 const get = io.of('/get');
-get.on('connection', function (socket) {
-    socket.on('get', function (data) {
+get.on('connection', function (gsocket) {
+    gsocket.on('get', function (data) {
         var isJson = IsJsonString(data);
         if (isJson) {
             var obj = JSON.parse(data);
             if (obj['auth']) {
                 db.AuthO(obj['auth']['login'], obj['auth']['pass']).subscribe(res => {
-                    socket.emit('get', '{"auth":' + JSON.stringify(res) + '}');
+                    gsocket.emit('get', '{"auth":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['getTimeouts']) {
@@ -96,32 +90,32 @@ get.on('connection', function (socket) {
             }
             if (obj['logs']) {
                 db.getLogO().subscribe(res => {
-                    socket.emit('get', '{"logs":' + JSON.stringify(res) + '}');
+                    gsocket.emit('get', '{"logs":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['getCompany'] || obj['getCompany'] === 0) {
                 db.getCompanyO(obj['getCompany']).subscribe(res => {
-                    socket.emit('get', '{"companies":' + JSON.stringify(res) + '}');
+                    gsocket.emit('get', '{"companies":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['getOffice'] || obj['getOffice'] === 0) {
                 db.getClientsO(obj['getOffice']).subscribe(res => {
-                    socket.emit('get', '{"offices":' + JSON.stringify(res) + '}');
+                    gsocket.emit('get', '{"offices":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['getDevices'] || obj['getDevices'] === 0) {
                 db.getDevicesO(obj['cid'], obj['oid'], obj['on']).subscribe(res => {
-                    socket.emit('get', '{"devices":' + JSON.stringify(res) + '}');
+                    gsocket.emit('get', '{"devices":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['getinfo'] || obj['getinfo'] === 0) {
                 db.getInfoO(obj['getinfo'], obj['start'], obj['end']).subscribe(res => {
-                    socket.emit('get', '{"infos":' + JSON.stringify(res) + '}');
+                    gsocket.emit('get', '{"infos":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['getCSV'] || obj['getCSV'] === 0) {
                 db.getInfoCSVO(obj['getCSV'], obj['start'], obj['end']).subscribe(res => {
-                    socket.emit('get', '{"getCSV":' + JSON.stringify(res) + '}');
+                    gsocket.emit('get', '{"getCSV":' + JSON.stringify(res) + '}');
                 });
             }
         }

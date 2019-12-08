@@ -31,7 +31,6 @@ export class DevicesComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(this.timeouts);
     this.timeouts = changes['timeouts'].currentValue;
   }
 
