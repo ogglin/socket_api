@@ -243,7 +243,7 @@ function addDevice(productName, url, init_client, company_id, article, placement
 
 function addInfo(company_id, device_id, cartridge, serialNumber, scanCycles, url, article, printCycles, productName,
                  status, KIT, maintenanceKitCount, adfCycles, log, callback) {
-    qai = "INSERT INTO rdata.info (printcycles, scancycles, status, kit, cartridge, log, maintenancekitcount, adfcycles, datetime, device_id) VALUES (";
+    var qai = "INSERT INTO rdata.info (printcycles, scancycles, status, kit, cartridge, log, maintenancekitcount, adfcycles, datetime, device_id) VALUES (";
     if (printCycles) {qai += printCycles;} else {qai += "NULL"}
     if (scanCycles) {qai += ", "+scanCycles;} else {qai += ", NULL"}
     if (status) {qai += ", '" + status + "'";} else {qai += ", NULL"}

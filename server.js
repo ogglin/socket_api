@@ -175,19 +175,6 @@ put.on('connection', function (socket) {
                     get.emit('get', JSON.stringify(res));
                     get.emit('get', '{"putDevice":' + JSON.stringify(res) + '}');
                     socket.emit('get', JSON.stringify(res));
-                    db.editDeviceO(
-                        obj['device_id'],
-                        obj['productName'],
-                        obj['url'],
-                        null,
-                        obj['company_id'],
-                        obj['article'],
-                        null,
-                        obj['serialNumber'],
-                        null
-                    ).subscribe(res => {
-                        get.emit('get', '{"putDevice":' + JSON.stringify(res) + '}');
-                    });
                 });
             }
             if (obj['client_init'] === 'addCompany') {
