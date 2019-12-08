@@ -286,14 +286,13 @@ function addInfo(company_id, device_id, cartridge, serialNumber, scanCycles, url
 
 
 function addError(device_id, error_code, error, callback) {
-    var d = new Date();
-    var n = d.toJSON();
-    qaa = "INSERT INTO rdata.info (error, error_code, datetime, device_id) VALUES ('"+error+"', '"+error_code+"', '"+n+"', "+ device_id+");";
+    qaa = "INSERT INTO rdata.info (error, error_code, datetime, device_id) VALUES ('"+error+"', '"+error_code+"', CURRENT_TIMESTAMP, "+ device_id+");";
     console.log(qaa);
     (async () => {
         const client = await pool.connect();
         try {
             const result = await client.query(qaa);
+            console.log(result);
             callback ({status:{result: 'success'}});
             return {status:{result:'success'}};
         } finally {
