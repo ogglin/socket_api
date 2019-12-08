@@ -81,7 +81,6 @@ io.on('connection', function (socket) {
 const get = io.of('/get');
 get.on('connection', function (socket) {
     socket.on('get', function (data) {
-        console.log(data);
         var isJson = IsJsonString(data);
         if (isJson) {
             var obj = JSON.parse(data);
@@ -139,7 +138,7 @@ put.on('connection', function (socket) {
                 get.emit('get', '{"putLog":' + JSON.stringify(res) + '}');
             });
             if (obj['server_init'] === 'getDevices') {
-                console.log('obj server_init: ' + obj);
+                console.log('obj server_init: ' + JSON.stringify(obj));
                 tout.addTimeoutO(obj['devices']).subscribe(res => {
                     get.emit('get', '{"deviceTimeout":' + JSON.stringify(res) + '}');
                 });
@@ -157,7 +156,7 @@ put.on('connection', function (socket) {
                 });
             }
             if (obj['client_init'] === 'putDevices') {
-                console.log('obj client_init: ' + obj);
+                console.log('obj client_init: ' + JSON.stringify(obj));
                 db.addInfoO(
                     obj['company_id'],
                     obj['device_id'],
