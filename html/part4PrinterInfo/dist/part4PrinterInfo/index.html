@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Part4 Printer Info</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--meta http-equiv="Content-Security-Policy" content="default-src '*'; script-src '*'; img-src '*'; style-src ‘self’ ‘unsafe-inline’ fonts.googleapis.com;"-->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#1976d2">
+<link rel="stylesheet" href="styles.f543d9435823685cb48f.css"></head>
+<body>
+  <app-root></app-root>
+
+  <script src="assets/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <!--script>
+      $(function () {
+          /*var socket = io('http://localhost:3000'),
+              get = io('http://localhost:3000/get');*/
+
+          var socket = io('http://116.203.243.136:3000'),
+              get = io('http://116.203.243.136:3000/get');
+
+          get.on('connect', function () {
+              get.emit('hi!');
+          });
+          get.on('a message', function (msg) {
+             console.log(msg);
+              $('#console').append($('<p>').text(msg));
+          });
+          socket.on('message', function (msg) {
+              console.log(msg);
+          });
+          document.getElementById('btnInit').onclick = function () {
+              var q = document.getElementById('info_query').value;
+              socket.emit('message', q);
+          };
+          document.getElementById('btnInitList').onclick = function () {
+              var ql = document.getElementById('info_queryList').value;
+              socket.emit('message', ql);
+          };
+          document.getElementById('btnInitDevice').onclick = function () {
+              var qd = document.getElementById('info_queryDevice').value;
+              socket.emit('message', qd);
+          };
+      });
+  </script-->
+
+  <!--script>
+      var socket = new WebSocket("ws://116.203.243.136:8080/ws");
+      document.addEventListener('DOMContentLoaded', function() {
+          socket.onopen = function () {
+              console.log("Соединение установлено.");
+              document.getElementById('console').innerHTML = "";
+              document.getElementById('console').innerHTML = "Соединение установлено.";
+          };
+
+          socket.onclose = function (event) {
+              document.getElementById('console').innerHTML = "";
+              if (event.wasClean) {
+                  console.log('Соединение закрыто чисто');
+                  document.getElementById('console').innerHTML = "Соединение закрыто чисто";
+              } else {
+                  console.log('Обрыв соединения'); // например, "убит" процесс сервера
+                  document.getElementById('console').innerHTML = "Обрыв соединения";
+              }
+              console.log('Код: ' + event.code + ' причина: ' + event.reason);
+              document.getElementById('console').innerHTML += ' Код: ' + event.code + ' причина: ' + event.reason + ' Решение: Перезагрузите страницу!';
+          };
+
+          socket.onmessage = function (event) {
+              console.log(JSON.parse(event.data));
+              document.getElementById('console').innerHTML = "";
+              document.getElementById('console').innerHTML = event.data;
+          };
+
+          socket.onerror = function (error) {
+              console.log("Ошибка " + error.message);
+          };
+
+          document.getElementById('btnInit').onclick = function () {
+              var q = document.getElementById('info_query').value;
+              console.log(q);
+              socket.send(q);
+          };
+          /*document.getElementById('addDevice').onclick = function () {
+              console.log('addDevice');
+              socket.send('{"new":0,"init_client":2,"cartridge":[{"black":"99"}],"serialNumber":"VCG7428977","scanCycles":29969,"url":"http://192.168.1.205","article":"0","client_article":"0","printCycles":87255,"productName":"Kyocera ECOSYS M2540dn","status":"Режим ожидания....", "company_id": 1}');
+          };*/
+      });
+  </script-->
+  <noscript>Please enable JavaScript to continue using this application.</noscript>
+<script src="runtime-es2015.8b27938b6565e5ec621c.js" type="module"></script><script src="runtime-es5.8b27938b6565e5ec621c.js" nomodule defer></script><script src="polyfills-es5.4adbedf35cf0605c974f.js" nomodule defer></script><script src="polyfills-es2015.5dc5fb260e889049f349.js" type="module"></script><script src="main-es2015.0acf89412fc3eca8b8b3.js" type="module"></script><script src="main-es5.0acf89412fc3eca8b8b3.js" nomodule defer></script></body>
+</html>
