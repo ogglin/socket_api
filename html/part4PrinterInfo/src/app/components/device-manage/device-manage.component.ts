@@ -54,7 +54,7 @@ export class DeviceManageComponent implements OnInit {
           if(data['putDevice']) {
             this.result = data['putDevice']['status'];
             if(this.result === 'success') {
-              this.sIO.getDevices(this.cid, this.oid, 1, 1);
+              this.sIO.getDevices(this.cid, null, 1, 0);
             }
           }
         });
