@@ -292,7 +292,7 @@ function addError(device_id, error_code, error, callback) {
             await client.query('BEGIN');
             const qaa = "INSERT INTO rdata.info (error, error_code, datetime, device_id) VALUES ('"+error+"', '"+error_code+"', CURRENT_TIMESTAMP, "+ device_id+");";
             console.log(qaa);
-            await client.query(qaa);
+            const result = await client.query(qaa);
             await client.query('COMMIT');
             console.log(result);
             callback ({status:{result: 'success'}});
