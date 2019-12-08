@@ -8,20 +8,20 @@ var cors = require('cors');
 var express = require('express');
 var app = express();
 
-/*const ssl = {
+const ssl = {
     key: fs.readFileSync('cert/localhost-key.pem'),
     cert: fs.readFileSync('cert/localhost.pem')
-};*/
+};
 /*const ssl = {
     cert: fs.readFileSync('cert/cert1.pem'),
     key: fs.readFileSync('cert/privkey1.pem')
 };*/
 
 /*Dev*/
-const ssl = {
+/*const ssl = {
     cert: fs.readFileSync('cert/dev_cert1.pem'),
     key: fs.readFileSync('cert/dev_privkey1.pem')
-};
+};*/
 
 const serverPort = 8443;
 
@@ -71,9 +71,12 @@ io.on('connection', function (allsoc) {
     clients[allsoc.id] = true;
     console.log(clients);
 });
-
+io.on('disconnect', function (dsoc) {
+    console.log('dis: '+dsoc);
+});
 const get = io.of('/get');
 get.on('connection', function (gsocket) {
+    console.log(gsocket.id);
     gsocket.on('get', function (data) {
         var isJson = IsJsonString(data);
         if (isJson) {
@@ -85,7 +88,7 @@ get.on('connection', function (gsocket) {
             }
             if (obj['getTimeouts']) {
                 tout.checkDeviceO().subscribe(res => {
-                    get.emit('get', '{"deviceTimeout":' + JSON.stringify(res) + '}');
+                    io.emit('get', '{"deviceTimeout":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['logs']) {
@@ -95,12 +98,13 @@ get.on('connection', function (gsocket) {
             }
             if (obj['getCompany'] || obj['getCompany'] === 0) {
                 db.getCompanyO(obj['getCompany']).subscribe(res => {
-                    gsocket.emit('get', '{"companies":' + JSON.stringify(res) + '}');
+                    gsocket.emit('get', '{"companies":' + JSON.stringify(res)  + ',"socket":"'+gsocket.id+ '"}');
                 });
             }
             if (obj['getOffice'] || obj['getOffice'] === 0) {
                 db.getClientsO(obj['getOffice']).subscribe(res => {
-                    gsocket.emit('get', '{"offices":' + JSON.stringify(res) + '}');
+                    console.log('{"offices":' + JSON.stringify(res) + '}');
+                    gsocket.emit('get', '{"offices":' + JSON.stringify(res)  + ',"socket":"'+gsocket.id+ '"}');
                 });
             }
             if (obj['getDevices'] || obj['getDevices'] === 0) {
@@ -110,7 +114,7 @@ get.on('connection', function (gsocket) {
             }
             if (obj['getinfo'] || obj['getinfo'] === 0) {
                 db.getInfoO(obj['getinfo'], obj['start'], obj['end']).subscribe(res => {
-                    gsocket.emit('get', '{"infos":' + JSON.stringify(res) + '}');
+                    gsocket.emit('get', '{"infos":' + JSON.stringify(res) + ',"socket":"'+gsocket.id+'"}');
                 });
             }
             if (obj['getCSV'] || obj['getCSV'] === 0) {
@@ -133,7 +137,7 @@ put.on('connection', function (socket) {
             });
             if (obj['server_init'] === 'getDevices') {
                 tout.addTimeoutO(obj['devices']).subscribe(res => {
-                    get.emit('get', '{"deviceTimeout":' + JSON.stringify(res) + '}');
+                    io.emit('get', '{"deviceTimeout":' + JSON.stringify(res) + '}');
                 });
                 put.emit('get', data);
                 socket.emit('message', data);

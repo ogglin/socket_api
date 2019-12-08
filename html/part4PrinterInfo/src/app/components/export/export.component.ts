@@ -12,27 +12,22 @@ export class ExportComponent implements OnInit {
 
   @Input() cid: number;
   @Input() title: string;
+  @Input() sIO: any;
   @Input() interval: object;
   csvData: any[] = [];
   ioConnection: any;
   changeLog: any[] = [];
 
-  constructor(private sIO: SocketService, private json: ToJsonService, private excel: ToXlsxService) {
+  constructor( private json: ToJsonService, private excel: ToXlsxService) {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    for (let propName in changes) {
-      let chng = changes[propName];
-      let cur  = JSON.stringify(chng.currentValue);
-      let prev = JSON.stringify(chng.previousValue);
-      this.changeLog.push(`${propName}: currentValue = ${cur}, previousValue = ${prev}`)
-    }
     this.sIO.getCSV(this.cid, this.interval['start'], this.interval['end']);
   }
 
   ngOnInit() {
     this.sIO.getCSV(this.cid, this.interval['start'], this.interval['end']);
-    this.ioConnection = this.sIO.onMessage()
+    this.sIO.onMessage()
       .subscribe(message => {
         this.json.toJSON(message).subscribe(data => {
           if (data['getCSV']) {

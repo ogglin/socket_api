@@ -4,12 +4,12 @@ import {Event} from './model/event';
 
 import io from 'socket.io-client';
 
-/*const SERVER_URL_GET = 'https://localhost:8443/get';
-const SERVER_URL_PUT = 'https://localhost:8443/put';*/
+const SERVER_URL_GET = 'https://localhost:8443/get';
+const SERVER_URL_PUT = 'https://localhost:8443/put';
 /*const SERVER_URL_GET = 'https://socket.api.part4.info:8443/get';
 const SERVER_URL_PUT = 'https://socket.api.part4.info:8443/put';*/
-const SERVER_URL_GET = 'https://dev.socket.part4.info:8443/get';
-const SERVER_URL_PUT = 'https://dev.socket.part4.info:8443/put';
+/*const SERVER_URL_GET = 'https://dev.socket.part4.info:8443/get';
+const SERVER_URL_PUT = 'https://dev.socket.part4.info:8443/put';*/
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,9 @@ export class SocketService {
 
   public initSocket(): void {
     this._put = io(SERVER_URL_PUT);
+    console.log(this._put);
     this._get = io(SERVER_URL_GET);
+    console.log(this._get);
   }
 
   public send(message: any): void {

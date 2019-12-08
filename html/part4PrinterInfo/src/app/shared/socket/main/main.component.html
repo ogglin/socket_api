@@ -1,12 +1,12 @@
-<app-timeouts (timeouts)="setTimeout($event)"></app-timeouts>
-<app-login (check)="LogIn($event)" *ngIf="!isLogin"></app-login>
+<app-timeouts (timeouts)="setTimeout($event)" [deviceTimeout]="deviceTimeout"></app-timeouts>
+<app-login (check)="LogIn($event)" *ngIf="!isLogin" [sIO]="sIO"></app-login>
 <div class="" *ngIf="isLogin">
   <header class="container">
     <div class="float-left py-2">
-      <app-companyes [edit]="isEdit" [uid]="uid" (cid)="setId($event)"></app-companyes>
+      <app-companyes [sIO]="sIO" [edit]="isEdit" [uid]="uid" [companies]="companies" (cid)="setId($event)"></app-companyes>
     </div>
     <div class="float-left py-2">
-      <app-export *ngIf="cid" [cid]="cid" [title]="companyName" [interval]="interval"></app-export>
+      <app-export [sIO]="sIO" *ngIf="cid" [cid]="cid" [title]="companyName" [interval]="interval"></app-export>
     </div>
     <div class="float-left py-2 mx-2">
       <app-date-interval (data)="interval = $event"></app-date-interval>
@@ -22,19 +22,19 @@
     <mat-sidenav opened mode="side" class="p-2 sidenav">
       <ng-scrollbar appearance="standart">
         <div class="container" *ngIf="cid">
-          <app-offices [edit]="isEdit" [cid]="cid" (oid)="setId($event)"></app-offices>
+          <app-offices [edit]="isEdit" [cid]="cid" [offices]="offices" (oid)="setId($event)"></app-offices>
         </div>
         <div class="container" *ngIf="oid">
-          <app-devices *ngIf="isEdit === 'false' && cid" [cid]="cid" [oid]="oid" [timeouts]="timeouts" (did)="setId($event)"></app-devices>
+          <app-devices [sIO]="sIO" *ngIf="isEdit === 'false' && cid" [cid]="cid" [oid]="oid" [timeouts]="timeouts" (did)="setId($event)"></app-devices>
         </div>
       </ng-scrollbar>
     </mat-sidenav>
     <div class="container">
-      <app-info *ngIf="isEdit === 'false'" [did]="did" [office]="office" [cid]="cid" [interval]="interval"
+      <app-info [sIO]="sIO" *ngIf="isEdit === 'false'" [did]="did" [office]="office" [cid]="cid" [interval]="interval"
                 [device]="device" [timeouts]="timeouts" (date)="setId($event)"></app-info>
-      <app-device-manage *ngIf="isEdit === 'true' && oid  && cid" [edit]="isEdit" [cid]="cid"
+      <app-device-manage [sIO]="sIO" *ngIf="isEdit === 'true' && oid  && cid" [edit]="isEdit" [cid]="cid"
                          [oid]="oid"></app-device-manage>
     </div>
   </mat-sidenav-container>
 </div>
-<app-console *ngIf="uid === 0"></app-console>
+<app-console *ngIf="uid === 0" [sIO]="sIO"></app-console>

@@ -15,6 +15,7 @@ export class InfoComponent implements OnInit {
   @Input() interval: object;
   @Input() device: object;
   @Input() timeouts: any[];
+  @Input() sIO: any;
   @Output() date = new EventEmitter<any>();
   infos: any[] = [];
   info: any;
@@ -25,51 +26,15 @@ export class InfoComponent implements OnInit {
   changeLog: any[] = [];
   btn_disable: boolean = false;
   ioConnection: any;
-  init: boolean = false;
 
-  constructor(private sIO: SocketService, private json: ToJsonService) {
+  constructor(private json: ToJsonService) {
   }
 
   ngOnInit() {
-
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if(!this.init) {
-      this.initIoConnection();
-    }
-    for (let propName in changes) {
-      let chng = changes[propName];
-      let cur = JSON.stringify(chng.currentValue);
-      let prev = JSON.stringify(chng.previousValue);
-      this.changeLog.push(`${propName}: currentValue = ${cur}, previousValue = ${prev}`)
-    }
-    if(this.did !== null) {
-      const pos = this.timeouts.map(function(e) { return e.id; }).indexOf(this.did);
-      this.timeouts.forEach(dev=>{
-        if(dev.id === this.did){
-          this.timeOut(dev.time);
-        }
-      });
-      if(pos < 0) {
-        this.timeOut(120000);
-      }
-      this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
-      setTimeout(()=>{this.init = true;}, 300);
-    } else {
-      this.info = null;
-      this.infos = [];
-    }
-    this.Query = '{"server_init": "getDevices", "company_id":' + this.cid + ',"devices": [' +
-      JSON.stringify(this.device) + ']}';
-  }
-
-  private initIoConnection(): void {
-    this.ioConnection = this.sIO.onMessage()
+    this.sIO.onMessage()
       .subscribe(message => {
         this.json.toJSON(message).subscribe(data => {
           if (data['infos']) {
-            console.log(data);
             this.infos = data['infos']['content'];
             if (this.infos.length > 0) {
               this.info = this.infos[0];
@@ -100,6 +65,29 @@ export class InfoComponent implements OnInit {
       });
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.did !== null) {
+      const pos = this.timeouts.map(function (e) {
+        return e.id;
+      }).indexOf(this.did);
+      this.timeouts.forEach(dev => {
+        if (dev.id === this.did) {
+          this.timeOut(dev.time);
+        }
+      });
+      if (pos < 0) {
+        this.timeOut(120000);
+      }
+      this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
+    } else {
+      this.info = null;
+      this.infos = [];
+    }
+    this.Query = '{"server_init": "getDevices", "company_id":' + this.cid + ',"devices": [' +
+      JSON.stringify(this.device) + ']}';
+  }
+
+
   toggle(id) {
     const e = {
       init: 'info',
@@ -122,10 +110,14 @@ export class InfoComponent implements OnInit {
     this.sIO.send_put(this.Query);
 
   }
-  timeOut(t){
+
+  timeOut(t) {
     this.btn_disable = true;
     if (t !== 120000) {
-      setTimeout(()=>{this.btn_disable = false; this.sIO.getTimeOut()}, 120000-t);
+      setTimeout(() => {
+        this.btn_disable = false;
+        this.sIO.getTimeOut()
+      }, 120000 - t);
     } else {
       this.btn_disable = false;
     }

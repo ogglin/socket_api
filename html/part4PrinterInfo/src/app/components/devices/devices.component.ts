@@ -15,6 +15,7 @@ export class DevicesComponent implements OnInit {
   @Input() cid: number;
   @Input() oid: number;
   @Input() timeouts: any[];
+  @Input() sIO: any;
   @Output() did = new EventEmitter<any>();
   filtered: Observable<string[]>;
   placeControl = new FormControl('');
@@ -27,16 +28,18 @@ export class DevicesComponent implements OnInit {
   selected = 'Все';
   ioConnection: any;
 
-  constructor(private sIO: SocketService, private json: ToJsonService) {
+  constructor(private json: ToJsonService) {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.timeouts = changes['timeouts'].currentValue;
+    if(changes['timeouts']) {
+      this.timeouts = changes['timeouts'].currentValue;
+    }
   }
 
   ngOnInit() {
     this.sIO.getDevices(this.cid, null, 1, 1);
-    this.ioConnection = this.sIO.onMessage()
+    this.sIO.onMessage()
       .subscribe(message => {
         this.json.toJSON(message).subscribe(data => {
           if (data['devices']) {

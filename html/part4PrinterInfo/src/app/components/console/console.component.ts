@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {SocketService} from "../../shared/socket/socket.service";
 
 @Component({
@@ -8,27 +8,23 @@ import {SocketService} from "../../shared/socket/socket.service";
 })
 export class ConsoleComponent implements OnInit {
 
+  @Input() sIO: any;
   messageContent: string;
   messages: any[] = [];
   ioConnection: any;
   isShow: boolean = false;
-  constructor(private sIO: SocketService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.initIoConnection();
-  }
-
-  private initIoConnection(): void {
-    this.sIO.initSocket();
-    this.ioConnection = this.sIO.onMessage()
+    this.sIO.onMessage()
       .subscribe(message=>{
         this.messages.push('get'+message);
       });
-
     this.sIO.onPutMessage().subscribe(message=>{
       this.messages.push('put'+message);
     });
   }
+
   public sendMessage(message: string): void {
     if(!message) {
       return;

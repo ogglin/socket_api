@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {APIService} from "../../devices/shared/services/api.service";
 import {SocketService} from "../../shared/socket/socket.service";
@@ -14,15 +14,16 @@ export class LoginComponent implements OnInit {
     loginControl: new FormControl(''),
     passControl: new FormControl('')
   });
+  @Input() sIO: any;
   @Output() check = new EventEmitter<any>();
   error: string = '';
   ioConnection: any;
 
-  constructor(private api: APIService, private sIO: SocketService) {
+  constructor() {
   }
 
   ngOnInit() {
-    this.ioConnection = this.sIO.onMessage()
+    this.sIO.onMessage()
       .subscribe(message => {
         let data: JSON;
         if (/^[\],:{}\s]*$/.test(message.replace(/\\["\\\/bfnrtu]/g, '@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
@@ -52,23 +53,6 @@ export class LoginComponent implements OnInit {
     const pass = this.loginForm.controls.passControl.value;
     const msg = '{"auth":{"login": "' + login + '", "pass": "' + pass + '"}}';
     this.sIO.send_get(msg);
-    /*this.api.authLogin(login,pass).subscribe(result=>{
-      let c;
-      if (result['status'] === 'success' && result['result'].length > 0) {
-        c = {
-          id: result['result'][0]['company_id'],
-          check: true
-        };
-      } else {
-        c = {
-          id: -1,
-          check: false,
-        };
-        this.error = 'Не верный логин или пароль';
-      }
-      this.check.emit(c);
-    });*/
-
   }
 
 }
