@@ -34,7 +34,7 @@ export class DeviceManageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sIO.getDevices(this.cid, this.oid, 1, 1);
+    this.sIO.getDevices(this.cid, null, 1, 0);
     this.ioConnection = this.sIO.onMessage()
       .subscribe(message => {
         this.json.toJSON(message).subscribe(data => {
