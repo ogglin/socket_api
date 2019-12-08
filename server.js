@@ -71,10 +71,10 @@ io.on('connection', function (socket) {
     clients[socket.id] = true;
     console.log(clients);
     socket.on('get', function (data) {
-        console.log(data);
+        //console.log(data);
     });
     socket.on('put', function (data) {
-        console.log(data);
+        //console.log(data);
     });
 });
 
