@@ -11,8 +11,8 @@
   </mat-list>
   <div class="device-info">&nbsp;
     <div class="btnGetInfo">
-      <button mat-raised-button color="primary" [disabled]="btn_disable" (click)="sendQuery()">Получить данные
-        устройства
+      <button mat-raised-button color="primary" [disabled]="btn_disable" (click)="sendQuery()">
+        Получить данные устройства <ngx-pulse-loader class="spin_inner" *ngIf="btn_disable"></ngx-pulse-loader>
       </button>
     </div>
     <ng-container *ngIf="!info && device">

@@ -1,18 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
-import {Address} from '../../devices/shared/model/address';
-import {Client} from '../../devices/shared/model/client';
-import {Customers} from '../../devices/shared/model/customers';
-import {Info} from '../../devices/shared/model/info';
 import {Event} from './model/event';
 
 import io from 'socket.io-client';
 
 /*const SERVER_URL_GET = 'https://localhost:8443/get';
 const SERVER_URL_PUT = 'https://localhost:8443/put';*/
-const SERVER_URL_GET = 'https://socket.api.part4.info:8443/get';
-const SERVER_URL_PUT = 'https://socket.api.part4.info:8443/put';
+/*const SERVER_URL_GET = 'https://socket.api.part4.info:8443/get';
+const SERVER_URL_PUT = 'https://socket.api.part4.info:8443/put';*/
+const SERVER_URL_GET = 'https://dev.socket.part4.info:8443/get';
+const SERVER_URL_PUT = 'https://dev.socket.part4.info:8443/put';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +20,9 @@ export class SocketService {
 
   public initSocket(): void {
     this._put = io(SERVER_URL_PUT);
+    //console.log(this._put);
     this._get = io(SERVER_URL_GET);
+    console.log(this._get);
   }
 
   public send(message: any): void {
@@ -63,8 +62,8 @@ export class SocketService {
   public getOffice(cid: number): void {
     this._get.emit('get', '{"getOffice":'+cid+'}');
   }
-  public getDevices(cid: number, oid: number, did: number): void {
-    this._get.emit('get', '{"getDevices":'+did+',"cid":'+cid+',"oid":'+oid+'}');
+  public getDevices(cid: number, oid: number, did: number, on: number): void {
+    this._get.emit('get', '{"getDevices":'+did+',"cid":'+cid+',"oid":'+oid+',"on":'+on+'}');
   }
   public getInfos(did, start, end): void {
     this._get.emit('get', '{"getinfo":'+did+',"start":"'+start+'","end":"'+end+'"}');
@@ -72,6 +71,8 @@ export class SocketService {
   public getCSV(cid: number, start, end): void {
     this._get.emit('get', '{"getCSV":'+cid+',"start":"'+start+'","end":"'+end+'"}');
   }
-
+  public getTimeOut(): void {
+    this._get.emit('get', '{"getTimeouts":"1"}');
+  }
   constructor() { }
 }

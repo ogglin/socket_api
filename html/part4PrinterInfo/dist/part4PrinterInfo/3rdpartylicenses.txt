@@ -150,6 +150,9 @@ MIT
 @angular/router
 MIT
 
+@angular/service-worker
+MIT
+
 @juggle/resize-observer
 Apache-2.0
                                  Apache License
@@ -732,6 +735,9 @@ SOFTWARE.
 
 
 ngx-scrollbar
+
+ngx-spinners
+MIT
 
 parseqs
 MIT

@@ -14,6 +14,8 @@ export class InfoComponent implements OnInit {
   @Input() office: string;
   @Input() interval: object;
   @Input() device: object;
+  @Input() timeouts: any[];
+  @Input() sIO: any;
   @Output() date = new EventEmitter<any>();
   infos: any[] = [];
   info: any;
@@ -23,25 +25,9 @@ export class InfoComponent implements OnInit {
   Query: string;
   changeLog: any[] = [];
   btn_disable: boolean = false;
+  ioConnection: any;
 
-  constructor(private sIO: SocketService, private json: ToJsonService) {
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    for (let propName in changes) {
-      let chng = changes[propName];
-      let cur = JSON.stringify(chng.currentValue);
-      let prev = JSON.stringify(chng.previousValue);
-      this.changeLog.push(`${propName}: currentValue = ${cur}, previousValue = ${prev}`)
-    }
-    if(this.did !== null) {
-      this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
-    } else {
-      this.info = null;
-      this.infos = [];
-    }
-    this.Query = '{"server_init": "getDevices", "company_id":' + this.cid + ',"devices": [' +
-      JSON.stringify(this.device) + ']}';
+  constructor(private json: ToJsonService) {
   }
 
   ngOnInit() {
@@ -69,7 +55,6 @@ export class InfoComponent implements OnInit {
               this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
             }
           }
-          console.log(data);
           if (data['putDevice']) {
             this.result = data['putDevice']['status']['result'];
             if (this.result === 'success') {
@@ -79,6 +64,29 @@ export class InfoComponent implements OnInit {
         });
       });
   }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.did !== null) {
+      const pos = this.timeouts.map(function (e) {
+        return e.id;
+      }).indexOf(this.did);
+      this.timeouts.forEach(dev => {
+        if (dev.id === this.did) {
+          this.timeOut(dev.time);
+        }
+      });
+      if (pos < 0) {
+        this.timeOut(120000);
+      }
+      this.sIO.getInfos(this.did, this.interval['start'], this.interval['end']);
+    } else {
+      this.info = null;
+      this.infos = [];
+    }
+    this.Query = '{"server_init": "getDevices", "company_id":' + this.cid + ',"devices": [' +
+      JSON.stringify(this.device) + ']}';
+  }
+
 
   toggle(id) {
     const e = {
@@ -100,6 +108,18 @@ export class InfoComponent implements OnInit {
   sendQuery() {
     this.btn_disable = true;
     this.sIO.send_put(this.Query);
-    setTimeout(()=>(this.btn_disable = false), 120000);
+
+  }
+
+  timeOut(t) {
+    this.btn_disable = true;
+    if (t !== 120000) {
+      setTimeout(() => {
+        this.btn_disable = false;
+        this.sIO.getTimeOut()
+      }, 120000 - t);
+    } else {
+      this.btn_disable = false;
+    }
   }
 }

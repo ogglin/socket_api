@@ -1,0 +1,22 @@
+<button mat-raised-button color="warn" class="console_btn" (click)="isShow = !isShow">Консоль</button>
+<div class="console" [ngClass]="isShow === true ? 'console active': 'console'">
+  <mat-card>
+    <ng-scrollbar track="all" appearance="compact">
+    <mat-list>
+      <mat-list-item *ngFor="let message of messages">
+        <h5 mat-line>{{message}}</h5>
+      </mat-list-item>
+    </mat-list>
+    </ng-scrollbar>
+    <div class="p-2 send-form">
+      <mat-icon>message</mat-icon>
+      <mat-form-field>
+        <input matInput
+               placeholder="Введите сообщение"
+               [(ngModel)]="messageContent"
+               (keyup.enter)="sendMessage(messageContent)"
+        >
+      </mat-form-field>
+    </div>
+  </mat-card>
+</div>

@@ -4,6 +4,7 @@ import {Event} from '../model/event'
 import {Action} from "../model/action";
 import {Message} from "../model/message";
 import {User} from '../model/user';
+import {ToJsonService} from "../../../services/to-json.service";
 
 @Component({
   selector: 'app-main',
@@ -14,8 +15,6 @@ export class MainComponent implements OnInit {
 
   action = Action;
   user: User;
-  messageContent: string;
-  messages: any[] = [];
   ioConnection: any;
   isLogin: boolean = false;
   uid:number = null;
@@ -27,7 +26,11 @@ export class MainComponent implements OnInit {
   isEdit: string = 'false';
   interval: any;
   companyName: string = '';
-  constructor(private sIO: SocketService) { }
+  timeouts: any[] = [];
+  deviceTimeout: any[] = [];
+  companies: any[] = [];
+  offices: any[] = [];
+  constructor(public sIO: SocketService, private json: ToJsonService) { }
 
   ngOnInit() {
     if(localStorage.getItem('login') === 'true' && localStorage.getItem('uid')) {
@@ -41,35 +44,32 @@ export class MainComponent implements OnInit {
     }
     this.initIoConnection();
   }
+
   private initIoConnection(): void {
     this.sIO.initSocket();
-
-    this.ioConnection = this.sIO.onMessage()
-      .subscribe(message=>{
-        this.messages.push(message);
+    this.sIO.onMessage().subscribe(message=>{
+      this.json.toJSON(message).subscribe(data => {
+        if(data['deviceTimeout']) {
+          this.deviceTimeout = data['deviceTimeout'];
+        }
+        if(data['companies']) {
+          this.companies = data['companies'];
+        }
+        if(data['putCompany']) {
+          if(data['putCompany']['status'] === 'success') {
+            this.sIO.getCompany(this.uid);
+          }
+        }
+        if(data['offices']) {
+          this.offices = data['offices'];
+        }
+        if(data['putOffice']) {
+          if(data['putOffice']['status'] === 'success') {
+            this.sIO.getOffice(this.cid);
+          }
+        }
       });
-
-    this.sIO.onPutMessage().subscribe(message=>{
-      console.log(message);
-      this.messages.push(message);
     });
-
-    this.sIO.onEvent(Event.CONNECT)
-      .subscribe((e) => {
-        console.log(e, 'connected');
-      });
-    this.sIO.onEvent(Event.DISCONNECT)
-      .subscribe(() => {
-        console.log('disconnected');
-      });
-  }
-
-  public sendMessage(message: string): void {
-    if(!message) {
-      return;
-    }
-    this.sIO.send( message );
-    this.messageContent = null;
   }
 
   public sendNotification(params: any, action: Action){
@@ -95,7 +95,7 @@ export class MainComponent implements OnInit {
 
   setId(e) {
     switch (e.init) {
-      case "company": this.cid = null; this.oid = null; this.did = null; this.companyName = e.title; setTimeout(()=>{this.cid = e.id}, 10); break;
+      case "company": this.cid = null; this.oid = null; this.did = null; this.companyName = e.title; setTimeout(()=>{this.cid = e.id; this.sIO.getOffice(this.cid);}, 10); break;
       case "office": this.oid = null; this.did = null; setTimeout(()=>{this.oid = e.id; this.office = e.office}, 10); break;
       case "device": this.did = null; setTimeout(()=>{this.did = e.id; this.device = e.device}, 10); break;
     }
@@ -119,5 +119,8 @@ export class MainComponent implements OnInit {
     localStorage.removeItem('login');
     localStorage.removeItem('uid');
     this.isLogin = false;
+  }
+  setTimeout(e) {
+    this.timeouts = e;
   }
 }

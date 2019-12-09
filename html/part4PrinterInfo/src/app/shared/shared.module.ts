@@ -18,22 +18,26 @@ import { InfoComponent } from '../components/info/info.component';
 import { ExportComponent } from '../components/export/export.component';
 import { DeviceManageComponent } from '../components/device-manage/device-manage.component';
 import { DateIntervalComponent } from '../components/date-interval/date-interval.component';
-
+import { ConsoleComponent } from '../components/console/console.component';
+import { TimeoutsComponent } from '../components/timeouts/timeouts.component';
+import {NgxSpinnersModule} from "ngx-spinners";
 
 @NgModule({
-  declarations: [CompanyComponent, ClientComponent, DeviceComponent, ManageComponent, AdminComponent, LoginComponent, MainComponent, CompanyesComponent, OfficesComponent, DevicesComponent, InfoComponent, ExportComponent, DeviceManageComponent, DateIntervalComponent],
+  declarations: [CompanyComponent, ClientComponent, DeviceComponent, ManageComponent, AdminComponent, LoginComponent, MainComponent, CompanyesComponent, OfficesComponent, DevicesComponent, InfoComponent, ExportComponent, DeviceManageComponent, DateIntervalComponent, ConsoleComponent, TimeoutsComponent],
   imports: [
     CommonModule,
     MaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
     NgScrollbarModule,
+    NgxSpinnersModule,
     FormsModule
   ],
   exports: [
     MaterialModule,
     HttpClientModule,
     NgScrollbarModule,
+    NgxSpinnersModule,
     LoginComponent
   ]
 })

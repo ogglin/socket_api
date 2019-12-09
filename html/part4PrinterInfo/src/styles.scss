@@ -66,7 +66,7 @@ mat-sidenav-container {
 }
 .color{
   &-green{
-    color: #50c878;
+    color: #00a86b;
   }
   &-red{
     color: #f44336;
@@ -186,13 +186,25 @@ mat-list-item.active, mat-list-item:hover, .urls-nav > div.active, .urls-nav > d
 .console {
   display: none;
   position: fixed;
-  bottom: 10px;
+  bottom: 40px;
   right: 15px;
-  max-height: 300px;
-  overflow-y: scroll;
+  height: 280px;
+  overflow: hidden;
   border: 1px solid #e27a0b50;
-  padding: 10px;
-  max-width: 600px;
+  width: 360px;
+  & ng-scrollbar {
+    height: 200px;
+  }
+  &.active {
+    display: block;
+    z-index: 998;
+  }
+  &_btn {
+    position: absolute !important;
+    right: 5px;
+    bottom: 5px;
+    z-index: 999;
+  }
 }
 .tooltip-info {
   background: #8dadbe;
@@ -308,5 +320,34 @@ mat-icon {
   }
   .mat-progress-bar.cyan .mat-progress-bar-fill::after {
     background-color: #0199fc;
+  }
+}
+.spin {
+  &_size-3 {
+    width: 30px;
+    height: 30px;
+  }
+  &_circle {
+    border-top: 3px solid rgba(255, 152, 1, .5);
+    border-right: 3px solid transparent;
+    border-radius: 50%;
+    animation: rotation .9s linear infinite;
+  }
+  &_inner{
+    float: right;
+    padding: 8px 0 0 4px;
+    line-height: 1em;
+    & .loader div{
+      background-color: #8dadbe !important;
+    }
+  }
+}
+// ANIMATIONS
+@keyframes rotation{
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(360deg);
   }
 }

@@ -13,6 +13,7 @@ export class DeviceManageComponent implements OnInit {
   @Input() cid: number;
   @Input() oid: number;
   @Input() edit: boolean;
+  @Input() sIO: any;
   devices: any[] = [];
   device: any;
   initDevices: any[] = [];
@@ -30,12 +31,12 @@ export class DeviceManageComponent implements OnInit {
     enabled: new FormControl(false)
   });
 
-  constructor(private sIO: SocketService, private json: ToJsonService) {
+  constructor(private json: ToJsonService) {
   }
 
   ngOnInit() {
-    this.sIO.getDevices(this.cid, this.oid, 1);
-    this.ioConnection = this.sIO.onMessage()
+    this.sIO.getDevices(this.cid, null, 1, 0);
+    this.sIO.onMessage()
       .subscribe(message => {
         this.json.toJSON(message).subscribe(data => {
           if (data['devices']) {
@@ -54,7 +55,7 @@ export class DeviceManageComponent implements OnInit {
           if(data['putDevice']) {
             this.result = data['putDevice']['status'];
             if(this.result === 'success') {
-              this.sIO.getDevices(this.cid, this.oid, 1);
+              this.sIO.getDevices(this.cid, null, 1, 0);
             }
           }
         });

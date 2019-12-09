@@ -1,26 +1,37 @@
 <div class="py-2">
-  <button *ngIf="devices.length > 0" mat-raised-button (click)="sendAll()" color="primary">Получить данные всех устройст
+  <button *ngIf="devices.length > 0" mat-raised-button (click)="sendQuery('all')" color="primary">Получить данные всех устройст
   </button>
 </div>
 <div class="py-2">
   <mat-form-field>
-    <mat-select [(value)]="selected">
-      <mat-option (click)="setPlace('')" [value]="'Все'">Все</mat-option>
-      <mat-option *ngFor="let place of places" (click)="setPlace(place)" [value]="place">
+    <input type="text" placeholder="Выбрать местоположение" aria-label="Number" matInput [formControl]="placeControl"
+           [matAutocomplete]="auto">
+    <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="placeControl.value !== ''"
+            (click)="placeControl.setValue(''); setPlace('')"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let place of filtered | async" [value]="place"
+                  (click)="setPlace(place)">
         {{place}}
       </mat-option>
-    </mat-select>
-    <mat-hint>Выбрать местоположение</mat-hint>
+    </mat-autocomplete>
   </mat-form-field>
 </div>
 <div class="py-2">
-  <button *ngIf="initDevices.length > 0" mat-raised-button (click)="sendQuery()" color="primary">Получить данные по
+  <button *ngIf="initDevices.length > 0" mat-raised-button (click)="sendQuery('list')" color="primary">Получить данные по
     списку
   </button>
 </div>
 <div class="urls-nav" *ngIf="initDevices.length > 0">
   <div *ngFor="let item of initDevices" (click)="toggle(item['id']);" class="cursor-pointer"
        [ngClass]="cdid === item['id']? 'active': ''">
+    <ng-container *ngFor="let time of timeouts">
+      <div class="float-right" *ngIf="time.id === item.id">
+        <div class="spin_circle spin_size-3"></div>
+      </div>
+    </ng-container>
     <h4>{{item['productname']}}</h4>
     <small class="text_dark-blue pl">{{item['placement']}}</small><br>
     <table>

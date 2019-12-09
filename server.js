@@ -1,23 +1,28 @@
 "use strict";
 var fs = require('fs');
 var db = require('./dbconnect');
+var tout = require('./timeouts');
 var bodyParser = require('body-parser');
 var https = require('https');
 var cors = require('cors');
 var express = require('express');
 var app = express();
 
-//var http = require('http').createServer(app);
-//var WebSocket  = require('ws');
-
 /*const ssl = {
     key: fs.readFileSync('cert/localhost-key.pem'),
     cert: fs.readFileSync('cert/localhost.pem')
 };*/
-const ssl = {
+/*const ssl = {
     cert: fs.readFileSync('cert/cert1.pem'),
     key: fs.readFileSync('cert/privkey1.pem')
+};*/
+
+/*Dev*/
+const ssl = {
+    cert: fs.readFileSync('cert/dev_cert1.pem'),
+    key: fs.readFileSync('cert/dev_privkey1.pem')
 };
+
 const serverPort = 8443;
 
 app.use(function(req, res, next) {
@@ -41,15 +46,8 @@ const corsOptions = {
     methods: "POST, PUT, OPTIONS, DELETE, GET, *",
     optionsSuccessStatus: 200,
     origin: "*"
-    /*origin: (origin, callback) => {
-        if (whitelist.includes(origin))
-            return callback(null, true);
-        callback(new Error('Not allowed by CORS'));
-    }*/
 };
 app.use(cors(corsOptions));
-/*app.use(cors());
-app.options('*', cors());*/
 
 const server = https.createServer(ssl, app);
 
@@ -68,41 +66,60 @@ function IsJsonString(str) {
 var clients = {};
 
 io.set('origins', '*:*');
+
+io.on('connection', function (allsoc) {
+    clients[allsoc.id] = true;
+    console.log(clients);
+});
+io.on('disconnect', function (dsoc) {
+    console.log('dis: '+dsoc);
+});
 const get = io.of('/get');
-get.on('connection', function (socket) {
-    socket.on('get', function (data) {
+get.on('connection', function (gsocket) {
+    console.log(gsocket.id);
+    gsocket.on('get', function (data) {
         var isJson = IsJsonString(data);
         if (isJson) {
             var obj = JSON.parse(data);
             if (obj['auth']) {
                 db.AuthO(obj['auth']['login'], obj['auth']['pass']).subscribe(res => {
-                    socket.emit('get', '{"auth":' + JSON.stringify(res) + '}');
+                    gsocket.emit('get', '{"auth":' + JSON.stringify(res) + '}');
+                });
+            }
+            if (obj['getTimeouts']) {
+                tout.checkDeviceO().subscribe(res => {
+                    io.emit('get', '{"deviceTimeout":' + JSON.stringify(res) + '}');
+                });
+            }
+            if (obj['logs']) {
+                db.getLogO().subscribe(res => {
+                    gsocket.emit('get', '{"logs":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['getCompany'] || obj['getCompany'] === 0) {
                 db.getCompanyO(obj['getCompany']).subscribe(res => {
-                    socket.emit('get', '{"companies":' + JSON.stringify(res) + '}');
+                    gsocket.emit('get', '{"companies":' + JSON.stringify(res)  + ',"socket":"'+gsocket.id+ '"}');
                 });
             }
             if (obj['getOffice'] || obj['getOffice'] === 0) {
                 db.getClientsO(obj['getOffice']).subscribe(res => {
-                    socket.emit('get', '{"offices":' + JSON.stringify(res) + '}');
+                    console.log('{"offices":' + JSON.stringify(res) + '}');
+                    gsocket.emit('get', '{"offices":' + JSON.stringify(res)  + ',"socket":"'+gsocket.id+ '"}');
                 });
             }
             if (obj['getDevices'] || obj['getDevices'] === 0) {
-                db.getDevicesO(obj['cid'], obj['oid'], obj['getDevices']).subscribe(res => {
-                    socket.emit('get', '{"devices":' + JSON.stringify(res) + '}');
+                db.getDevicesO(obj['cid'], obj['oid'], obj['on']).subscribe(res => {
+                    gsocket.emit('get', '{"devices":' + JSON.stringify(res) + '}');
                 });
             }
             if (obj['getinfo'] || obj['getinfo'] === 0) {
                 db.getInfoO(obj['getinfo'], obj['start'], obj['end']).subscribe(res => {
-                    console.log("infos:" + res);
-                    socket.emit('get', '{"infos":' + JSON.stringify(res) + '}');
+                    gsocket.emit('get', '{"infos":' + JSON.stringify(res) + ',"socket":"'+gsocket.id+'"}');
                 });
             }
             if (obj['getCSV'] || obj['getCSV'] === 0) {
                 db.getInfoCSVO(obj['getCSV'], obj['start'], obj['end']).subscribe(res => {
-                    socket.emit('get', '{"getCSV":' + JSON.stringify(res) + '}');
+                    gsocket.emit('get', '{"getCSV":' + JSON.stringify(res) + '}');
                 });
             }
         }
@@ -111,12 +128,17 @@ get.on('connection', function (socket) {
 const put = io.of('/put');
 put.on('connection', function (socket) {
     socket.on('put', function (data) {
-        console.log('put: ' + data);
+        console.log('data: ' + data);
         var isJson = IsJsonString(data);
         if (isJson) {
             var obj = JSON.parse(data);
+            db.addLogO(obj).subscribe(res => {
+                get.emit('get', '{"putLog":' + JSON.stringify(res) + '}');
+            });
             if (obj['server_init'] === 'getDevices') {
-                console.log(data);
+                tout.addTimeoutO(obj['devices']).subscribe(res => {
+                    io.emit('get', '{"deviceTimeout":' + JSON.stringify(res) + '}');
+                });
                 put.emit('get', data);
                 socket.emit('message', data);
             }
@@ -125,7 +147,13 @@ put.on('connection', function (socket) {
                     get.emit('get', '{"putDevice":' + JSON.stringify(res) + '}');
                 });
             }
+            if (obj['log']) {
+                db.addLogO(obj['log']).subscribe(res => {
+                    get.emit('get', '{"putLog":' + JSON.stringify(res) + '}');
+                });
+            }
             if (obj['client_init'] === 'putDevices') {
+                console.log('obj client_init: ' + JSON.stringify(obj));
                 db.addInfoO(
                     obj['company_id'],
                     obj['device_id'],
@@ -214,6 +242,3 @@ app.listen(5000, function (err) {
 server.listen(serverPort, function () {
     console.log('server up and running at %s port', serverPort);
 });
-/*http.listen(3000, function(){
-    console.log('listening on *:3000');
-});*/
