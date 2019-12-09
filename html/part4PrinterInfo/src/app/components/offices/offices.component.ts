@@ -1,9 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Observable} from "rxjs";
 import {FormControl} from "@angular/forms";
-import {SocketService} from "../../shared/socket/socket.service";
 import {map, startWith} from "rxjs/operators";
-import {ToJsonService} from "../../services/to-json.service";
 
 @Component({
   selector: 'app-offices',

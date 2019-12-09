@@ -1,5 +1,4 @@
 import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
-import {SocketService} from "../../shared/socket/socket.service";
 import {ToJsonService} from "../../services/to-json.service";
 import {ToXlsxService} from "../../services/to-xlsx.service";
 
@@ -53,23 +52,4 @@ export class ExportComponent implements OnInit {
   exportAsXLSX():void {
     this.excel.exportAsExcelFile(this.csvData, this.title);
   }
-
-  /*downloadFile(data: any) {
-    const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-    const header = Object.keys(data[0]);
-    let csv = data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'));
-    csv.unshift(header.join(';'));
-    let csvArray = csv.join('\r\n');
-
-    var a = document.createElement('a');
-    var blob = new Blob([csvArray], {type: 'text/csv;charset=utf-8'}),
-      url = window.URL.createObjectURL(blob);
-
-    a.href = url;
-    a.download = "Export.csv";
-    a.click();
-    window.URL.revokeObjectURL(url);
-    a.remove();
-  }*/
-
 }

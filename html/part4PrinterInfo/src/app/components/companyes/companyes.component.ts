@@ -1,10 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
-import {SocketService} from "../../shared/socket/socket.service";
 import {Observable} from "rxjs";
 import {FormControl} from "@angular/forms";
 import {map, startWith} from "rxjs/operators";
-import {Event} from "../../shared/socket/model/event";
-import {ToJsonService} from "../../services/to-json.service";
 
 @Component({
   selector: 'app-companyes',
@@ -36,6 +33,7 @@ export class CompanyesComponent implements OnInit {
   ngOnInit() {
     this.sIO.getCompany(this.uid);
   }
+
   private _filterCompany(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.companies.filter(option => option['title'].toLowerCase().includes(filterValue));
@@ -50,7 +48,8 @@ export class CompanyesComponent implements OnInit {
     this.cid.emit(e);
     this.id = id;
   }
-  addCompany() {
+
+  addCompany(){
     let body;
     if(this.id !== null) {
       body = {

@@ -1,7 +1,4 @@
 import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
-import {AsyncSubject, Observable} from "rxjs";
-import {ToJsonService} from "../../services/to-json.service";
-import {SocketService} from "../../shared/socket/socket.service";
 
 @Component({
   selector: 'app-timeouts',

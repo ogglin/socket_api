@@ -22,7 +22,7 @@ export class SocketService {
     this._put = io(SERVER_URL_PUT);
     //console.log(this._put);
     this._get = io(SERVER_URL_GET);
-    console.log(this._get);
+    //console.log(this._get);
   }
 
   public send(message: any): void {
