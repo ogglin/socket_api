@@ -254,12 +254,10 @@ function addInfo(company_id, device_id, cartridge, serialNumber, scanCycles, url
     qai += ", CURRENT_TIMESTAMP, "+device_id+");" ;
 
     var qed = "UPDATE rdata.devices SET (";
-    if(productName) {qed += "productname"}
     if(url) {qed += ",url"}
     if(article) {qed += ",article"}
     if(serialNumber) {qed += ",sn"}
     qed += ") = (";
-    if(productName) {qed += "'"+productName+"'"}
     if(url) {qed += ",'"+url+"'"}
     if(article) {qed += ",'"+article+"'"}
     if(serialNumber) {qed += ",'"+serialNumber+"'"}
